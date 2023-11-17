@@ -11,7 +11,7 @@ namespace FirstLab
         /// <summary>
         /// Метод Main.
         /// </summary>
-        static void Main()
+        public static void Main()
         {
             Console.WriteLine("a. Программное создание двух списков персон, в каждом из которых по три человека.\n");
 
@@ -87,7 +87,7 @@ namespace FirstLab
         public static void ReadKey()
         {
             Console.WriteLine("Чтобы продолжить, нажмите любую клавишу.\n");
-            Console.ReadKey();
+            _ = Console.ReadKey();
         }
     }
 }
