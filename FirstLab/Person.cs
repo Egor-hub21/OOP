@@ -8,22 +8,22 @@ namespace FirstLab
         /// <summary>
         /// Возраст.
         /// </summary>
-        private int age;
+        private int _age;
 
         /// <summary>
         /// Имя.
         /// </summary>
-        private string firstName;
+        private string _firstName;
 
         /// <summary>
         /// Гендер.
         /// </summary>
-        private Gender gender;
+        private Gender _gender;
 
         /// <summary>
         /// Фамилия.
         /// </summary>
-        private string lastName;
+        private string _lastName;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Person"/> class.
@@ -42,49 +42,49 @@ namespace FirstLab
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="Person.age"/> \ Получает или задает  возраст.
+        /// Gets or sets the <see cref="Person._age"/> \ Получает или задает  возраст.
         /// </summary>
         public int Age
         {
             get
             {
-                return age;
+                return _age;
             }
 
             set
             {
                 if (value >= 0)
                 {
-                    age = value;
+                    _age = value;
                 }
             }
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="Person.firstName"/> \ Получает или задает имя.
+        /// Gets or sets the <see cref="Person._firstName"/> \ Получает или задает имя.
         /// </summary>
         public string FirstName
         {
-            get { return firstName; }
-            set { firstName = value; }
+            get { return _firstName; }
+            set { _firstName = value; }
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="Person.gender"/> \ Получает или задает  пол.
+        /// Gets or sets the <see cref="Person._gender"/> \ Получает или задает  пол.
         /// </summary>
         public Gender Gender
         {
-            get { return gender; }
-            set { gender = value; }
+            get { return _gender; }
+            set { _gender = value; }
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="Person.lastName"/> \ Получает или задает  фамилию.
+        /// Gets or sets the <see cref="Person._lastName"/> \ Получает или задает  фамилию.
         /// </summary>
         public string LastName
         {
-            get { return lastName; }
-            set { lastName = value; }
+            get { return _lastName; }
+            set { _lastName = value; }
         }
     }
 }
