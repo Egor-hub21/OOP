@@ -5,7 +5,7 @@ namespace FirstLab
     /// </summary>
     public class PersonList
     {
-        private List<Person> peopleList;
+        private List<Person> _peopleList;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PersonList"/> class.
@@ -13,7 +13,7 @@ namespace FirstLab
         /// </summary>
         public PersonList()
         {
-            peopleList = new List<Person>();
+            _peopleList = new List<Person>();
         }
 
         /// <summary>
@@ -22,7 +22,7 @@ namespace FirstLab
         /// <param name="person">Экземпляр класса <see cref="Person"/>.</param>
         public void AddPerson(Person person)
         {
-            peopleList.Add(person);
+            _peopleList.Add(person);
         }
 
         /// <summary>
@@ -31,18 +31,18 @@ namespace FirstLab
         /// <param name="i">Номер члена в  списке  <see cref="PersonList"/>.</param>
         public void Print(int i)
         {
-            if (peopleList.Count - 1 >= i)
+            if (_peopleList.Count - 1 >= i)
             {
                 Console.WriteLine($"Индекс: {i}\t" +
-                                  $"Имя: {peopleList[i].FirstName}\t" +
-                                  $"Фамилия: {peopleList[i].LastName}\t" +
-                                  $"Возраст: {peopleList[i].Age}\t" +
-                                  $"Пол: {peopleList[i].Gender}\n");
+                                  $"Имя: {_peopleList[i].FirstName}\t" +
+                                  $"Фамилия: {_peopleList[i].LastName}\t" +
+                                  $"Возраст: {_peopleList[i].Age}\t" +
+                                  $"Пол: {_peopleList[i].Gender}\n");
             }
             else
             {
                 Console.WriteLine($"Список не содержит {i}-й элемент " +
-                                  $"(последний элемент списка:{peopleList.Count - 1})");
+                                  $"(последний элемент списка:{_peopleList.Count - 1})");
             }
         }
 
@@ -52,7 +52,7 @@ namespace FirstLab
         public void Print()
         {
             int i = 0;
-            foreach (Person person in peopleList)
+            foreach (Person person in _peopleList)
             {
                 Console.WriteLine($"Индекс: {i}\t" +
                                   $"Имя: {person.FirstName}\t" +
@@ -63,7 +63,7 @@ namespace FirstLab
                 i++;
             }
 
-            if (peopleList.Count == 0)
+            if (_peopleList.Count == 0)
             {
                 Console.WriteLine("Список пуст!\n");
             }
@@ -74,7 +74,7 @@ namespace FirstLab
         /// </summary>
         public void Clear()
         {
-            peopleList.Clear();
+            _peopleList.Clear();
         }
 
         /// <summary>
@@ -83,15 +83,15 @@ namespace FirstLab
         /// <param name="i">Номер члена в  списке  <see cref="PersonList"/>.</param>
         public void DeletePerson(int i)
         {
-            if (peopleList.Count >= i)
+            if (_peopleList.Count >= i)
             {
-                peopleList.RemoveAt(i);
+                _peopleList.RemoveAt(i);
                 Console.WriteLine($"Элемент {i} удален из списка!\n");
             }
             else
             {
                 Console.WriteLine($"Список не содержит {i}-й элемент " +
-                                  $"(последний элемент списка:{peopleList.Count - 1})");
+                                  $"(последний элемент списка:{_peopleList.Count - 1})");
             }
         }
 
@@ -102,20 +102,20 @@ namespace FirstLab
         /// <param name="count">Количество элементов которые подлежат удалению.</param>
         public void DeletePerson(int i, int count)
         {
-            if (peopleList.Count >= i + count)
+            if (_peopleList.Count >= i + count)
             {
-                peopleList.RemoveRange(i, count);
+                _peopleList.RemoveRange(i, count);
                 Console.WriteLine($"Элемент с {i} по {i + count - 1} удален из списка!\n");
             }
-            else if (peopleList.Count < i)
+            else if (_peopleList.Count < i)
             {
                 Console.WriteLine($"Список не содержит элемент с индексом {i} " +
-                                  $"(последний элемент списка:{peopleList.Count - 1})");
+                                  $"(последний элемент списка:{_peopleList.Count - 1})");
             }
             else
             {
                 Console.WriteLine($"Список не содержит {i + count} элементов " +
-                                  $"(в списке {peopleList.Count} элементов)");
+                                  $"(в списке {_peopleList.Count} элементов)");
             }
         }
 
@@ -125,7 +125,7 @@ namespace FirstLab
         /// <returns>Количество элементов в списке <see cref="PersonList"/>.</returns>
         public int GetCount()
         {
-            return peopleList.Count;
+            return _peopleList.Count;
         }
 
         /// <summary>
@@ -138,10 +138,10 @@ namespace FirstLab
         {
             int index = -1;
 
-            for (int i = 0; i < peopleList.Count; i++)
+            for (int i = 0; i < _peopleList.Count; i++)
             {
-                if ((peopleList[i].Age == setPerson.Age) && (peopleList[i].FirstName == setPerson.FirstName) &&
-                    (peopleList[i].Gender == setPerson.Gender) && (peopleList[i].LastName == setPerson.LastName))
+                if ((_peopleList[i].Age == setPerson.Age) && (_peopleList[i].FirstName == setPerson.FirstName) &&
+                    (_peopleList[i].Gender == setPerson.Gender) && (_peopleList[i].LastName == setPerson.LastName))
                 {
                     index = i;
                     break;
@@ -158,7 +158,7 @@ namespace FirstLab
         /// <returns>Элемент класса <see cref="PersonList"/>.</returns>
         public Person GetByIndex(int index)
         {
-            return peopleList[index];
+            return _peopleList[index];
         }
     }
 }

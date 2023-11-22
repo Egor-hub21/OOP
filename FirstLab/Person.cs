@@ -8,22 +8,32 @@ namespace FirstLab
         /// <summary>
         /// Возраст.
         /// </summary>
-        private int age;
+        private int _age;
 
         /// <summary>
         /// Имя.
         /// </summary>
-        private string firstName;
+        private string _firstName;
 
         /// <summary>
         /// Гендер.
         /// </summary>
-        private Gender gender;
+        private Gender _gender;
 
         /// <summary>
         /// Фамилия.
         /// </summary>
-        private string lastName;
+        private string _lastName;
+
+        /// <summary>
+        /// Минимальный возраст.
+        /// </summary>
+        private const int _ageMin = 0;
+
+        /// <summary>
+        /// Минимальный возраст.
+        /// </summary>
+        private const int _ageMax = 100;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Person"/> class.
@@ -42,49 +52,106 @@ namespace FirstLab
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="Person.age"/> \ Получает или задает  возраст.
+        /// Gets or sets the <see cref="Person._age"/> \ Получает или задает  возраст.
         /// </summary>
         public int Age
         {
             get
             {
-                return age;
+                return _age;
             }
 
             set
             {
-                if (value >= 0)
+                if (value >= _ageMin && _ageMax >= value)
                 {
-                    age = value;
+                    _age = value;
                 }
             }
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="Person.firstName"/> \ Получает или задает имя.
+        /// Gets or sets the <see cref="Person._firstName"/> \ Получает или задает имя.
         /// </summary>
         public string FirstName
         {
-            get { return firstName; }
-            set { firstName = value; }
+            get { return _firstName; }
+            set { _firstName = value; }
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="Person.gender"/> \ Получает или задает  пол.
+        /// Gets or sets the <see cref="Person._gender"/> \ Получает или задает  пол.
         /// </summary>
         public Gender Gender
         {
-            get { return gender; }
-            set { gender = value; }
+            get { return _gender; }
+            set { _gender = value; }
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="Person.lastName"/> \ Получает или задает  фамилию.
+        /// Gets or sets the <see cref="Person._lastName"/> \ Получает или задает  фамилию.
         /// </summary>
         public string LastName
         {
-            get { return lastName; }
-            set { lastName = value; }
+            get { return _lastName; }
+            set { _lastName = value; }
+        }
+
+        /// <summary>
+        /// Чтения <see cref="Person"/> с клавиатуры.
+        /// </summary>
+        /// <returns>Экземпляр класса <see cref="Person"/>.</returns>
+        public static Person ConsoleReadPerson()
+        {
+            string firstName = Console.ReadLine();
+            string lastName = Console.ReadLine();
+            int age = Convert.ToInt32(Console.ReadLine());
+            string gender = Console.ReadLine();
+            Gender genderEnum;
+            if (gender == "Male")
+            {
+                genderEnum = Gender.Male;
+            }
+            else if (gender == "Female")
+            {
+                genderEnum = Gender.Female;
+            }
+            else
+            {
+                throw new Exception("Ошибка ввода!");
+            }
+
+            return new Person(firstName, lastName, age, genderEnum);
+        }
+
+        /// <summary>
+        /// Возвращает строку с информацией о <see cref="Person"/>.
+        /// </summary>
+        /// <returns>Информация о <see cref="Person"/> в вмиде строки.</returns>
+        public string GetPersonInfo()
+        {
+            return ($"Имя: {FirstName}\tФамилия: {LastName}\t" +
+                    $"Возраст: {Age}\tПол: {Gender}\n");
+        }
+
+        /// <summary>
+        /// Создает экземпляяр класса <see cref="Person"/> со случайным набором полей.
+        /// </summary>
+        /// <returns>Экземпляр класса <see cref="Person"/>.</returns>
+        public static Person GetRandomPerson()
+        {
+            // Создание пулла фамилий и имен
+            string[] firstNames = { "Александр", "Екатерина", "Михаил", "Анна", "Дмитрий", "Мария", "Иван", "Ольга", "Николай", "Елена" };
+            string[] lastNames = { "Ямцун", "Ромм", "Резник", "Кулиш", "Томпсон", "Думер", "Бумер", "Зумер", "Герман", "Штраус" };
+
+            Random random = new Random();
+
+            string randomFirstName = firstNames[random.Next(firstNames.Length)];
+            string randomLastName = lastNames[random.Next(lastNames.Length)];
+            int randomAge = random.Next(_ageMin, _ageMax);
+            Gender randomGender = (Gender)random.Next(Enum.GetNames(typeof(Gender)).Length);
+
+            return new Person(randomFirstName, randomLastName, randomAge, randomGender);
         }
     }
 }
