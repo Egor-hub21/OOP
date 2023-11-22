@@ -141,15 +141,47 @@ namespace FirstLab
         public static Person GetRandomPerson()
         {
             // Создание пулла фамилий и имен
-            string[] firstNames = { "Александр", "Екатерина", "Михаил", "Анна", "Дмитрий", "Мария", "Иван", "Ольга", "Николай", "Елена" };
-            string[] lastNames = { "Ямцун", "Ромм", "Резник", "Кулиш", "Томпсон", "Думер", "Бумер", "Зумер", "Герман", "Штраус" };
+            string[] manFirstNames = { "Александр", "Михаил", "Дмитрий", "Иван", "Олег", "Николай", "Ален" };
+            string[] femFirstNames = { "Александра", "Анна", "Мария", "Ивана", "Ольга", "Елена", "Екатерина" };
+            string[] unisexLastNames = { "Ямцун", "Ромм", "Резник", "Кулиш", "Томпсон", "Думер", "Бумер", "Зумер", "Герман", "Штраус" };
+            string[] manLastNames = { "Блохин", "Андреев", "Дорохов", "Ермилов", "Ефимов", "Золотарев", "Казаков" };
 
             Random random = new Random();
 
-            string randomFirstName = firstNames[random.Next(firstNames.Length)];
-            string randomLastName = lastNames[random.Next(lastNames.Length)];
             int randomAge = random.Next(_ageMin, _ageMax);
             Gender randomGender = (Gender)random.Next(Enum.GetNames(typeof(Gender)).Length);
+
+            int numLastNames = random.Next(0, 1);
+
+            string randomFirstName;
+            string randomLastName;
+
+            if (randomGender == Gender.Female)
+            {
+                randomFirstName = femFirstNames[random.Next(femFirstNames.Length)];
+
+                if (numLastNames == 0)
+                {
+                    randomLastName = unisexLastNames[random.Next(unisexLastNames.Length)];
+                }
+                else
+                {
+                    randomLastName = manLastNames[random.Next(manLastNames.Length)] + "a";
+                }
+            }
+
+            else
+            {
+                randomFirstName = manFirstNames[random.Next(manFirstNames.Length)];
+                if (numLastNames == 0)
+                {
+                    randomLastName = unisexLastNames[random.Next(unisexLastNames.Length)];
+                }
+                else
+                {
+                    randomLastName = manLastNames[random.Next(manLastNames.Length)];
+                }
+            }
 
             return new Person(randomFirstName, randomLastName, randomAge, randomGender);
         }
