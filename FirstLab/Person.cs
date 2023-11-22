@@ -143,7 +143,7 @@ namespace FirstLab
             // Создание пулла фамилий и имен
             string[] manFirstNames = { "Александр", "Михаил", "Дмитрий", "Иван", "Олег", "Николай", "Ален" };
             string[] femFirstNames = { "Александра", "Анна", "Мария", "Ивана", "Ольга", "Елена", "Екатерина" };
-            string[] unisexLastNames = { "Ямцун", "Ромм", "Резник", "Кулиш", "Томпсон", "Думер", "Бумер", "Зумер", "Герман", "Штраус" };
+            string[] unisexLastNames = { "Ямцун", "Ромм", "Резник", "Кулиш", "Томпсон", "Думер", "Бумер", "Герман", "Штраус" };
             string[] manLastNames = { "Блохин", "Андреев", "Дорохов", "Ермилов", "Ефимов", "Золотарев", "Казаков" };
 
             Random random = new Random();
@@ -151,7 +151,7 @@ namespace FirstLab
             int randomAge = random.Next(_ageMin, _ageMax);
             Gender randomGender = (Gender)random.Next(Enum.GetNames(typeof(Gender)).Length);
 
-            int numLastNames = random.Next(0, 1);
+            int numLastNames = random.Next(2);
 
             string randomFirstName;
             string randomLastName;
