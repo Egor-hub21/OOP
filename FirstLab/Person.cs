@@ -1,3 +1,5 @@
+using System.Text.RegularExpressions;
+
 namespace FirstLab
 {
     /// <summary>
@@ -37,6 +39,12 @@ namespace FirstLab
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Person"/> class.
+        /// </summary>
+        public Person()
+        { }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Person"/> class.
         /// Конструктор класса <see cref="Person"/>.
         /// </summary>
         /// <param name="firstName">Имя.</param>
@@ -63,10 +71,19 @@ namespace FirstLab
 
             set
             {
-                if (value >= _ageMin && _ageMax >= value)
+                if (value <= _ageMin)
+                {
+                    throw new Exception($"Введенный возраст ниже допустимого {_ageMin}");
+                }
+                else if (value >= _ageMax)
+                {
+                    throw new Exception($"Введенный возраст выше допустимого {_ageMax}");
+                }
+                else
                 {
                     _age = value;
                 }
+
             }
         }
 
@@ -76,7 +93,18 @@ namespace FirstLab
         public string FirstName
         {
             get { return _firstName; }
-            set { _firstName = value; }
+
+            set
+            {
+                if (!SymbolControl(value))
+                {
+                    throw new Exception($"При вводе имени использовались недопустимые символы");
+                }
+                else
+                {
+                    _firstName = value;
+                }
+            }
         }
 
         /// <summary>
@@ -94,7 +122,18 @@ namespace FirstLab
         public string LastName
         {
             get { return _lastName; }
-            set { _lastName = value; }
+
+            set
+            {
+                if (!SymbolControl(value))
+                {
+                    throw new Exception($"При вводе фамилии использовались недопустимые символы");
+                }
+                else
+                {
+                    _lastName = value;
+                }
+            }
         }
 
         /// <summary>
@@ -184,6 +223,19 @@ namespace FirstLab
             }
 
             return new Person(randomFirstName, randomLastName, randomAge, randomGender);
+        }
+
+        /// <summary>
+        /// Проверка: слово должно содержать только
+        /// русские или английские символы.
+        /// </summary>
+        /// <param name="word">Проверяемое слово.</param>
+        /// <returns>trye условие выполняется;
+        /// false условие не выполняется.</returns>
+        public static bool SymbolControl(string word)
+        {
+            Regex regex = new Regex("^[a-zA-Zа-яА-Я]+$");
+            return regex.IsMatch(word);
         }
     }
 }

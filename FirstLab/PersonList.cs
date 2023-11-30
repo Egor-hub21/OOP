@@ -59,7 +59,7 @@ namespace FirstLab
                                   $"Фамилия: {person.LastName}\t" +
                                   $"Возраст: {person.Age}\t" +
                                   $"Пол: {person.Gender}\n" +
-                                  new string('-', 60));
+                                  new string('-', 100));
                 i++;
             }
 
