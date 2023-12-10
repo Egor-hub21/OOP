@@ -30,12 +30,12 @@ namespace FirstLab
         /// <summary>
         /// Минимальный возраст.
         /// </summary>
-        private const int _ageMin = 0;
+        public const int _ageMin = 0;
 
         /// <summary>
         /// Минимальный возраст.
         /// </summary>
-        private const int _ageMax = 100;
+        public const int _ageMax = 100;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Person"/> class.
@@ -137,33 +137,6 @@ namespace FirstLab
         }
 
         /// <summary>
-        /// Чтения <see cref="Person"/> с клавиатуры.
-        /// </summary>
-        /// <returns>Экземпляр класса <see cref="Person"/>.</returns>
-        public static Person ConsoleReadPerson()
-        {
-            string firstName = Console.ReadLine();
-            string lastName = Console.ReadLine();
-            int age = Convert.ToInt32(Console.ReadLine());
-            string gender = Console.ReadLine();
-            Gender genderEnum;
-            if (gender == "Male")
-            {
-                genderEnum = Gender.Male;
-            }
-            else if (gender == "Female")
-            {
-                genderEnum = Gender.Female;
-            }
-            else
-            {
-                throw new Exception("Ошибка ввода!");
-            }
-
-            return new Person(firstName, lastName, age, genderEnum);
-        }
-
-        /// <summary>
         /// Возвращает строку с информацией о <see cref="Person"/>.
         /// </summary>
         /// <returns>Информация о <see cref="Person"/> в вмиде строки.</returns>
@@ -171,58 +144,6 @@ namespace FirstLab
         {
             return ($"Имя: {FirstName}\tФамилия: {LastName}\t" +
                     $"Возраст: {Age}\tПол: {Gender}\n");
-        }
-
-        /// <summary>
-        /// Создает экземпляяр класса <see cref="Person"/> со случайным набором полей.
-        /// </summary>
-        /// <returns>Экземпляр класса <see cref="Person"/>.</returns>
-        public static Person GetRandomPerson()
-        {
-            // Создание пулла фамилий и имен
-            string[] manFirstNames = { "Александр", "Михаил", "Дмитрий", "Иван", "Олег", "Николай", "Ален" };
-            string[] femFirstNames = { "Александра", "Анна", "Мария", "Ивана", "Ольга", "Елена", "Екатерина" };
-            string[] unisexLastNames = { "Ямцун", "Ромм", "Резник", "Кулиш", "Томпсон", "Думер", "Бумер", "Герман", "Штраус" };
-            string[] manLastNames = { "Блохин", "Андреев", "Дорохов", "Ермилов", "Ефимов", "Золотарев", "Казаков" };
-
-            Random random = new Random();
-
-            int randomAge = random.Next(_ageMin, _ageMax);
-            Gender randomGender = (Gender)random.Next(Enum.GetNames(typeof(Gender)).Length);
-
-            int numLastNames = random.Next(2);
-
-            string randomFirstName;
-            string randomLastName;
-
-            if (randomGender == Gender.Female)
-            {
-                randomFirstName = femFirstNames[random.Next(femFirstNames.Length)];
-
-                if (numLastNames == 0)
-                {
-                    randomLastName = unisexLastNames[random.Next(unisexLastNames.Length)];
-                }
-                else
-                {
-                    randomLastName = manLastNames[random.Next(manLastNames.Length)] + "a";
-                }
-            }
-
-            else
-            {
-                randomFirstName = manFirstNames[random.Next(manFirstNames.Length)];
-                if (numLastNames == 0)
-                {
-                    randomLastName = unisexLastNames[random.Next(unisexLastNames.Length)];
-                }
-                else
-                {
-                    randomLastName = manLastNames[random.Next(manLastNames.Length)];
-                }
-            }
-
-            return new Person(randomFirstName, randomLastName, randomAge, randomGender);
         }
 
         /// <summary>

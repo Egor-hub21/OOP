@@ -1,3 +1,4 @@
+
 namespace FirstLab
 {
     /// <summary>
@@ -29,44 +30,42 @@ namespace FirstLab
         /// Метод для вывода информации о i-ном <see cref="Person"/> в списке  <see cref="PersonList"/>.
         /// </summary>
         /// <param name="i">Номер члена в  списке  <see cref="PersonList"/>.</param>
-        public void Print(int i)
+        public string PersonInfo(int i)
         {
-            if (_peopleList.Count - 1 >= i)
+            if (_peopleList.Count <= i)
             {
-                Console.WriteLine($"Индекс: {i}\t" +
-                                  $"Имя: {_peopleList[i].FirstName}\t" +
-                                  $"Фамилия: {_peopleList[i].LastName}\t" +
-                                  $"Возраст: {_peopleList[i].Age}\t" +
-                                  $"Пол: {_peopleList[i].Gender}\n");
+                throw new Exception($"Список не содержит {i}-й элемент " +
+                                    $"(последний элемент списка: " +
+                                    $"{_peopleList.Count - 1})");
             }
-            else
-            {
-                Console.WriteLine($"Список не содержит {i}-й элемент " +
-                                  $"(последний элемент списка:{_peopleList.Count - 1})");
-            }
+         
+             return ($"Индекс: {i}\t" +
+                     $"Имя: {_peopleList[i].FirstName}\t" +
+                     $"Фамилия: {_peopleList[i].LastName}\t" +
+                     $"Возраст: {_peopleList[i].Age}\t" +
+                     $"Пол: {_peopleList[i].Gender}\n");
+         
         }
 
         /// <summary>
         /// Метод для вывода информации о  всех  <see cref="Person"/> в списке  <see cref="PersonList"/>.
         /// </summary>
-        public void Print()
+        public string PersonInfo()
         {
+            string info = "";
             int i = 0;
             foreach (Person person in _peopleList)
             {
-                Console.WriteLine($"Индекс: {i}\t" +
-                                  $"Имя: {person.FirstName}\t" +
-                                  $"Фамилия: {person.LastName}\t" +
-                                  $"Возраст: {person.Age}\t" +
-                                  $"Пол: {person.Gender}\n" +
-                                  new string('-', 100));
+               info = info + ($"Индекс: {i}\t" +
+                              $"Имя: {person.FirstName}\t" +
+                              $"Фамилия: {person.LastName}\t" +
+                              $"Возраст: {person.Age}\t" +
+                              $"Пол: {person.Gender}\n" +
+                              new string('-', 100)+"\n");
                 i++;
             }
 
-            if (_peopleList.Count == 0)
-            {
-                Console.WriteLine("Список пуст!\n");
-            }
+            return info;
         }
 
         /// <summary>
@@ -83,15 +82,21 @@ namespace FirstLab
         /// <param name="i">Номер члена в  списке  <see cref="PersonList"/>.</param>
         public void DeletePerson(int i)
         {
-            if (_peopleList.Count >= i)
+            if (i < 0)
             {
-                _peopleList.RemoveAt(i);
-                Console.WriteLine($"Элемент {i} удален из списка!\n");
+                throw new Exception("Введен отрицательный индекс!");
+            }
+
+            else if (_peopleList.Count <= i)
+            {
+                throw new Exception($"Список не содержит {i}-й элемент " +
+                                    $"(последний элемент списка:" +
+                                    $"{_peopleList.Count - 1})");
             }
             else
             {
-                Console.WriteLine($"Список не содержит {i}-й элемент " +
-                                  $"(последний элемент списка:{_peopleList.Count - 1})");
+                _peopleList.RemoveAt(i);
+
             }
         }
 
@@ -102,20 +107,27 @@ namespace FirstLab
         /// <param name="count">Количество элементов которые подлежат удалению.</param>
         public void DeletePerson(int i, int count)
         {
-            if (_peopleList.Count >= i + count)
+            if (i < 0)
             {
-                _peopleList.RemoveRange(i, count);
-                Console.WriteLine($"Элемент с {i} по {i + count - 1} удален из списка!\n");
+                throw new Exception("Введен отрицательный индекс!");
+            }
+            else if (count < 0)
+            {
+                throw new Exception("Введено отрицательное число!");
             }
             else if (_peopleList.Count < i)
             {
-                Console.WriteLine($"Список не содержит элемент с индексом {i} " +
-                                  $"(последний элемент списка:{_peopleList.Count - 1})");
+                throw new Exception($"Список не содержит элемент с индексом {i} " +
+                                    $"(последний элемент списка:{_peopleList.Count - 1})");
+            }
+            else if (_peopleList.Count < i + count)
+            {
+                throw new Exception($"Список не содержит {i + count} элементов " +
+                                    $"(в списке {_peopleList.Count} элементов)");
             }
             else
             {
-                Console.WriteLine($"Список не содержит {i + count} элементов " +
-                                  $"(в списке {_peopleList.Count} элементов)");
+                _peopleList.RemoveRange(i, count);
             }
         }
 
@@ -158,7 +170,19 @@ namespace FirstLab
         /// <returns>Элемент класса <see cref="PersonList"/>.</returns>
         public Person GetByIndex(int index)
         {
-            return _peopleList[index];
+            int lastIndex = _peopleList.Count - 1;
+
+            if (lastIndex < index)
+            {
+                throw new IndexOutOfRangeException($"Элемента с индексом" +
+                                                   $" {index} нет в списке" +
+                                                   $"последний элемент имеет индекс " +
+                                                   $"{lastIndex}");
+            }
+            else 
+            {
+                return _peopleList[index];
+            }            
         }
     }
 }
