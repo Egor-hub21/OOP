@@ -38,13 +38,13 @@ namespace FirstLab
                                     $"(последний элемент списка: " +
                                     $"{_peopleList.Count - 1})");
             }
-         
-             return ($"Индекс: {i}\t" +
+
+            return ($"Индекс: {i}\t" +
                      $"Имя: {_peopleList[i].FirstName}\t" +
                      $"Фамилия: {_peopleList[i].LastName}\t" +
                      $"Возраст: {_peopleList[i].Age}\t" +
                      $"Пол: {_peopleList[i].Gender}\n");
-         
+
         }
 
         /// <summary>
@@ -56,12 +56,12 @@ namespace FirstLab
             int i = 0;
             foreach (Person person in _peopleList)
             {
-               info = info + ($"Индекс: {i}\t" +
+                info += ($"Индекс: {i}\t" +
                               $"Имя: {person.FirstName}\t" +
                               $"Фамилия: {person.LastName}\t" +
                               $"Возраст: {person.Age}\t" +
                               $"Пол: {person.Gender}\n" +
-                              new string('-', 100)+"\n");
+                              new string('-', 100) + "\n");
                 i++;
             }
 
@@ -179,10 +179,10 @@ namespace FirstLab
                                                    $"последний элемент имеет индекс " +
                                                    $"{lastIndex}");
             }
-            else 
+            else
             {
                 return _peopleList[index];
-            }            
+            }
         }
     }
 }

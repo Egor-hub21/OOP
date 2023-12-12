@@ -30,12 +30,12 @@ namespace FirstLab
         /// <summary>
         /// Минимальный возраст.
         /// </summary>
-        public const int _ageMin = 0;
+        public const int AgeMin = 0;
 
         /// <summary>
         /// Минимальный возраст.
         /// </summary>
-        public const int _ageMax = 100;
+        public const int AgeMax = 100;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Person"/> class.
@@ -71,13 +71,13 @@ namespace FirstLab
 
             set
             {
-                if (value <= _ageMin)
+                if (value < AgeMin)
                 {
-                    throw new Exception($"Введенный возраст ниже допустимого {_ageMin}");
+                    throw new Exception($"Введенный возраст ниже допустимого {AgeMin}");
                 }
-                else if (value >= _ageMax)
+                else if (value >= AgeMax)
                 {
-                    throw new Exception($"Введенный возраст выше допустимого {_ageMax}");
+                    throw new Exception($"Введенный возраст выше допустимого {AgeMax}");
                 }
                 else
                 {
@@ -100,9 +100,13 @@ namespace FirstLab
                 {
                     throw new Exception($"При вводе имени использовались недопустимые символы");
                 }
+                else if (!AlphabeticalControl(_lastName, value))
+                {
+                    throw new Exception($"Фамилия и имя введены с использованием разных алфавитов");
+                }
                 else
                 {
-                    _firstName = value;
+                    _firstName = CorrectionRegister(value);
                 }
             }
         }
@@ -129,9 +133,13 @@ namespace FirstLab
                 {
                     throw new Exception($"При вводе фамилии использовались недопустимые символы");
                 }
+                else if (!AlphabeticalControl(value, _firstName))
+                {
+                    throw new Exception($"Фамилия и имя введены с использованием разных алфавитов");
+                }
                 else
                 {
-                    _lastName = value;
+                    _lastName = CorrectionRegister(value);
                 }
             }
         }
@@ -148,15 +156,117 @@ namespace FirstLab
 
         /// <summary>
         /// Проверка: слово должно содержать только
-        /// русские или английские символы.
+        /// русские или только английские символы.
         /// </summary>
         /// <param name="word">Проверяемое слово.</param>
         /// <returns>trye условие выполняется;
         /// false условие не выполняется.</returns>
         public static bool SymbolControl(string word)
         {
-            Regex regex = new Regex("^[a-zA-Zа-яА-Я]+$");
-            return regex.IsMatch(word);
+            {
+                Regex regex1 = new Regex("^(([a-zA-Z]+)|([а-яА-Я]+))$");
+                Regex regex2 = new Regex("^(([a-zA-Z]+-[a-zA-Z]+)|([а-яА-Я]+-[а-яА-Я]+))$");
+
+                bool letter = false;
+
+                if (regex1.IsMatch(word))
+                {
+                    letter = true;
+                }
+                else if (regex2.IsMatch(word))
+                {
+                    letter = true;
+                }
+                return letter;
+            }
+        }
+
+        /// <summary>
+        /// Сравнивает фамилию и имя если алфавит совпадает то возвращает true.
+        /// </summary>
+        /// <param name="lastName">Фамилия.</param>
+        /// <param name="firstName">Имя.</param>
+        /// <returns>Булевое значение.</returns>
+        public static bool AlphabeticalControl(string lastName, string firstName)
+        {
+            Regex regex = new Regex("^(([a-zA-Z]+)|([а-яА-Я]+))$");
+
+            string newWord = lastName + firstName;
+            newWord = string.Concat(newWord.Split("-"));
+
+            return regex.IsMatch(newWord);
+        }
+
+        /// <summary>
+        /// Первая буква большой регистр, последующие малый.
+        /// </summary>
+        /// <param name="word">Слово.</param>
+        /// <returns>Слово.</returns>
+        public static string CorrectionRegister(string word)
+        {
+
+            Regex regex1 = new Regex("^(([a-zA-Z]+)|([а-яА-Я]+))$");
+            Regex regex2 = new Regex("^(([a-zA-Z]+-[a-zA-Z]+)|([а-яА-Я]+-[а-яА-Я]+))$");
+
+            string newWord = "Ошибка";
+
+            if (regex1.IsMatch(word))
+            {
+                newWord = word.Substring(0, 1).ToUpper() + word.Substring(1).ToLower();
+            }
+            else if (regex2.IsMatch(word))
+            {
+                string[] words = word.Split('-');
+                for (int i = 0; i < words.Length; i++)
+                {
+                    words[i] = words[i].Substring(0, 1).ToUpper() + words[i].Substring(1).ToLower();
+                }
+                newWord = words[0] + "-" + words[1];
+            }
+            return newWord;
+        }
+
+        /// <summary>
+        /// Создает экземпляяр класса <see cref="Person"/> со случайным набором полей.
+        /// </summary>
+        /// <returns>Экземпляр класса <see cref="Person"/>.</returns>
+        public static Person GetRandomPerson()
+        {
+            // Создание пулла фамилий и имен
+            string[] manFirstNames = { "Александр", "Михаил", "Дмитрий", "Иван", "Олег", "Николай", "Ален" };
+            string[] femFirstNames = { "Александра", "Анна", "Мария", "Ивана", "Ольга", "Елена", "Екатерина" };
+            string[] unisexLastNames = { "Ямцун", "Ромм", "Резник", "Кулиш", "Томпсон", "Думер", "Бумер", "Герман", "Штраус" };
+            string[] manLastNames = { "Блохин", "Андреев", "Дорохов", "Ермилов", "Ефимов", "Золотарев", "Казаков" };
+
+            Random random = new Random();
+
+            int randomAge = random.Next(AgeMin, AgeMax);
+            Gender randomGender = (Gender)random.Next(Enum.GetNames(typeof(Gender)).Length);
+
+            int numLastNames = random.Next(2);
+
+            string randomFirstName;
+            string randomLastName;
+
+            if (randomGender == Gender.Female)
+            {
+                randomFirstName = femFirstNames[random.Next(femFirstNames.Length)];
+
+                randomLastName = numLastNames == 0
+                    ? unisexLastNames[random.Next(unisexLastNames.Length)]
+                    : manLastNames[random.Next(manLastNames.Length)] + "а";
+            }
+
+            else
+            {
+                randomFirstName = manFirstNames[random.Next(manFirstNames.Length)];
+
+                randomLastName = numLastNames == 0
+                    ? unisexLastNames[random.Next(unisexLastNames.Length)]
+                    : manLastNames[random.Next(manLastNames.Length)];
+            }
+
+            return new Person(randomFirstName, randomLastName, randomAge, randomGender);
         }
     }
 }
