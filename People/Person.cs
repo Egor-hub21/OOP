@@ -59,6 +59,7 @@ namespace FirstLab
             Gender = gender;
         }
 
+        //TODO: RSDN
         /// <summary>
         /// Gets or sets the <see cref="Person._age"/> \ Получает или задает  возраст.
         /// </summary>
@@ -71,6 +72,7 @@ namespace FirstLab
 
             set
             {
+                //TODO: RSDN
                 if (value < AgeMin)
                 {
                     throw new Exception($"Введенный возраст ниже допустимого {AgeMin}");
@@ -87,6 +89,7 @@ namespace FirstLab
             }
         }
 
+        //TODO: RSDN
         /// <summary>
         /// Gets or sets the <see cref="Person._firstName"/> \ Получает или задает имя.
         /// </summary>
@@ -107,6 +110,7 @@ namespace FirstLab
             }
         }
 
+        //TODO: RSDN
         /// <summary>
         /// Gets or sets the <see cref="Person._gender"/> \ Получает или задает  пол.
         /// </summary>
@@ -125,6 +129,7 @@ namespace FirstLab
 
             set
             {
+                //TODO: RSDN
                 if (!WordStyleСompliance(value))
                 {
                     throw new Exception($"При вводе фамилии использовались недопустимые символы");
@@ -146,8 +151,8 @@ namespace FirstLab
         /// <returns>Информация о <see cref="Person"/> в вмиде строки.</returns>
         public string GetPersonInfo()
         {
-            return ($"Имя: {FirstName}\tФамилия: {LastName}\t" +
-                    $"Возраст: {Age}\tПол: {Gender}\n");
+            return $"Имя: {FirstName}\tФамилия: {LastName}\t" +
+                    $"Возраст: {Age}\tПол: {Gender}\n";
         }
 
         /// <summary>
@@ -157,7 +162,7 @@ namespace FirstLab
         /// <returns>Слово.</returns>
         public static string CorrectionRegister(string word)
         {
-
+            //TODO: RSDN
             Regex regex1 = new Regex("^(([a-zA-Z]+)|([а-яА-Я]+))$");
             Regex regex2 = new Regex("^(([a-zA-Z]+-[a-zA-Z]+)|([а-яА-Я]+-[а-яА-Я]+))$");
 
@@ -165,6 +170,7 @@ namespace FirstLab
 
             if (regex1.IsMatch(word))
             {
+                //TODO: RSDN
                 newWord = word.Substring(0, 1).ToUpper() + word.Substring(1).ToLower();
             }
             else if (regex2.IsMatch(word))
@@ -172,6 +178,7 @@ namespace FirstLab
                 string[] words = word.Split('-');
                 for (int i = 0; i < words.Length; i++)
                 {
+                    //TODO: RSDN
                     words[i] = words[i].Substring(0, 1).ToUpper() + words[i].Substring(1).ToLower();
                 }
                 newWord = words[0] + "-" + words[1];
@@ -185,6 +192,7 @@ namespace FirstLab
         /// <returns>Экземпляр класса <see cref="Person"/>.</returns>
         public static Person GetRandomPerson()
         {
+            //TODO: RSDN
             // Создание пулла фамилий и имен
             string[] manFirstNames = { "Александр", "Михаил", "Дмитрий", "Иван", "Олег", "Николай", "Ален" };
             string[] femFirstNames = { "Александра", "Анна", "Мария", "Ивана", "Ольга", "Елена", "Екатерина" };
@@ -221,17 +229,19 @@ namespace FirstLab
 
             return new Person(randomFirstName, randomLastName, randomAge, randomGender);
         }
-
+        //TODO: XML
         public static bool LettersStyleСompliance(string word, bool styleLetters = true)
         {
             Regex regex = new Regex("^$");
 
             if (styleLetters)
             {
+                //TODO: duplication
                 regex = new Regex("^(([a-zA-Z]+)|([a-zA-Z]+-[a-zA-Z]+))$");
             }
             else if (!styleLetters)
             {
+                //TODO: duplication
                 regex = new Regex("^(([а-яА-Я]+)|([а-яА-Я]+-[а-яА-Я]+))$");
             }
 
@@ -252,7 +262,8 @@ namespace FirstLab
         /// <returns>Булевая переменная.</returns>
         public static bool WordStyleСompliance(string word)
         {
-            return (LettersStyleСompliance(word) || LettersStyleСompliance(word, false));
+            return LettersStyleСompliance(word)
+                || LettersStyleСompliance(word, false);
         }
 
         /// <summary>
@@ -263,8 +274,10 @@ namespace FirstLab
         /// <returns>Булевая переменная.</returns>
         public static bool WordsStyleСompliance(string word1, string word2)
         {
-            return ((LettersStyleСompliance(word1) && LettersStyleСompliance(word2))
-                   || (LettersStyleСompliance(word1, false) && LettersStyleСompliance(word2, false)));
+            return (LettersStyleСompliance(word1)
+                    && LettersStyleСompliance(word2))
+                || (LettersStyleСompliance(word1, false)
+                    && LettersStyleСompliance(word2, false));
         }
     }
 }

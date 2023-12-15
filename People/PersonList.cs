@@ -6,6 +6,7 @@ namespace FirstLab
     /// </summary>
     public class PersonList
     {
+        //TODO: XML
         private List<Person> _peopleList;
 
         /// <summary>
@@ -38,7 +39,7 @@ namespace FirstLab
                                     $"(последний элемент списка: " +
                                     $"{_peopleList.Count - 1})");
             }
-
+            //TODO: duplication
             return ($"Индекс: {i}\t" +
                      $"Имя: {_peopleList[i].FirstName}\t" +
                      $"Фамилия: {_peopleList[i].LastName}\t" +
@@ -53,9 +54,12 @@ namespace FirstLab
         public string PersonInfo()
         {
             string info = "";
+
             int i = 0;
+            //TODO: to for
             foreach (Person person in _peopleList)
             {
+                //TODO: duplication
                 info += ($"Индекс: {i}\t" +
                               $"Имя: {person.FirstName}\t" +
                               $"Фамилия: {person.LastName}\t" +
@@ -87,6 +91,7 @@ namespace FirstLab
                 throw new Exception("Введен отрицательный индекс!");
             }
 
+            //TODO: duplication
             else if (_peopleList.Count <= i)
             {
                 throw new Exception($"Список не содержит {i}-й элемент " +
@@ -115,6 +120,7 @@ namespace FirstLab
             {
                 throw new Exception("Введено отрицательное число!");
             }
+            //TODO: duplication
             else if (_peopleList.Count < i)
             {
                 throw new Exception($"Список не содержит элемент с индексом {i} " +
@@ -152,8 +158,10 @@ namespace FirstLab
 
             for (int i = 0; i < _peopleList.Count; i++)
             {
-                if ((_peopleList[i].Age == setPerson.Age) && (_peopleList[i].FirstName == setPerson.FirstName) &&
-                    (_peopleList[i].Gender == setPerson.Gender) && (_peopleList[i].LastName == setPerson.LastName))
+                if (_peopleList[i].Age == setPerson.Age
+                    && _peopleList[i].FirstName == setPerson.FirstName
+                    && _peopleList[i].Gender == setPerson.Gender
+                    && _peopleList[i].LastName == setPerson.LastName)
                 {
                     index = i;
                     break;
