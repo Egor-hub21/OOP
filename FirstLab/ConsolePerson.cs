@@ -24,23 +24,23 @@ namespace FirstLab
                 Console.WriteLine("Введите фамилию: ");
                 lastName = VerificationWord(lastName);
 
-                if (!Person.AlphabeticalControl(lastName, firstName))
+                if (!Person.WordsStyleСompliance(lastName, firstName))
                 {
-                    Console.WriteLine($"Фамилия и имя введены с использованием разных алфавитов");
+                    Console.WriteLine($"\n!Фамилия и имя введены с использованием разных алфавитов!\n");
 
                     firstName = string.Empty;
                     lastName = string.Empty;
                 }
             }
 
+            Console.WriteLine($"Введите Возраст человека: ");
             do
             {
-                Console.WriteLine($"Введите Возраст человека: ");
                 string readAge = Console.ReadLine();
 
                 if (!int.TryParse(readAge, out age))
                 {
-                    Console.WriteLine("Некорректный ввод. Попробуйте еще раз.");
+                    Console.WriteLine("\n!Некорректный ввод!\nПопробуйте еще раз:");
                     age = -1;
                     continue;
                 }
@@ -48,20 +48,21 @@ namespace FirstLab
                 // Проверяем, если возраст отрицательный
                 if (age < Person.AgeMin || age >= Person.AgeMax)
                 {
-                    Console.WriteLine("Возраст не может быть отрицательным. Попробуйте еще раз.");
+                    Console.WriteLine("\n!Возраст не может быть отрицательным!\nПопробуйте еще раз.");
                 }
             }
             while (age < Person.AgeMin || age >= Person.AgeMax);
 
             Gender gender = Gender.Female;
+
+            Console.WriteLine("Введите пол (Male/Female): ");
             do
             {
-                Console.WriteLine("Введите пол: ");
                 enteredGender = Console.ReadLine();
 
-                if (!Person.SymbolControl(enteredGender))
+                if (!Person.WordStyleСompliance(enteredGender))
                 {
-                    Console.WriteLine($"При вводе использовались недопустимые символы");
+                    Console.WriteLine($"\n!При вводе использовались недопустимые символы!\n Попробуйте снова:");
                     if (!string.IsNullOrEmpty(enteredGender))
                     {
                         enteredGender = string.Empty;
@@ -80,7 +81,7 @@ namespace FirstLab
                     }
                     else
                     {
-                        Console.WriteLine("Ошибка ввода!");
+                        Console.WriteLine("\n!Ошибка ввода!\nПопробуйте снова:");
                         enteredGender = string.Empty;
                     }
                 }
@@ -91,7 +92,7 @@ namespace FirstLab
         }
 
         /// <summary>
-        /// Обрабатывает слово (до корректного ввода).
+        /// Запрашивает ввод слова (до корректного ввода).
         /// </summary>
         /// <param name="word">Введенное слово.</param>
         /// <returns>Обработанное слово.</returns>
@@ -101,9 +102,9 @@ namespace FirstLab
             {
                 word = Console.ReadLine();
 
-                if (!Person.SymbolControl(word))
+                if (!Person.WordStyleСompliance(word))
                 {
-                    Console.WriteLine($"При вводе использовались недопустимые символы");
+                    Console.WriteLine($"\n!При вводе использовались недопустимые символы!\nПопробуйте снова:");
                     word = string.Empty;
                 }
                 else

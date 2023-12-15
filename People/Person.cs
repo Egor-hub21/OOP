@@ -96,13 +96,9 @@ namespace FirstLab
 
             set
             {
-                if (!SymbolControl(value))
+                if (!WordStyleСompliance(value))
                 {
                     throw new Exception($"При вводе имени использовались недопустимые символы");
-                }
-                else if (!AlphabeticalControl(_lastName, value))
-                {
-                    throw new Exception($"Фамилия и имя введены с использованием разных алфавитов");
                 }
                 else
                 {
@@ -129,11 +125,11 @@ namespace FirstLab
 
             set
             {
-                if (!SymbolControl(value))
+                if (!WordStyleСompliance(value))
                 {
                     throw new Exception($"При вводе фамилии использовались недопустимые символы");
                 }
-                else if (!AlphabeticalControl(value, _firstName))
+                else if (!WordsStyleСompliance(value, _firstName))
                 {
                     throw new Exception($"Фамилия и имя введены с использованием разных алфавитов");
                 }
@@ -152,49 +148,6 @@ namespace FirstLab
         {
             return ($"Имя: {FirstName}\tФамилия: {LastName}\t" +
                     $"Возраст: {Age}\tПол: {Gender}\n");
-        }
-
-        /// <summary>
-        /// Проверка: слово должно содержать только
-        /// русские или только английские символы.
-        /// </summary>
-        /// <param name="word">Проверяемое слово.</param>
-        /// <returns>trye условие выполняется;
-        /// false условие не выполняется.</returns>
-        public static bool SymbolControl(string word)
-        {
-            {
-                Regex regex1 = new Regex("^(([a-zA-Z]+)|([а-яА-Я]+))$");
-                Regex regex2 = new Regex("^(([a-zA-Z]+-[a-zA-Z]+)|([а-яА-Я]+-[а-яА-Я]+))$");
-
-                bool letter = false;
-
-                if (regex1.IsMatch(word))
-                {
-                    letter = true;
-                }
-                else if (regex2.IsMatch(word))
-                {
-                    letter = true;
-                }
-                return letter;
-            }
-        }
-
-        /// <summary>
-        /// Сравнивает фамилию и имя если алфавит совпадает то возвращает true.
-        /// </summary>
-        /// <param name="lastName">Фамилия.</param>
-        /// <param name="firstName">Имя.</param>
-        /// <returns>Булевое значение.</returns>
-        public static bool AlphabeticalControl(string lastName, string firstName)
-        {
-            Regex regex = new Regex("^(([a-zA-Z]+)|([а-яА-Я]+))$");
-
-            string newWord = lastName + firstName;
-            newWord = string.Concat(newWord.Split("-"));
-
-            return regex.IsMatch(newWord);
         }
 
         /// <summary>
@@ -267,6 +220,51 @@ namespace FirstLab
             }
 
             return new Person(randomFirstName, randomLastName, randomAge, randomGender);
+        }
+
+        public static bool LettersStyleСompliance(string word, bool styleLetters = true)
+        {
+            Regex regex = new Regex("^$");
+
+            if (styleLetters)
+            {
+                regex = new Regex("^(([a-zA-Z]+)|([a-zA-Z]+-[a-zA-Z]+))$");
+            }
+            else if (!styleLetters)
+            {
+                regex = new Regex("^(([а-яА-Я]+)|([а-яА-Я]+-[а-яА-Я]+))$");
+            }
+
+            bool styleСompliance = false;
+
+            if (regex.IsMatch(word))
+            {
+                styleСompliance = true;
+            }
+
+            return styleСompliance;
+        }
+
+        /// <summary>
+        /// Проверяет соответствие стилю (Кириллица и Латиница) символов слова.
+        /// </summary>
+        /// <param name="word">Слово (Имя, Фамилия).</param>
+        /// <returns>Булевая переменная.</returns>
+        public static bool WordStyleСompliance(string word)
+        {
+            return (LettersStyleСompliance(word) || LettersStyleСompliance(word, false));
+        }
+
+        /// <summary>
+        /// Сравнивает стили (Кириллица и Латиница) символов двух слов.
+        /// </summary>
+        /// <param name="word1">Слово (Имя).</param>
+        /// <param name="word2">Слово (Фамилия).</param>
+        /// <returns>Булевая переменная.</returns>
+        public static bool WordsStyleСompliance(string word1, string word2)
+        {
+            return ((LettersStyleСompliance(word1) && LettersStyleСompliance(word2))
+                   || (LettersStyleСompliance(word1, false) && LettersStyleСompliance(word2, false)));
         }
     }
 }
