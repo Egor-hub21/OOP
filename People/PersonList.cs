@@ -1,12 +1,15 @@
 
-namespace FirstLab
+namespace People
 {
     /// <summary>
     /// Класс PersonList, описывающий абстракцию списка, содержащего объекты класса Person.
     /// </summary>
     public class PersonList
     {
-        //TODO: XML
+        //TODO: XML+
+        /// <summary>
+        /// Лист класса <see cref="Person"/>.
+        /// </summary>
         private List<Person> _peopleList;
 
         /// <summary>
@@ -28,45 +31,34 @@ namespace FirstLab
         }
 
         /// <summary>
-        /// Метод для вывода информации о i-ном <see cref="Person"/> в списке  <see cref="PersonList"/>.
+        /// Метод для вывода информации о <see cref="Person"/>
+        /// по index в списке  <see cref="PersonList"/>.
         /// </summary>
-        /// <param name="i">Номер члена в  списке  <see cref="PersonList"/>.</param>
-        public string PersonInfo(int i)
+        /// <param name="index">Номер члена в
+        /// списке  <see cref="PersonList"/>.</param>
+        public string PersonInfo(int index)
         {
-            if (_peopleList.Count <= i)
-            {
-                throw new Exception($"Список не содержит {i}-й элемент " +
-                                    $"(последний элемент списка: " +
-                                    $"{_peopleList.Count - 1})");
-            }
-            //TODO: duplication
-            return ($"Индекс: {i}\t" +
-                     $"Имя: {_peopleList[i].FirstName}\t" +
-                     $"Фамилия: {_peopleList[i].LastName}\t" +
-                     $"Возраст: {_peopleList[i].Age}\t" +
-                     $"Пол: {_peopleList[i].Gender}\n");
+            IndexError(index);
+            //TODO: duplication+
+            return ($"Индекс: {index}\t" +
+                     _peopleList[index].GetInfo());
 
         }
 
         /// <summary>
-        /// Метод для вывода информации о  всех  <see cref="Person"/> в списке  <see cref="PersonList"/>.
+        /// Метод для вывода информации о  всех  <see cref="Person"/>
+        /// в списке  <see cref="PersonList"/>.
         /// </summary>
         public string PersonInfo()
         {
             string info = "";
 
-            int i = 0;
-            //TODO: to for
-            foreach (Person person in _peopleList)
+            //TODO: to for +
+            for (int index = 0; index < _peopleList.Count; index++)
             {
-                //TODO: duplication
-                info += ($"Индекс: {i}\t" +
-                              $"Имя: {person.FirstName}\t" +
-                              $"Фамилия: {person.LastName}\t" +
-                              $"Возраст: {person.Age}\t" +
-                              $"Пол: {person.Gender}\n" +
-                              new string('-', 100) + "\n");
-                i++;
+                //TODO: duplication+
+                info += (_peopleList[index].GetInfo() +
+                         new string('-', 100) + "\n");
             }
 
             return info;
@@ -81,60 +73,32 @@ namespace FirstLab
         }
 
         /// <summary>
-        /// Удаление i-го элемента списка <see cref="PersonList"/>.
+        /// Удаление элемента по index из списка <see cref="PersonList"/>.
         /// </summary>
-        /// <param name="i">Номер члена в  списке  <see cref="PersonList"/>.</param>
-        public void DeletePerson(int i)
+        /// <param name="index">Номер члена в
+        /// списке <see cref="PersonList"/>.</param>
+        public void DeletePerson(int index)
         {
-            if (i < 0)
-            {
-                throw new Exception("Введен отрицательный индекс!");
-            }
-
-            //TODO: duplication
-            else if (_peopleList.Count <= i)
-            {
-                throw new Exception($"Список не содержит {i}-й элемент " +
-                                    $"(последний элемент списка:" +
-                                    $"{_peopleList.Count - 1})");
-            }
-            else
-            {
-                _peopleList.RemoveAt(i);
-
-            }
+            //TODO: duplication+
+            IndexError(index);
+            _peopleList.RemoveAt(index);
         }
 
         /// <summary>
-        /// Удаление count элементов списка <see cref="PersonList"/> начиная c i-го элемента .
+        /// Удаление count элементов списка
+        /// <see cref="PersonList"/> начиная c элемента по index.
         /// </summary>
-        /// <param name="i">Индекс элемента с которого начинается удаление.</param>
-        /// <param name="count">Количество элементов которые подлежат удалению.</param>
-        public void DeletePerson(int i, int count)
+        /// <param name="index">Индекс элемента с
+        /// которого начинается удаление.</param>
+        /// <param name="count">Количество элементов
+        /// которые подлежат удалению.</param>
+        public void DeletePerson(int index, int count)
         {
-            if (i < 0)
-            {
-                throw new Exception("Введен отрицательный индекс!");
-            }
-            else if (count < 0)
-            {
-                throw new Exception("Введено отрицательное число!");
-            }
-            //TODO: duplication
-            else if (_peopleList.Count < i)
-            {
-                throw new Exception($"Список не содержит элемент с индексом {i} " +
-                                    $"(последний элемент списка:{_peopleList.Count - 1})");
-            }
-            else if (_peopleList.Count < i + count)
-            {
-                throw new Exception($"Список не содержит {i + count} элементов " +
-                                    $"(в списке {_peopleList.Count} элементов)");
-            }
-            else
-            {
-                _peopleList.RemoveRange(i, count);
-            }
+            //TODO: duplication +
+            IndexError(index);
+            IndexError(index + count);
+            _peopleList.RemoveRange(index, count);
+
         }
 
         /// <summary>
@@ -178,18 +142,28 @@ namespace FirstLab
         /// <returns>Элемент класса <see cref="PersonList"/>.</returns>
         public Person GetByIndex(int index)
         {
-            int lastIndex = _peopleList.Count - 1;
+            IndexError(index);
+            return _peopleList[index];
+        }
 
-            if (lastIndex < index)
+        /// <summary>
+        ///  Возвращает сообщение об ошибке при неверном индексе.
+        /// </summary>
+        /// <param name="index">Индекс.</param>
+        /// <returns>Сообщение.</returns>
+        private void IndexError(int index)
+        {
+            if (index < 0)
             {
-                throw new IndexOutOfRangeException($"Элемента с индексом" +
-                                                   $" {index} нет в списке" +
-                                                   $"последний элемент имеет индекс " +
-                                                   $"{lastIndex}");
+                throw new ArgumentOutOfRangeException($"Введенное число" +
+                                                      $" меньше нуля.");
             }
-            else
+            if (_peopleList.Count - 1 < index)
             {
-                return _peopleList[index];
+                throw new ArgumentException($"Список не содержит {index}-й" +
+                                            $" элемент (последний элемент " +
+                                            $"списка:" +
+                                            $"{_peopleList.Count - 1})");
             }
         }
     }

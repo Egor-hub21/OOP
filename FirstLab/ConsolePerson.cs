@@ -1,3 +1,5 @@
+using People;
+
 namespace FirstLab
 {
     /// <summary>
@@ -12,52 +14,74 @@ namespace FirstLab
         /// <returns>Экземпляр класса <see cref="Person"/>.</returns>
         public static Person ConsoleReadPerson()
         {
-            string firstName = string.Empty;
-            string lastName = string.Empty;
-            int age;
+            Person сonsolePerson = new Person();
+
             string enteredGender;
-            while (string.IsNullOrEmpty(firstName) && string.IsNullOrEmpty(lastName))
+
+            bool test;
+
+            do
             {
                 Console.WriteLine("Введите имя: ");
-                firstName = VerificationWord(firstName);
+                test = false;
+                try
+                {
+                    сonsolePerson.FirstName = Console.ReadLine();
+                }
+                catch (FormatException ex)
+                {
+                    Console.WriteLine($"Возникло исключение {ex.Message}");
+                    test = true;
+                }
+            }
+            while (test);
 
+            do
+            {
                 Console.WriteLine("Введите фамилию: ");
-                lastName = VerificationWord(lastName);
-
-                if (!Person.WordsStyleСompliance(lastName, firstName))
+                test = false;
+                try
                 {
-                    Console.WriteLine($"\n!Фамилия и имя введены с использованием разных алфавитов!\n");
-
-                    firstName = string.Empty;
-                    lastName = string.Empty;
+                    сonsolePerson.LastName = Console.ReadLine();
+                }
+                catch (FormatException ex)
+                {
+                    Console.WriteLine($"Возникло исключение {ex.Message}");
+                    test = true;
+                }
+                catch (ArgumentOutOfRangeException ex)
+                {
+                    Console.WriteLine($"Возникло исключение {ex.Message}");
+                    test = true;
                 }
             }
+            while (test);
 
-            Console.WriteLine($"Введите Возраст человека: ");
             do
             {
-                string readAge = Console.ReadLine();
-
-                if (!int.TryParse(readAge, out age))
+                Console.WriteLine($"Введите Возраст человека: ");
+                test = false;
+                try
                 {
-                    Console.WriteLine("\n!Некорректный ввод!\nПопробуйте еще раз:");
-                    age = -1;
-                    continue;
+                    сonsolePerson.Age = Convert.ToInt32(Console.ReadLine());
+                }
+                catch (ArgumentOutOfRangeException ex)
+                {
+                    Console.WriteLine($"Возникло исключение {ex.Message}");
+                    test = true;
+                }
+                catch (FormatException ex)
+                {
+                    Console.WriteLine($"Возникло исключение {ex.Message}");
+                    test = true;
                 }
 
-                // Проверяем, если возраст отрицательный
-                if (age < Person.AgeMin || age >= Person.AgeMax)
-                {
-                    Console.WriteLine("\n!Возраст не может быть отрицательным!\nПопробуйте еще раз.");
-                }
             }
-            while (age < Person.AgeMin || age >= Person.AgeMax);
+            while (test);
 
-            Gender gender = Gender.Female;
-
-            Console.WriteLine("Введите пол (Male/Female): ");
             do
             {
+                Console.WriteLine("Введите пол (Male/Female): ");
                 enteredGender = Console.ReadLine();
 
                 if (!Person.WordStyleСompliance(enteredGender))
@@ -73,11 +97,11 @@ namespace FirstLab
                     enteredGender = Person.CorrectionRegister(enteredGender);
                     if (enteredGender == "Male")
                     {
-                        gender = Gender.Male;
+                        сonsolePerson.Gender = Gender.Male;
                     }
                     else if (enteredGender == "Female")
                     {
-                        gender = Gender.Female;
+                        сonsolePerson.Gender = Gender.Female;
                     }
                     else
                     {
@@ -88,32 +112,7 @@ namespace FirstLab
             }
             while (string.IsNullOrEmpty(enteredGender));
 
-            return new Person(firstName, lastName, age, gender);
-        }
-
-        /// <summary>
-        /// Запрашивает ввод слова (до корректного ввода).
-        /// </summary>
-        /// <param name="word">Введенное слово.</param>
-        /// <returns>Обработанное слово.</returns>
-        public static string VerificationWord(string word)
-        {
-            while (string.IsNullOrEmpty(word))
-            {
-                word = Console.ReadLine();
-
-                if (!Person.WordStyleСompliance(word))
-                {
-                    Console.WriteLine($"\n!При вводе использовались недопустимые символы!\nПопробуйте снова:");
-                    word = string.Empty;
-                }
-                else
-                {
-                    word = Person.CorrectionRegister(word);
-                }
-            }
-
-            return word;
+            return сonsolePerson;
         }
     }
 }

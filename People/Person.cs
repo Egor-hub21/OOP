@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 
-namespace FirstLab
+namespace People
 {
     /// <summary>
     /// Класс Person, содержащий: имя, фамилию, возраст, пол.
@@ -40,7 +40,7 @@ namespace FirstLab
         /// <summary>
         /// Initializes a new instance of the <see cref="Person"/> class.
         /// </summary>
-        public Person()
+        public Person() : this("Неизвестно", "Неизвестно", 18, Gender.Male)
         { }
 
         /// <summary>
@@ -59,9 +59,10 @@ namespace FirstLab
             Gender = gender;
         }
 
-        //TODO: RSDN
+        //TODO: RSDN+
         /// <summary>
-        /// Gets or sets the <see cref="Person._age"/> \ Получает или задает  возраст.
+        /// Gets or sets the <see cref="Person._age"/>.
+        /// Получает или задает  возраст.
         /// </summary>
         public int Age
         {
@@ -72,14 +73,12 @@ namespace FirstLab
 
             set
             {
-                //TODO: RSDN
-                if (value < AgeMin)
+                //TODO: RSDN+
+                if (value < AgeMin || value >= AgeMax)
                 {
-                    throw new Exception($"Введенный возраст ниже допустимого {AgeMin}");
-                }
-                else if (value >= AgeMax)
-                {
-                    throw new Exception($"Введенный возраст выше допустимого {AgeMax}");
+                    throw new ArgumentOutOfRangeException
+                        ($"Введенный возраст выходит из " +
+                        $"допустимого прела: {AgeMin} <= age < {AgeMax}");
                 }
                 else
                 {
@@ -89,9 +88,10 @@ namespace FirstLab
             }
         }
 
-        //TODO: RSDN
+        //TODO: RSDN+
         /// <summary>
-        /// Gets or sets the <see cref="Person._firstName"/> \ Получает или задает имя.
+        /// Gets or sets the <see cref="Person._firstName"/>.
+        /// Получает или задает имя.
         /// </summary>
         public string FirstName
         {
@@ -101,7 +101,10 @@ namespace FirstLab
             {
                 if (!WordStyleСompliance(value))
                 {
-                    throw new Exception($"При вводе имени использовались недопустимые символы");
+                    throw new FormatException
+                                       ($"При вводе имени " +
+                                        $"использовались " +
+                                        $"недопустимые символы");
                 }
                 else
                 {
@@ -110,9 +113,10 @@ namespace FirstLab
             }
         }
 
-        //TODO: RSDN
+        //TODO: RSDN+
         /// <summary>
-        /// Gets or sets the <see cref="Person._gender"/> \ Получает или задает  пол.
+        /// Gets or sets the <see cref="Person._gender"/>.
+        /// Получает или задает  пол.
         /// </summary>
         public Gender Gender
         {
@@ -121,7 +125,8 @@ namespace FirstLab
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="Person._lastName"/> \ Получает или задает  фамилию.
+        /// Gets or sets the <see cref="Person._lastName"/>.
+        /// Получает или задает  фамилию.
         /// </summary>
         public string LastName
         {
@@ -129,14 +134,20 @@ namespace FirstLab
 
             set
             {
-                //TODO: RSDN
+                //TODO: RSDN+
                 if (!WordStyleСompliance(value))
                 {
-                    throw new Exception($"При вводе фамилии использовались недопустимые символы");
+                    throw new FormatException
+                                       ($"При вводе фамилии " +
+                                        $"использовались " +
+                                        $"недопустимые символы");
                 }
                 else if (!WordsStyleСompliance(value, _firstName))
                 {
-                    throw new Exception($"Фамилия и имя введены с использованием разных алфавитов");
+                    throw new ArgumentOutOfRangeException
+                                       ($"Фамилия и имя введены с" +
+                                        $" использованием разных" +
+                                        $" алфавитов");
                 }
                 else
                 {
@@ -148,8 +159,8 @@ namespace FirstLab
         /// <summary>
         /// Возвращает строку с информацией о <see cref="Person"/>.
         /// </summary>
-        /// <returns>Информация о <see cref="Person"/> в вмиде строки.</returns>
-        public string GetPersonInfo()
+        /// <returns>Информация о <see cref="Person"/>.</returns>
+        public string GetInfo()
         {
             return $"Имя: {FirstName}\tФамилия: {LastName}\t" +
                     $"Возраст: {Age}\tПол: {Gender}\n";
@@ -162,101 +173,101 @@ namespace FirstLab
         /// <returns>Слово.</returns>
         public static string CorrectionRegister(string word)
         {
-            //TODO: RSDN
-            Regex regex1 = new Regex("^(([a-zA-Z]+)|([а-яА-Я]+))$");
-            Regex regex2 = new Regex("^(([a-zA-Z]+-[a-zA-Z]+)|([а-яА-Я]+-[а-яА-Я]+))$");
-
-            string newWord = "Ошибка";
-
-            if (regex1.IsMatch(word))
+            //TODO: RSDN+
+            string[] words = word.Split('-');
+            for (int i = 0; i < words.Length; i++)
             {
-                //TODO: RSDN
-                newWord = word.Substring(0, 1).ToUpper() + word.Substring(1).ToLower();
+                //TODO: RSDN+
+                words[i] = words[i].Substring(0, 1).ToUpper()
+                        + words[i].Substring(1).ToLower();
             }
-            else if (regex2.IsMatch(word))
-            {
-                string[] words = word.Split('-');
-                for (int i = 0; i < words.Length; i++)
-                {
-                    //TODO: RSDN
-                    words[i] = words[i].Substring(0, 1).ToUpper() + words[i].Substring(1).ToLower();
-                }
-                newWord = words[0] + "-" + words[1];
-            }
-            return newWord;
+
+            return string.Join("-", words);
         }
 
         /// <summary>
-        /// Создает экземпляяр класса <see cref="Person"/> со случайным набором полей.
+        /// Создает экземпляяр класса <see cref="Person"/>
+        /// со случайным набором полей.
         /// </summary>
         /// <returns>Экземпляр класса <see cref="Person"/>.</returns>
         public static Person GetRandomPerson()
         {
-            //TODO: RSDN
+
+            Person randomPerson = new Person();
+
+            //TODO: RSDN+
             // Создание пулла фамилий и имен
-            string[] manFirstNames = { "Александр", "Михаил", "Дмитрий", "Иван", "Олег", "Николай", "Ален" };
-            string[] femFirstNames = { "Александра", "Анна", "Мария", "Ивана", "Ольга", "Елена", "Екатерина" };
-            string[] unisexLastNames = { "Ямцун", "Ромм", "Резник", "Кулиш", "Томпсон", "Думер", "Бумер", "Герман", "Штраус" };
-            string[] manLastNames = { "Блохин", "Андреев", "Дорохов", "Ермилов", "Ефимов", "Золотарев", "Казаков" };
+            string[] manFirstNames = { "Александр", "Михаил", "Дмитрий",
+                                       "Иван", "Олег", "Николай", "Ален" };
+            string[] femFirstNames = { "Александра", "Анна", "Мария", "Ивана",
+                                       "Ольга", "Елена", "Екатерина" };
+            string[] unisexLastNames = { "Ямцун", "Ромм", "Резник", "Кулиш",
+                                         "Томпсон", "Думер", "Бумер",
+                                         "Герман", "Штраус" };
+            string[] manLastNames = { "Блохин", "Андреев", "Дорохов",
+                                      "Ермилов", "Ефимов", "Золотарев",
+                                      "Казаков" };
 
             Random random = new Random();
 
-            int randomAge = random.Next(AgeMin, AgeMax);
-            Gender randomGender = (Gender)random.Next(Enum.GetNames(typeof(Gender)).Length);
+            randomPerson.Age = random.Next(AgeMin, AgeMax);
+            Gender randomGender = (Gender)random.Next(
+                                   Enum.GetNames(typeof(Gender)).Length);
 
             int numLastNames = random.Next(2);
 
-            string randomFirstName;
-            string randomLastName;
-
             if (randomGender == Gender.Female)
             {
-                randomFirstName = femFirstNames[random.Next(femFirstNames.Length)];
+                randomPerson.FirstName = femFirstNames[
+                                  random.Next(femFirstNames.Length)];
 
-                randomLastName = numLastNames == 0
+                randomPerson.LastName = numLastNames == 0
                     ? unisexLastNames[random.Next(unisexLastNames.Length)]
                     : manLastNames[random.Next(manLastNames.Length)] + "а";
             }
 
             else
             {
-                randomFirstName = manFirstNames[random.Next(manFirstNames.Length)];
+                randomPerson.FirstName = manFirstNames[
+                                  random.Next(manFirstNames.Length)];
 
-                randomLastName = numLastNames == 0
+                randomPerson.LastName = numLastNames == 0
                     ? unisexLastNames[random.Next(unisexLastNames.Length)]
                     : manLastNames[random.Next(manLastNames.Length)];
             }
 
-            return new Person(randomFirstName, randomLastName, randomAge, randomGender);
+            return randomPerson;
         }
-        //TODO: XML
-        public static bool LettersStyleСompliance(string word, bool styleLetters = true)
+        //TODO: XML+
+        /// <summary>
+        /// Проверяет на соответствии языка.
+        /// </summary>
+        /// <param name="word">Проверяемое слово.</param>
+        /// <param name="styleLetters">Тип языка:
+        /// true - латиница, false - кириллица </param>
+        /// <returns></returns>
+        public static bool LettersStyleСompliance(string word,
+                                                  bool styleLetters = true)
         {
             Regex regex = new Regex("^$");
 
             if (styleLetters)
             {
-                //TODO: duplication
+                //TODO: duplication ?
                 regex = new Regex("^(([a-zA-Z]+)|([a-zA-Z]+-[a-zA-Z]+))$");
             }
             else if (!styleLetters)
             {
-                //TODO: duplication
+                //TODO: duplication ?
                 regex = new Regex("^(([а-яА-Я]+)|([а-яА-Я]+-[а-яА-Я]+))$");
             }
 
-            bool styleСompliance = false;
-
-            if (regex.IsMatch(word))
-            {
-                styleСompliance = true;
-            }
-
-            return styleСompliance;
+            return regex.IsMatch(word);
         }
 
         /// <summary>
-        /// Проверяет соответствие стилю (Кириллица и Латиница) символов слова.
+        /// Проверяет соответствие стилю (Кириллица и Латиница)
+        /// символов слова.
         /// </summary>
         /// <param name="word">Слово (Имя, Фамилия).</param>
         /// <returns>Булевая переменная.</returns>

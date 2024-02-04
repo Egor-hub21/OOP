@@ -1,5 +1,5 @@
-//TODO: rename
-namespace FirstLab
+//TODO: rename +
+namespace People
 {
     /// <summary>
     /// Перечесление возможных значений пола.
