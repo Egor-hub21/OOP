@@ -17,9 +17,9 @@ namespace FirstLab
                        "персон, в каждом из которых по три человека.\n");
 
             PersonList personList1 = new PersonList();
-            personList1.AddPerson(Person.GetRandomPerson());
-            personList1.AddPerson(Person.GetRandomPerson());
-            personList1.AddPerson(Person.GetRandomPerson());
+            personList1.AddPerson(Child.GetRandomChild());
+            personList1.AddPerson(Adult.GetRandomAdult());
+            personList1.AddPerson(Adult.GetRandomAdult());
 
             PersonList personList2 = new PersonList();
             personList2.AddPerson(Person.GetRandomPerson());

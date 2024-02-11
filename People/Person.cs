@@ -28,20 +28,11 @@ namespace People
         private string _lastName;
 
         /// <summary>
-        /// Минимальный возраст.
+        /// Минимальный и Максимальный возраст.
         /// </summary>
-        public const int AgeMin = 0;
+        protected const int _ageMin = 0, _ageMax = 100;
 
-        /// <summary>
-        /// Минимальный возраст.
-        /// </summary>
-        public const int AgeMax = 100;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Person"/> class.
-        /// </summary>
-        public Person() : this("Неизвестно", "Неизвестно", 18, Gender.Male)
-        { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Person"/> class.
@@ -59,12 +50,18 @@ namespace People
             Gender = gender;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Person"/> class.
+        /// </summary>
+        public Person() : this("Неизвестно", "Неизвестно", 18, Gender.Male)
+        { }
+
         //TODO: RSDN+
         /// <summary>
         /// Gets or sets the <see cref="Person._age"/>.
         /// Получает или задает  возраст.
         /// </summary>
-        public int Age
+        public virtual int Age
         {
             get
             {
@@ -74,17 +71,13 @@ namespace People
             set
             {
                 //TODO: RSDN+
-                if (value < AgeMin || value >= AgeMax)
+                if (value < _ageMin || value >= _ageMax)
                 {
                     throw new ArgumentOutOfRangeException
                         ($"Введенный возраст выходит из " +
-                        $"допустимого прела: {AgeMin} <= age < {AgeMax}");
+                        $"допустимого прела: {_ageMin} <= age < {_ageMax}");
                 }
-                else
-                {
-                    _age = value;
-                }
-
+                _age = value;
             }
         }
 
@@ -106,10 +99,7 @@ namespace People
                                         $"использовались " +
                                         $"недопустимые символы");
                 }
-                else
-                {
-                    _firstName = CorrectionRegister(value);
-                }
+                _firstName = CorrectionRegister(value);
             }
         }
 
@@ -149,10 +139,7 @@ namespace People
                                         $" использованием разных" +
                                         $" алфавитов");
                 }
-                else
-                {
-                    _lastName = CorrectionRegister(value);
-                }
+                _lastName = CorrectionRegister(value);
             }
         }
 
@@ -160,7 +147,7 @@ namespace People
         /// Возвращает строку с информацией о <see cref="Person"/>.
         /// </summary>
         /// <returns>Информация о <see cref="Person"/>.</returns>
-        public string GetInfo()
+        public virtual string GetInfo()
         {
             return $"Имя: {FirstName}\tФамилия: {LastName}\t" +
                     $"Возраст: {Age}\tПол: {Gender}\n";
@@ -192,9 +179,38 @@ namespace People
         /// <returns>Экземпляр класса <see cref="Person"/>.</returns>
         public static Person GetRandomPerson()
         {
-
             Person randomPerson = new Person();
+            randomPerson.RandomAge(_ageMin, _ageMax);
+            randomPerson.RandomGender();
+            randomPerson.RandomNames();
 
+            return randomPerson;
+        }
+
+        /// <summary>
+        /// Создание рандомного возраста.
+        /// </summary>
+        protected void RandomAge(int ageMin, int ageMax)
+        {
+            Random random = new Random();
+            Age = random.Next(ageMin, ageMax);
+        }
+
+        /// <summary>
+        /// Создание рандомного пола.
+        /// </summary>
+        protected void RandomGender()
+        {
+            Random random = new Random();
+            Gender = (Gender)random.Next(
+                                   Enum.GetNames(typeof(Gender)).Length);
+        }
+
+        /// <summary>
+        /// Создание рандомных имен.
+        /// </summary>
+        protected void RandomNames()
+        {
             //TODO: RSDN+
             // Создание пулла фамилий и имен
             string[] manFirstNames = { "Александр", "Михаил", "Дмитрий",
@@ -209,44 +225,35 @@ namespace People
                                       "Казаков" };
 
             Random random = new Random();
-
-            randomPerson.Age = random.Next(AgeMin, AgeMax);
-            Gender randomGender = (Gender)random.Next(
-                                   Enum.GetNames(typeof(Gender)).Length);
-
             int numLastNames = random.Next(2);
 
-            if (randomGender == Gender.Female)
+            if (Gender == Gender.Female)
             {
-                randomPerson.FirstName = femFirstNames[
-                                  random.Next(femFirstNames.Length)];
+                FirstName = RandomString(femFirstNames);
 
-                randomPerson.LastName = numLastNames == 0
-                    ? unisexLastNames[random.Next(unisexLastNames.Length)]
-                    : manLastNames[random.Next(manLastNames.Length)] + "а";
+                LastName = numLastNames == 0
+                    ? RandomString(unisexLastNames)
+                    : RandomString(manLastNames) + "а";
             }
-
             else
             {
-                randomPerson.FirstName = manFirstNames[
-                                  random.Next(manFirstNames.Length)];
+                FirstName = RandomString(manFirstNames);
 
-                randomPerson.LastName = numLastNames == 0
-                    ? unisexLastNames[random.Next(unisexLastNames.Length)]
-                    : manLastNames[random.Next(manLastNames.Length)];
+                LastName = numLastNames == 0
+                    ? RandomString(unisexLastNames)
+                    : RandomString(manLastNames);
             }
-
-            return randomPerson;
         }
+
         //TODO: XML+
         /// <summary>
         /// Проверяет на соответствии языка.
         /// </summary>
         /// <param name="word">Проверяемое слово.</param>
         /// <param name="styleLetters">Тип языка:
-        /// true - латиница, false - кириллица </param>
-        /// <returns></returns>
-        public static bool LettersStyleСompliance(string word,
+        /// true - латиница, false - кириллица.</param>
+        /// <returns>Слово.</returns>
+        protected static bool LettersStyleСompliance(string word,
                                                   bool styleLetters = true)
         {
             Regex regex = new Regex("^$");
@@ -283,12 +290,23 @@ namespace People
         /// <param name="word1">Слово (Имя).</param>
         /// <param name="word2">Слово (Фамилия).</param>
         /// <returns>Булевая переменная.</returns>
-        public static bool WordsStyleСompliance(string word1, string word2)
+        protected static bool WordsStyleСompliance(string word1, string word2)
         {
             return (LettersStyleСompliance(word1)
                     && LettersStyleСompliance(word2))
                 || (LettersStyleСompliance(word1, false)
                     && LettersStyleСompliance(word2, false));
+        }
+
+        /// <summary>
+        /// Производит выбор случайной строки из массива строк. 
+        /// </summary>
+        /// <param name="strings">Массива строк.</param>
+        /// <returns>Строка.</returns>
+        protected string RandomString(string[] strings)
+        {
+            Random random = new Random();
+            return strings[random.Next(strings.Length)];
         }
     }
 }
