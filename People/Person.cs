@@ -25,12 +25,12 @@ namespace People
         /// <summary>
         /// Минимальный возраст.
         /// </summary>
-        public const int AgeMin = 0;
+        private const int _ageMin = 0;
 
         /// <summary>
         /// Минимальный возраст.
         /// </summary>
-        public const int AgeMax = 100;
+        private const int _ageMax = 100;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Person"/> class.
@@ -69,11 +69,11 @@ namespace People
             set
             {
                 //TODO: RSDN+
-                if (value < AgeMin || value >= AgeMax)
+                if (value < _ageMin || value >= _ageMax)
                 {
                     throw new ArgumentOutOfRangeException
                         ($"Введенный возраст выходит из " +
-                        $"допустимого прела: {AgeMin} <= age < {AgeMax}");
+                        $"допустимого прела: {_ageMin} <= age < {_ageMax}");
                 }
                 else
                 {
@@ -200,7 +200,7 @@ namespace People
 
             Random random = new Random();
 
-            randomPerson.Age = random.Next(AgeMin, AgeMax);
+            randomPerson.Age = random.Next(_ageMin, _ageMax);
             randomPerson.Gender = (Gender)random.Next(
                                    Enum.GetNames(typeof(Gender)).Length);
 
@@ -208,14 +208,14 @@ namespace People
 
 
             randomPerson.FirstName = randomPerson.Gender == Gender.Female
-                ? femFirstNames[random.Next(femFirstNames.Length)]
-                : manFirstNames[random.Next(manFirstNames.Length)];
+                ? RandomString(femFirstNames)
+                : RandomString(manFirstNames);
 
             randomPerson.LastName = numLastNames == 0
-                ? unisexLastNames[random.Next(unisexLastNames.Length)]
+                ? RandomString(unisexLastNames)
                 : randomPerson.Gender == Gender.Female
-                ? manLastNames[random.Next(manLastNames.Length)] + "а"
-                : manLastNames[random.Next(manLastNames.Length)];
+                ? RandomString(manLastNames) + "а"
+                : RandomString(manLastNames);
 
             return randomPerson;
         }
@@ -270,6 +270,17 @@ namespace People
                     && CheckWordLanguage(word2))
                 || (CheckWordLanguage(word1, Language.Russian)
                     && CheckWordLanguage(word2, Language.Russian));
+        }
+
+        /// <summary>
+        /// Производит выбор случайной строки из массива строк. 
+        /// </summary>
+        /// <param name="strings">Массива строк.</param>
+        /// <returns>Строка.</returns>
+        protected static string RandomString(string[] strings)
+        {
+            Random random = new Random();
+            return strings[random.Next(strings.Length)];
         }
     }
 }
