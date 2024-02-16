@@ -201,30 +201,21 @@ namespace People
             Random random = new Random();
 
             randomPerson.Age = random.Next(AgeMin, AgeMax);
-            Gender randomGender = (Gender)random.Next(
+            randomPerson.Gender = (Gender)random.Next(
                                    Enum.GetNames(typeof(Gender)).Length);
 
             int numLastNames = random.Next(2);
 
-            if (randomGender == Gender.Female)
-            {
-                randomPerson.FirstName = femFirstNames[
-                                  random.Next(femFirstNames.Length)];
 
-                randomPerson.LastName = numLastNames == 0
-                    ? unisexLastNames[random.Next(unisexLastNames.Length)]
-                    : manLastNames[random.Next(manLastNames.Length)] + "а";
-            }
+            randomPerson.FirstName = randomPerson.Gender == Gender.Female
+                ? femFirstNames[random.Next(femFirstNames.Length)]
+                : manFirstNames[random.Next(manFirstNames.Length)];
 
-            else
-            {
-                randomPerson.FirstName = manFirstNames[
-                                  random.Next(manFirstNames.Length)];
-
-                randomPerson.LastName = numLastNames == 0
-                    ? unisexLastNames[random.Next(unisexLastNames.Length)]
-                    : manLastNames[random.Next(manLastNames.Length)];
-            }
+            randomPerson.LastName = numLastNames == 0
+                ? unisexLastNames[random.Next(unisexLastNames.Length)]
+                : randomPerson.Gender == Gender.Female
+                ? manLastNames[random.Next(manLastNames.Length)] + "а"
+                : manLastNames[random.Next(manLastNames.Length)];
 
             return randomPerson;
         }
