@@ -42,7 +42,8 @@ namespace People
         /// <param name="lastName">Фамилия.</param>
         /// <param name="age">Возраст.</param>
         /// <param name="gender">Пол.</param>
-        public Person(string firstName, string lastName, int age, Gender gender)
+        public Person(string firstName, string lastName, int age,
+                      Gender gender)
         {
             FirstName = firstName;
             LastName = lastName;
@@ -254,7 +255,7 @@ namespace People
         /// true - латиница, false - кириллица.</param>
         /// <returns>Слово.</returns>
         protected static bool LettersStyleСompliance(string word,
-                                                  bool styleLetters = true)
+                                                    bool styleLetters = true)
         {
             Regex regex = new Regex("^$");
 
@@ -290,7 +291,8 @@ namespace People
         /// <param name="word1">Слово (Имя).</param>
         /// <param name="word2">Слово (Фамилия).</param>
         /// <returns>Булевая переменная.</returns>
-        protected static bool WordsStyleСompliance(string word1, string word2)
+        protected static bool WordsStyleСompliance(string word1,
+                                                   string word2)
         {
             return (LettersStyleСompliance(word1)
                     && LettersStyleСompliance(word2))

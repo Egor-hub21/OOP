@@ -86,7 +86,8 @@ namespace FirstLab
 
                 if (!Person.WordStyleСompliance(enteredGender))
                 {
-                    Console.WriteLine($"\n!При вводе использовались недопустимые символы!\n Попробуйте снова:");
+                    Console.WriteLine($"\n!При вводе использовались" +
+                        $" недопустимые символы!\n Попробуйте снова:");
                     if (!string.IsNullOrEmpty(enteredGender))
                     {
                         enteredGender = string.Empty;
@@ -105,7 +106,8 @@ namespace FirstLab
                     }
                     else
                     {
-                        Console.WriteLine("\n!Ошибка ввода!\nПопробуйте снова:");
+                        Console.WriteLine("\n!Ошибка ввода!" +
+                                          "\nПопробуйте снова:");
                         enteredGender = string.Empty;
                     }
                 }
