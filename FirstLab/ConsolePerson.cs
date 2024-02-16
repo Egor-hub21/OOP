@@ -1,4 +1,5 @@
 using People;
+using System;
 
 namespace FirstLab
 {
@@ -16,106 +17,114 @@ namespace FirstLab
         {
             Person сonsolePerson = new Person();
 
-            string enteredGender;
-
-            bool test;
-
-            do
+            var catchDictioary = new Dictionary<Type, Action<string>>()
             {
-                Console.WriteLine("Введите имя: ");
-                test = false;
-                try
                 {
-                    сonsolePerson.FirstName = Console.ReadLine();
-                }
-                catch (FormatException ex)
-                {
-                    Console.WriteLine($"Возникло исключение {ex.Message}");
-                    test = true;
-                }
-            }
-            while (test);
-
-            do
-            {
-                Console.WriteLine("Введите фамилию: ");
-                test = false;
-                try
-                {
-                    сonsolePerson.LastName = Console.ReadLine();
-                }
-                catch (FormatException ex)
-                {
-                    Console.WriteLine($"Возникло исключение {ex.Message}");
-                    test = true;
-                }
-                catch (ArgumentOutOfRangeException ex)
-                {
-                    Console.WriteLine($"Возникло исключение {ex.Message}");
-                    test = true;
-                }
-            }
-            while (test);
-
-            do
-            {
-                Console.WriteLine($"Введите Возраст человека: ");
-                test = false;
-                try
-                {
-                    сonsolePerson.Age = Convert.ToInt32(Console.ReadLine());
-                }
-                catch (ArgumentOutOfRangeException ex)
-                {
-                    Console.WriteLine($"Возникло исключение {ex.Message}");
-                    test = true;
-                }
-                catch (FormatException ex)
-                {
-                    Console.WriteLine($"Возникло исключение {ex.Message}");
-                    test = true;
-                }
-
-            }
-            while (test);
-
-            do
-            {
-                Console.WriteLine("Введите пол (Male/Female): ");
-                enteredGender = Console.ReadLine();
-
-                if (!Person.WordStyleСompliance(enteredGender))
-                {
-                    Console.WriteLine($"\n!При вводе использовались " +
-                                      $"недопустимые символы!\n " +
-                                      $"Попробуйте снова:");
-                    if (!string.IsNullOrEmpty(enteredGender))
+                    typeof(FormatException),
+                    (string message) =>
                     {
-                        enteredGender = string.Empty;
+                        Console.WriteLine($"Возникло исключение {message}");
+                    }
+                },
+                {
+                    typeof(ArgumentOutOfRangeException),
+                    (string message) =>
+                    {
+                        Console.WriteLine($"Возникло исключение {message}");
                     }
                 }
-                else
-                {
-                    enteredGender = Person.CorrectionRegister(enteredGender);
-                    if (enteredGender == "Male")
-                    {
-                        сonsolePerson.Gender = Gender.Male;
-                    }
-                    else if (enteredGender == "Female")
-                    {
-                        сonsolePerson.Gender = Gender.Female;
-                    }
-                    else
-                    {
-                        Console.WriteLine("\n!Ошибка ввода!" +
-                                          "\nПопробуйте снова:");
-                        enteredGender = string.Empty;
-                    }
-                }
+            };
+
+            var tmpCollection = new List<Tuple<Action, Dictionary<Type, Action<string>>>>
+            {
+                new Tuple<Action, Dictionary<Type,Action<string>>>(
+                        () =>
+                        {
+                            Console.WriteLine("Введите имя: ");
+                            сonsolePerson.FirstName = Console.ReadLine();
+                        },
+                        catchDictioary
+                    ),
+                new Tuple<Action, Dictionary<Type,Action<string>>>(
+                        () =>
+                        {
+                            Console.WriteLine("Введите фамилию: ");
+                            сonsolePerson.LastName = Console.ReadLine();
+                        },
+                        catchDictioary
+                    ),
+                new Tuple<Action, Dictionary<Type,Action<string>>>(
+                        () =>
+                        {
+                            Console.WriteLine($"Введите Возраст человека: ");
+                            сonsolePerson.Age = Convert.ToInt32(Console.ReadLine());
+                        },
+                        catchDictioary
+                    ),
+                new Tuple<Action, Dictionary<Type,Action<string>>>(
+                        () =>
+                        {
+                            Console.WriteLine("Введите пол (Male/Female): ");
+                            var enteredGender = Console.ReadLine().ToLower();
+                            switch (enteredGender)
+                            {
+                                case "m":
+                                case "м":
+                                    {
+                                        сonsolePerson.Gender = Gender.Male;
+                                        break;
+                                    }
+
+                                case "f":
+                                case "ж":
+                                    {
+                                        сonsolePerson.Gender = Gender.Female;
+                                        break;
+                                    }
+
+                                default:
+                                    {
+                                        throw new ArgumentException("Где м или ж? F or m?");
+                                    }
+                            }
+                        },
+                        new Dictionary<Type, Action<string>>()
+                        {
+                            {
+                                typeof(ArgumentException),
+                                (string message) =>
+                                {
+                                    Console.WriteLine($"Введён не корректный пол, ошибка: {message}");
+                                }
+                            }
+                        }
+                    )
+            };
+
+            foreach (var action in tmpCollection)
+            {
+                ActionHandler(action.Item1, action.Item2);
             }
-            while (string.IsNullOrEmpty(enteredGender));
 
             return сonsolePerson;
+        }
+
+        private static void ActionHandler(Action tryAction, Dictionary<Type, Action<string>> catchActionDictionary)
+        {
+            while (true)
+            {
+                try
+                {
+                    tryAction.Invoke();
+                    return;
+                }
+                catch (Exception ex)
+                {
+                    catchActionDictionary[ex.GetType()].Invoke(ex.Message);
+                }
+
+                Console.WriteLine("\n!Ошибка ввода!\nПопробуйте снова:");
+            }
         }
     }
 }

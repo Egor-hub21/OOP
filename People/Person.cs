@@ -173,11 +173,9 @@ namespace People
         /// <returns>Слово.</returns>
         public static string CorrectionRegister(string word)
         {
-            //TODO: RSDN+
             string[] words = word.Split('-');
             for (int i = 0; i < words.Length; i++)
             {
-                //TODO: RSDN+
                 words[i] = words[i].Substring(0, 1).ToUpper()
                         + words[i].Substring(1).ToLower();
             }
@@ -250,18 +248,15 @@ namespace People
         public static bool LettersStyleСompliance(string word,
                                                   bool styleLetters = true)
         {
-            Regex regex = new Regex("^$");
+            var languageTemplateDictionary = new Dictionary<bool, string>
+            {
+                {false, "a-zA-Z" },
+                {true, "а-яА-Я" }
+            };
 
-            if (styleLetters)
-            {
-                //TODO: duplication ?
-                regex = new Regex("^(([a-zA-Z]+)|([a-zA-Z]+-[a-zA-Z]+))$");
-            }
-            else if (!styleLetters)
-            {
-                //TODO: duplication ?
-                regex = new Regex("^(([а-яА-Я]+)|([а-яА-Я]+-[а-яА-Я]+))$");
-            }
+            var tmpTemplate = languageTemplateDictionary[styleLetters];
+
+            var regex = new Regex($"^(([{tmpTemplate}]+)|([{tmpTemplate}]+-[{tmpTemplate}]+))$");
 
             return regex.IsMatch(word);
         }
