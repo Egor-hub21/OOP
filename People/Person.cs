@@ -18,11 +18,6 @@ namespace People
         private string _firstName;
 
         /// <summary>
-        /// Гендер.
-        /// </summary>
-        private Gender _gender;
-
-        /// <summary>
         /// Фамилия.
         /// </summary>
         private string _lastName;
@@ -99,7 +94,7 @@ namespace People
 
             set
             {
-                if (!WordStyleСompliance(value))
+                if (!CheckWordSameLanguage(value))
                 {
                     throw new FormatException
                                        ($"При вводе имени " +
@@ -118,11 +113,7 @@ namespace People
         /// Gets or sets the <see cref="Person._gender"/>.
         /// Получает или задает  пол.
         /// </summary>
-        public Gender Gender
-        {
-            get { return _gender; }
-            set { _gender = value; }
-        }
+        public Gender Gender { get; set; }
 
         /// <summary>
         /// Gets or sets the <see cref="Person._lastName"/>.
@@ -135,14 +126,14 @@ namespace People
             set
             {
                 //TODO: RSDN+
-                if (!WordStyleСompliance(value))
+                if (!CheckWordSameLanguage(value))
                 {
                     throw new FormatException
                                        ($"При вводе фамилии " +
                                         $"использовались " +
                                         $"недопустимые символы");
                 }
-                else if (!WordsStyleСompliance(value, _firstName))
+                else if (!CheckCharacterStylesWords(value, _firstName))
                 {
                     throw new ArgumentOutOfRangeException
                                        ($"Фамилия и имя введены с" +
@@ -239,52 +230,55 @@ namespace People
         }
         //TODO: XML+
         /// <summary>
-        /// Проверяет на соответствии языка.
+        /// Проверяет на каком языке написано слово.
         /// </summary>
         /// <param name="word">Проверяемое слово.</param>
         /// <param name="styleLetters">Тип языка:
         /// true - латиница, false - кириллица </param>
         /// <returns></returns>
-        public static bool LettersStyleСompliance(string word,
-                                                  bool styleLetters = true)
+        public static bool CheckWordLanguage(string word,
+                                                  Language language
+                                                  = Language.English)
         {
-            var languageTemplateDictionary = new Dictionary<bool, string>
+            var languageTemplateDictionary = new Dictionary<Language, string>
             {
-                {false, "a-zA-Z" },
-                {true, "а-яА-Я" }
+                {Language.English, "a-zA-Z" },
+                {Language.Russian, "а-яА-Я" }
             };
 
-            var tmpTemplate = languageTemplateDictionary[styleLetters];
+            var tmpTemplate = languageTemplateDictionary[language];
 
-            var regex = new Regex($"^(([{tmpTemplate}]+)|([{tmpTemplate}]+-[{tmpTemplate}]+))$");
+            var regex = $"^(([{tmpTemplate}]+)|"
+                       + $"([{tmpTemplate}]+-[{tmpTemplate}]+))$";
 
-            return regex.IsMatch(word);
+            return Regex.IsMatch(word, regex);
         }
 
         /// <summary>
-        /// Проверяет соответствие стилю (Кириллица и Латиница)
-        /// символов слова.
+        /// Проверяет, что слово написано
+        /// с использованием символов одного языка.
         /// </summary>
         /// <param name="word">Слово (Имя, Фамилия).</param>
         /// <returns>Булевая переменная.</returns>
-        public static bool WordStyleСompliance(string word)
+        public static bool CheckWordSameLanguage(string word)
         {
-            return LettersStyleСompliance(word)
-                || LettersStyleСompliance(word, false);
+            return CheckWordLanguage(word)
+                || CheckWordLanguage(word, Language.Russian);
         }
 
         /// <summary>
-        /// Сравнивает стили (Кириллица и Латиница) символов двух слов.
+        /// Сравнивает стили символов двух слов.
         /// </summary>
         /// <param name="word1">Слово (Имя).</param>
         /// <param name="word2">Слово (Фамилия).</param>
         /// <returns>Булевая переменная.</returns>
-        public static bool WordsStyleСompliance(string word1, string word2)
+        public static bool CheckCharacterStylesWords(string word1,
+                                                     string word2)
         {
-            return (LettersStyleСompliance(word1)
-                    && LettersStyleСompliance(word2))
-                || (LettersStyleСompliance(word1, false)
-                    && LettersStyleСompliance(word2, false));
+            return (CheckWordLanguage(word1)
+                    && CheckWordLanguage(word2))
+                || (CheckWordLanguage(word1, Language.Russian)
+                    && CheckWordLanguage(word2, Language.Russian));
         }
     }
 }

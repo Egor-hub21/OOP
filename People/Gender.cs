@@ -7,12 +7,12 @@ namespace People
     public enum Gender
     {
         /// <summary>
-        /// Представляет мужской гендер.
+        /// Представляет мужской пол.
         /// </summary>
         Male,
 
         /// <summary>
-        /// Представляет женский гендер.
+        /// Представляет женский пол.
         /// </summary>
         Female,
     }

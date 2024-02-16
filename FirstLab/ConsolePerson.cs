@@ -1,5 +1,4 @@
 using People;
-using System;
 
 namespace FirstLab
 {
@@ -35,7 +34,8 @@ namespace FirstLab
                 }
             };
 
-            var tmpCollection = new List<Tuple<Action, Dictionary<Type, Action<string>>>>
+            var tmpCollection = new List<Tuple<Action, Dictionary<Type,
+                                                          Action<string>>>>
             {
                 new Tuple<Action, Dictionary<Type,Action<string>>>(
                         () =>
@@ -57,14 +57,15 @@ namespace FirstLab
                         () =>
                         {
                             Console.WriteLine($"Введите Возраст человека: ");
-                            сonsolePerson.Age = Convert.ToInt32(Console.ReadLine());
+                            сonsolePerson.Age =
+                                        Convert.ToInt32(Console.ReadLine());
                         },
                         catchDictioary
-                    ),
+                        ),
                 new Tuple<Action, Dictionary<Type,Action<string>>>(
                         () =>
                         {
-                            Console.WriteLine("Введите пол (Male/Female): ");
+                            Console.WriteLine("Введите пол М/Ж (M/F): ");
                             var enteredGender = Console.ReadLine().ToLower();
                             switch (enteredGender)
                             {
@@ -84,7 +85,10 @@ namespace FirstLab
 
                                 default:
                                     {
-                                        throw new ArgumentException("Где м или ж? F or m?");
+                                        throw new ArgumentException
+                                            ("Никоректный ввод. При вводе "
+                                            + "разрешино использовать "
+                                            + "следующие символы: М,Ж,M,F.");
                                     }
                             }
                         },
@@ -94,7 +98,9 @@ namespace FirstLab
                                 typeof(ArgumentException),
                                 (string message) =>
                                 {
-                                    Console.WriteLine($"Введён не корректный пол, ошибка: {message}");
+                                    Console.WriteLine($"Введён не корректный"
+                                                      + $" пол, ошибка:"
+                                                      + $" {message}");
                                 }
                             }
                         }
@@ -109,7 +115,8 @@ namespace FirstLab
             return сonsolePerson;
         }
 
-        private static void ActionHandler(Action tryAction, Dictionary<Type, Action<string>> catchActionDictionary)
+        private static void ActionHandler(Action tryAction, Dictionary<Type,
+                                      Action<string>> catchActionDictionary)
         {
             while (true)
             {

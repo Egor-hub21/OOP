@@ -14,6 +14,11 @@ namespace People
         private List<Person> _peopleList;
 
         /// <summary>
+        /// Количество записей в лесте.
+        /// </summary>
+        private int _count;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="PersonList"/> class.
         /// Инициализация списка при создании объекта
         /// <see cref="PersonList"/> (Конструктор PersonList).
@@ -21,6 +26,16 @@ namespace People
         public PersonList()
         {
             _peopleList = new List<Person>();
+            _count = 0;
+        }
+
+        /// <summary>
+        /// Gets or sets the <see cref="PersonList._count"/>.
+        /// Получает количество записей в лесте.
+        /// </summary>
+        public int Count
+        {
+            get { return _count; }
         }
 
         /// <summary>
@@ -32,6 +47,7 @@ namespace People
         public void AddPerson(Person person)
         {
             _peopleList.Add(person);
+            _count++;
         }
 
         /// <summary>
@@ -42,7 +58,7 @@ namespace People
         /// списке  <see cref="PersonList"/>.</param>
         public string PersonInfo(int index)
         {
-            IndexError(index);
+            CheckIndexValidity(index);
             //TODO: duplication+
             return ($"Индекс: {index}\t" +
                      _peopleList[index].GetInfo());
@@ -69,7 +85,7 @@ namespace People
         }
 
         /// <summary>
-        /// Удаление всех элементов списка <see cref="PersonList"/>.
+        /// Очистка списка <see cref="PersonList"/>.
         /// </summary>
         public void Clear()
         {
@@ -84,7 +100,7 @@ namespace People
         public void DeletePerson(int index)
         {
             //TODO: duplication+
-            IndexError(index);
+            CheckIndexValidity(index);
             _peopleList.RemoveAt(index);
         }
 
@@ -99,20 +115,10 @@ namespace People
         public void DeletePerson(int index, int count)
         {
             //TODO: duplication +
-            IndexError(index);
-            IndexError(index + count);
+            CheckIndexValidity(index);
+            CheckIndexValidity(index + count);
             _peopleList.RemoveRange(index, count);
 
-        }
-
-        /// <summary>
-        /// Возращает количество элементов в списке <see cref="PersonList"/>.
-        /// </summary>
-        /// <returns>Количество элементов в списке
-        /// <see cref="PersonList"/>.</returns>
-        public int GetCount()
-        {
-            return _peopleList.Count;
         }
 
         /// <summary>
@@ -150,7 +156,7 @@ namespace People
         /// <returns>Элемент класса <see cref="PersonList"/>.</returns>
         public Person GetByIndex(int index)
         {
-            IndexError(index);
+            CheckIndexValidity(index);
             return _peopleList[index];
         }
 
@@ -159,7 +165,7 @@ namespace People
         /// </summary>
         /// <param name="index">Индекс.</param>
         /// <returns>Сообщение.</returns>
-        private void IndexError(int index)
+        private void CheckIndexValidity(int index)
         {
             if (index < 0)
             {
@@ -174,5 +180,16 @@ namespace People
                                             $"{_peopleList.Count - 1})");
             }
         }
+        public static PersonList GetRandomPersonList(int quantity)
+        {
+            PersonList personList = new PersonList();
+
+            for (int i = 0; i < quantity; i++)
+            {
+                personList.AddPerson(Person.GetRandomPerson());
+            }
+            return personList;
+        }
+
     }
 }
