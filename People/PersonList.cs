@@ -2,7 +2,8 @@
 namespace People
 {
     /// <summary>
-    /// Класс PersonList, описывающий абстракцию списка, содержащего объекты класса Person.
+    /// Класс PersonList, описывающий абстракцию списка,
+    /// содержащего объекты класса Person.
     /// </summary>
     public class PersonList
     {
@@ -14,7 +15,8 @@ namespace People
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PersonList"/> class.
-        /// Инициализация списка при создании объекта <see cref="PersonList"/> (Конструктор PersonList).
+        /// Инициализация списка при создании объекта
+        /// <see cref="PersonList"/> (Конструктор PersonList).
         /// </summary>
         public PersonList()
         {
@@ -22,9 +24,11 @@ namespace People
         }
 
         /// <summary>
-        /// Метод для добавления <see cref="Person"/> в <see cref="PersonList"/>.
+        /// Метод для добавления <see cref="Person"/>
+        /// в <see cref="PersonList"/>.
         /// </summary>
-        /// <param name="person">Экземпляр класса <see cref="Person"/>.</param>
+        /// <param name="person">Экземпляр класса
+        /// <see cref="Person"/>.</param>
         public void AddPerson(Person person)
         {
             _peopleList.Add(person);
@@ -104,17 +108,21 @@ namespace People
         /// <summary>
         /// Возращает количество элементов в списке <see cref="PersonList"/>.
         /// </summary>
-        /// <returns>Количество элементов в списке <see cref="PersonList"/>.</returns>
+        /// <returns>Количество элементов в списке
+        /// <see cref="PersonList"/>.</returns>
         public int GetCount()
         {
             return _peopleList.Count;
         }
 
         /// <summary>
-        /// Возращает значение индекса <see cref="Person"/> в списке <see cref="PersonList"/>
-        /// (если <see cref="Person"/> не является членом <see cref="PersonList"/> то индекс равен "-1").
+        /// Возращает значение индекса <see cref="Person"/>
+        /// в списке <see cref="PersonList"/>
+        /// (если <see cref="Person"/> не является членом
+        /// <see cref="PersonList"/> то индекс равен "-1").
         /// </summary>
-        /// <param name="setPerson"асс>Экземпляр класса <see cref="Person"/>.</param>
+        /// <param name="setPerson"асс>Экземпляр класса
+        /// <see cref="Person"/>.</param>
         /// <returns>Индекс экземпляра класса <see cref="Person"/>.</returns>
         public int GetIndex(Person setPerson)
         {
