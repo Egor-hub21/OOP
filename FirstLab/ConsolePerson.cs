@@ -115,6 +115,12 @@ namespace FirstLab
             return сonsolePerson;
         }
 
+        /// <summary>
+        /// Вспомогательный метод зацикливаня действий пользователя.
+        /// </summary>
+        /// <param name="tryAction">Действие.</param>
+        /// <param name="catchActionDictionary">Словарь Key:Тип исключения,
+        /// Value: действие.</param>
         private static void ActionHandler(Action tryAction, Dictionary<Type,
                                       Action<string>> catchActionDictionary)
         {

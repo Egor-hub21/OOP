@@ -180,6 +180,12 @@ namespace People
                                             $"{_peopleList.Count - 1})");
             }
         }
+
+        /// <summary>
+        /// Генерирует список <see cref="PersonList"/>.
+        /// </summary>
+        /// <param name="quantity">Количество <see cref="Person"/>.</param>
+        /// <returns>Список персон.</returns>
         public static PersonList GetRandomPersonList(int quantity)
         {
             PersonList personList = new PersonList();
