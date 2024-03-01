@@ -54,7 +54,6 @@ namespace People
             Gender = gender;
         }
 
-        //TODO: RSDN+
         /// <summary>
         /// Gets or sets the <see cref="Person._age"/>.
         /// Получает или задает  возраст.
@@ -68,7 +67,6 @@ namespace People
 
             set
             {
-                //TODO: RSDN+
                 if (value < _ageMin || value >= _ageMax)
                 {
                     throw new ArgumentOutOfRangeException
@@ -83,7 +81,6 @@ namespace People
             }
         }
 
-        //TODO: RSDN+
         /// <summary>
         /// Gets or sets the <see cref="Person._firstName"/>.
         /// Получает или задает имя.
@@ -108,7 +105,6 @@ namespace People
             }
         }
 
-        //TODO: RSDN+
         /// <summary>
         /// Gets or sets the <see cref="Person._gender"/>.
         /// Получает или задает  пол.
@@ -125,7 +121,6 @@ namespace People
 
             set
             {
-                //TODO: RSDN+
                 if (!CheckWordSameLanguage(value))
                 {
                     throw new FormatException
@@ -184,8 +179,6 @@ namespace People
 
             Person randomPerson = new Person();
 
-            //TODO: RSDN+
-            // Создание пулла фамилий и имен
             string[] manFirstNames = { "Александр", "Михаил", "Дмитрий",
                                        "Иван", "Олег", "Николай", "Ален" };
             string[] femFirstNames = { "Александра", "Анна", "Мария",
@@ -219,17 +212,15 @@ namespace People
 
             return randomPerson;
         }
-        //TODO: XML+
+
         /// <summary>
         /// Проверяет на каком языке написано слово.
         /// </summary>
         /// <param name="word">Проверяемое слово.</param>
-        /// <param name="styleLetters">Тип языка:
         /// true - латиница, false - кириллица </param>
         /// <returns></returns>
         public static bool CheckWordLanguage(string word,
-                                                  Language language
-                                                  = Language.English)
+            Language language = Language.English)
         {
             var languageTemplateDictionary = new Dictionary<Language, string>
             {

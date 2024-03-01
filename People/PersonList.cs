@@ -7,7 +7,6 @@ namespace People
     /// </summary>
     public class PersonList
     {
-        //TODO: XML+
         /// <summary>
         /// Лист класса <see cref="Person"/>.
         /// </summary>
@@ -59,7 +58,7 @@ namespace People
         public string PersonInfo(int index)
         {
             CheckIndexValidity(index);
-            //TODO: duplication+
+
             return ($"Индекс: {index}\t" +
                      _peopleList[index].GetInfo());
 
@@ -73,10 +72,8 @@ namespace People
         {
             string info = "";
 
-            //TODO: to for +
             for (int index = 0; index < _peopleList.Count; index++)
             {
-                //TODO: duplication+
                 info += (_peopleList[index].GetInfo() +
                          new string('-', 100) + "\n");
             }
@@ -99,7 +96,6 @@ namespace People
         /// списке <see cref="PersonList"/>.</param>
         public void DeletePerson(int index)
         {
-            //TODO: duplication+
             CheckIndexValidity(index);
             _peopleList.RemoveAt(index);
         }
@@ -114,7 +110,6 @@ namespace People
         /// которые подлежат удалению.</param>
         public void DeletePerson(int index, int count)
         {
-            //TODO: duplication +
             CheckIndexValidity(index);
             CheckIndexValidity(index + count);
             _peopleList.RemoveRange(index, count);
