@@ -25,12 +25,12 @@ namespace People
         /// <summary>
         /// Минимальный и Максимальный возраст.
         /// </summary>
-        private const int _ageMin = 0;
+        protected const int _ageMin = 0;
 
         /// <summary>
         /// Минимальный возраст.
         /// </summary>
-        private const int _ageMax = 100;
+        protected const int _ageMax = 100;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Person"/> class.
@@ -59,7 +59,7 @@ namespace People
         /// Gets or sets the <see cref="Person._age"/>.
         /// Получает или задает  возраст.
         /// </summary>
-        public int Age
+        public virtual int Age
         {
             get
             {
@@ -203,7 +203,6 @@ namespace People
         /// </summary>
         protected void RandomNames()
         {
-            //TODO: RSDN+
             // Создание пулла фамилий и имен
             string[] manFirstNames = { "Александр", "Михаил", "Дмитрий",
                                        "Иван", "Олег", "Николай", "Ален" };
@@ -219,29 +218,15 @@ namespace People
             Random random = new Random();
             int numLastNames = random.Next(2);
 
-
-            randomPerson.FirstName = randomPerson.Gender == Gender.Female
+            FirstName = Gender == Gender.Female
                 ? RandomString(femFirstNames)
                 : RandomString(manFirstNames);
-            if (Gender == Gender.Female)
-            {
-                FirstName = RandomString(femFirstNames);
 
-                LastName = numLastNames == 0
-                    ? RandomString(unisexLastNames)
-                    : RandomString(manLastNames) + "а";
-            }
-            else
-            {
-                FirstName = RandomString(manFirstNames);
-
-                LastName = numLastNames == 0
-                    ? RandomString(unisexLastNames)
-                    : RandomString(manLastNames);
-            }
-        }
-
-            return randomPerson;
+            LastName = numLastNames == 0
+                ? RandomString(unisexLastNames)
+                : Gender == Gender.Female
+                ? RandomString(manLastNames) + "а"
+                : RandomString(manLastNames);
         }
 
         /// <summary>
@@ -300,17 +285,6 @@ namespace People
         /// <param name="strings">Массива строк.</param>
         /// <returns>Строка.</returns>
         protected static string RandomString(string[] strings)
-        {
-            Random random = new Random();
-            return strings[random.Next(strings.Length)];
-        }
-
-        /// <summary>
-        /// Производит выбор случайной строки из массива строк. 
-        /// </summary>
-        /// <param name="strings">Массива строк.</param>
-        /// <returns>Строка.</returns>
-        protected string RandomString(string[] strings)
         {
             Random random = new Random();
             return strings[random.Next(strings.Length)];

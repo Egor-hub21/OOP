@@ -68,7 +68,6 @@ namespace People
 
             set
             {
-                //TODO: RSDN+
                 if (value < _ageMin || value >= _ageMax)
                 {
                     throw new ArgumentOutOfRangeException
