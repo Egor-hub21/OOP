@@ -1,6 +1,6 @@
 using People;
 
-namespace FirstLab
+namespace ConsolePeople
 {
     /// <summary>
     /// Класс Program.

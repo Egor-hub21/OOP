@@ -13,7 +13,7 @@ namespace People
         private List<Person> _peopleList;
 
         /// <summary>
-        /// Количество записей в лесте.
+        /// Количество записей в листе.
         /// </summary>
         private int _count;
 
@@ -30,7 +30,7 @@ namespace People
 
         /// <summary>
         /// Gets or sets the <see cref="PersonList._count"/>.
-        /// Получает количество записей в лесте.
+        /// Получает количество записей в листе.
         /// </summary>
         public int Count
         {
