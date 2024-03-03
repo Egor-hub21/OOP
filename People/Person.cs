@@ -25,12 +25,12 @@ namespace People
         /// <summary>
         /// Минимальный и Максимальный возраст.
         /// </summary>
-        protected const int _ageMin = 0;
+        protected virtual int AgeMin { get; }
 
         /// <summary>
         /// Минимальный возраст.
         /// </summary>
-        protected const int _ageMax = 100;
+        protected virtual int AgeMax { get; } = 100;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Person"/> class.
@@ -59,7 +59,7 @@ namespace People
         /// Gets or sets the <see cref="Person._age"/>.
         /// Получает или задает  возраст.
         /// </summary>
-        public virtual int Age
+        public int Age
         {
             get
             {
@@ -68,16 +68,14 @@ namespace People
 
             set
             {
-                if (value < _ageMin || value >= _ageMax)
+                if (value < AgeMin || value >= AgeMax)
                 {
                     throw new ArgumentOutOfRangeException
                         ($"Введенный возраст выходит из " +
-                        $"допустимого прела: {_ageMin} <= age < {_ageMax}");
+                        $"допустимого прела: {AgeMin} <= age < {AgeMax}");
                 }
-                else
-                {
-                    _age = value;
-                }
+
+                _age = value;
 
             }
         }
@@ -172,20 +170,44 @@ namespace People
         public static Person GetRandomPerson()
         {
             Person randomPerson = new Person();
-            randomPerson.RandomAge(_ageMin, _ageMax);
             randomPerson.RandomGender();
-            randomPerson.RandomNames();
+            randomPerson.RandomData();
 
             return randomPerson;
         }
 
         /// <summary>
+        /// Создает экземпляяр класса <see cref="Person"/>
+        /// со случайным набором полей.
+        /// </summary>
+        /// <param name="gender">Пол.</param>
+        /// <returns>Экземпляр класса <see cref="Person"/>.</returns>
+        public static Person GetRandomPerson(Gender gender)
+        {
+            Person randomPerson = new Person();
+            randomPerson.Gender = gender;
+            randomPerson.RandomData();
+
+            return randomPerson;
+        }
+
+        /// <summary>
+        /// Присваивает объекту случайные
+        /// данные в зависимости от пола.
+        /// </summary>
+        protected virtual void RandomData()
+        {
+            RandomAge();
+            RandomNames();
+        }
+
+        /// <summary>
         /// Создание рандомного возраста.
         /// </summary>
-        protected void RandomAge(int ageMin, int ageMax)
+        protected void RandomAge()
         {
             Random random = new Random();
-            Age = random.Next(ageMin, ageMax);
+            Age = random.Next(AgeMin, AgeMax);
         }
 
         /// <summary>
@@ -284,7 +306,7 @@ namespace People
         /// </summary>
         /// <param name="strings">Массива строк.</param>
         /// <returns>Строка.</returns>
-        protected static string RandomString(string[] strings)
+        protected static string RandomString(string?[] strings)
         {
             Random random = new Random();
             return strings[random.Next(strings.Length)];

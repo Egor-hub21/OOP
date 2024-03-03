@@ -191,6 +191,25 @@ namespace People
             }
             return personList;
         }
+        public void ListMarried(int womenIndex, int manIndex)
+        {
+            ConvertAdult(manIndex).GetMarried(ConvertAdult(womenIndex));
+        }
+
+        public void AdoptChild(int childIndex, int motherIndex, int fatherIndex)
+        {
+            ConvertChild(childIndex).Adopt(ConvertAdult(motherIndex),
+                                           ConvertAdult(fatherIndex));
+        }
+
+        private Child ConvertChild(int index)
+        {
+            return ((Child)GetByIndex(index));
+        }
+        private Adult ConvertAdult(int index)
+        {
+            return ((Adult)GetByIndex(index));
+        }
 
     }
 }

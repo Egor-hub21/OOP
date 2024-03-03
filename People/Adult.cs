@@ -29,7 +29,7 @@ namespace People
         /// <summary>
         /// Минимальный возраст.
         /// </summary>
-        protected new const int _ageMin = 18;
+        protected override int AgeMin { get; } = 18;
 
         /// <summary>
         /// Конструктор.
@@ -40,10 +40,11 @@ namespace People
         /// <param name="gender">Пол.</param>
         /// <param name="passportSeries">Серия паспорта.</param>
         /// <param name="passportNumber">Номер паспорта.</param>
-        /// <param name="placeOfWork">Ссылка на супруга.</param>
+        /// <param name="placeOfWork">Место работы.</param>
         public Adult(string firstName, string lastName,
                      int age, Gender gender, int passportSeries,
-                     int passportNumber, string placeOfWork, Adult? spouse = null)
+                     int passportNumber, string? placeOfWork = null,
+                     Adult? spouse = null)
             : base(firstName, lastName, age, gender)
         {
             PassportSeries = passportSeries;
@@ -60,8 +61,7 @@ namespace People
                               18,
                               Gender.Male,
                               RandomPassportData(4),
-                              RandomPassportData(6),
-                              "Безработный")
+                              RandomPassportData(6))
         { }
 
         /// <summary>
@@ -69,10 +69,8 @@ namespace People
         /// </summary>
         public int PassportSeries
         {
-            get
-            {
-                return _passportSeries;
-            }
+            get => _passportSeries;
+
             set
             {
                 DataControl(4, value, _unicalPassport);
@@ -85,10 +83,7 @@ namespace People
         /// </summary>
         public int PassportNumber
         {
-            get
-            {
-                return _passportNumber;
-            }
+            get => _passportNumber;
             set
             {
                 DataControl(6, value, _unicalPassport);
@@ -99,46 +94,38 @@ namespace People
         /// <summary>
         /// Gets or sets the <see cref="Adult._placeOfWork"/>.
         /// </summary>
-        public string PlaceOfWork { get; set; }
+        public string? PlaceOfWork { get; set; }
 
         /// <summary>
         /// Gets or sets the <see cref="Adult._spouse"/>.
         /// </summary>
-        public Adult Spouse
+        public Adult? Spouse
         {
-            get { return _spouse; }
-
+            get => _spouse;
             set
             {
-                if (value != null && Gender == value.Gender)
+                if (value?.Gender == Gender)
                 {
                     throw new ArgumentException($"Пол супругов не " +
-                                                $"должен совпадать.");
+                                                $"должен совпадать!");
                 }
-                _spouse = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the <see cref="Adult._age"/>.
-        /// Получает или задает  возраст.
-        /// </summary>
-        public override int Age
-        {
-            get
-            {
-                return base.Age;
-            }
-
-            set
-            {
-                if (value < _ageMin || value >= _ageMax)
+                if (value?.Spouse is not null && value?.Spouse != this)
                 {
-                    throw new ArgumentOutOfRangeException
-                        ($"Введенный возраст выходит из " +
-                        $"допустимого прела: {_ageMin} <= age < {_ageMax}");
+                    throw new ArgumentException($"Предполагаемый супруг,"
+                                                + $" уже в браке!");
                 }
-                base.Age = value;
+                if (Spouse is not null && Spouse != value)
+                {
+                    throw new ArgumentException($"Adult уже состоит"
+                                                + $" в браке!");
+                }
+
+                _spouse = value;
+
+                if (value is not null)
+                {
+                    value._spouse = this;
+                }
             }
         }
 
@@ -148,33 +135,32 @@ namespace People
         /// <returns>Информация о <see cref="Adult"/>.</returns>
         public override string GetInfo()
         {
-            return Spouse == null
-                ? base.GetInfo() +
-                  $"Паспортыне данные: {PassportSeries} {PassportNumber}\t" +
-                  $"Место работы: {PlaceOfWork}\t" +
-                  $"В браке, не состоит.\n"
-                : base.GetInfo() +
-                  $"Паспортыне данные: {PassportSeries} {PassportNumber}\t" +
-                  $"Место работы: {PlaceOfWork}\t" +
-                  $"Супруг: {Spouse.FirstName} {Spouse.FirstName}\n";
+            return base.GetInfo()
+                  + $"Паспортыне данные: {PassportSeries} {PassportNumber}\t"
+                  + $"{GetInfoPlaceOfWork()}\t"
+                  + $"{GetInfoStateOfMarriage()}\n";
         }
 
         /// <summary>
-        /// Проверка уникальности паспортных данных.
+        /// Возвращиет информацию о работе.
         /// </summary>
-        /// <param name="size">Размерность.</param>
-        /// <param name="value">Значение.</param>
-        /// <param name="unical">Список, уже существующих значений.</param>
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
-        protected static void DataControl(int size, int value, HashSet<int> unical)
+        /// <returns>Строка.</returns>
+        protected string GetInfoPlaceOfWork()
         {
-            if (unical.Contains(value) || value.ToString().Length != size
-                || value < 0)
-            {
-                throw new ArgumentOutOfRangeException
-                            ($"Введено некорректное значение!");
-            }
-            _ = unical.Add(value);
+            return Spouse == null
+                ? $"Безработный."
+                : $"Место работы:: {PlaceOfWork}";
+        }
+
+        /// <summary>
+        /// Возвращиет информацию о состоянии брака.
+        /// </summary>
+        /// <returns>Строка.</returns>
+        protected string GetInfoStateOfMarriage()
+        {
+            return Spouse == null
+                ? $"В браке, не состоит."
+                : $"Супруг: {Spouse.FirstName} {Spouse.LastName}";
         }
 
         /// <summary>
@@ -184,14 +170,32 @@ namespace People
         /// <returns>Экземпляр класса <see cref="Adult"/>.</returns>
         public static Adult GetRandomAdult()
         {
-            Adult randomPerson = new Adult();
-            randomPerson.RandomAge(_ageMin, _ageMax);
-            randomPerson.RandomGender();
-            randomPerson.RandomNames();
-            randomPerson.RandomWork();
-            randomPerson.PassportSeries = RandomPassportData(4);
-            randomPerson.PassportNumber = RandomPassportData(6);
-            return randomPerson;
+            Adult randomAdult = new Adult();
+            randomAdult.RandomGender();
+            randomAdult.RandomData();
+            return randomAdult;
+        }
+
+        /// <summary>
+        /// Создает экземпляяр класса <see cref="Adult"/>
+        /// со случайным набором полей.
+        /// </summary>
+        /// <param name="gender">Пол.</param>
+        /// <returns>Экземпляр класса <see cref="Adult"/>.</returns>
+        public static Adult GetRandomAdult(Gender gender)
+        {
+            Adult randomAdult = new Adult();
+            randomAdult.Gender = gender;
+            randomAdult.RandomData();
+            return randomAdult;
+        }
+
+        protected override void RandomData()
+        {
+            base.RandomData();
+            RandomWork();
+            PassportSeries = RandomPassportData(4);
+            PassportNumber = RandomPassportData(6);
         }
 
         /// <summary>
@@ -199,7 +203,14 @@ namespace People
         /// </summary>
         protected void RandomWork()
         {
-            string[] works = { "СО ЕЭС", "Россети", "Росатом", "ФСК" };
+            string?[] works =
+            {
+                "СО ЕЭС",
+                "Россети",
+                "Росатом",
+                "ФСК",
+                null
+            };
 
             PlaceOfWork = RandomString(works);
         }
@@ -207,20 +218,68 @@ namespace People
         /// <summary>
         /// Генерирует случайное число из указанного диапазона. 
         /// </summary>
-        protected static int RandomPassportData(int size)
+        /// <param name="size">Количество символов.</param>
+        /// <returns>Число.</returns>
+        public static int RandomPassportData(int size)
         {
             Random random = new Random();
             int value;
             int maxValue = (int)Math.Pow(10, size);
-            do
+            while (true)
             {
                 value = random.Next(maxValue / 10, maxValue);
-            }
-            while (_unicalPassport.Contains(value)
-                   || value.ToString().Length != size
-                   || value < 0);
 
-            return value;
+                if (!_unicalPassport.Contains(value)
+                   && value.ToString().Length == size)
+                {
+                    return value;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Проверка уникальности паспортных данных.
+        /// </summary>
+        /// <param name="size">Размерность.</param>
+        /// <param name="value">Значение.</param>
+        /// <param name="unical">Список, уже существующих значений.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        private static void DataControl(int size, int value, HashSet<int> unical)
+        {
+            if (unical.Contains(value) || value.ToString().Length != size
+                || value < 0)
+            {
+                throw new ArgumentOutOfRangeException
+                            ($"Введено некорректное значение!\n"
+                           + $"Введите {size} символов");
+            }
+            _ = unical.Add(value);
+        }
+
+        /// <summary>
+        /// Создает супружускую пару.
+        /// </summary>
+        /// <param name="spouse"></param>
+        public void GetMarried(Adult spouse)
+        {
+            Spouse = spouse;
+        }
+
+        /// <summary>
+        /// Удаляет супружускую пару.
+        /// </summary>
+        public void Divorce()
+        {
+            if (Spouse != null)
+            {
+                Spouse.Spouse = null;
+                Spouse = null;
+            }
+            else
+            {
+                throw new NullReferenceException("Adult не состоит"
+                                                + " в браке!");
+            }
         }
 
     }

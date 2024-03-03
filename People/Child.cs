@@ -8,12 +8,12 @@ namespace People
         /// <summary>
         /// Ссылка на мать.
         /// </summary>
-        public Adult? Mother { get; set; }
+        private Adult? _mother;
 
         /// <summary>
         /// Ссылка на отца.
         /// </summary>
-        public Adult? Father { get; set; }
+        private Adult? _father;
 
         /// <summary>
         /// Название места учебы.
@@ -23,7 +23,7 @@ namespace People
         /// <summary>
         /// Максимальный возраст.
         /// </summary>
-        protected new const int _ageMax = 17;
+        protected override int AgeMax { get; } = 17;
 
         /// <summary>
         /// Конструктор
@@ -56,27 +56,59 @@ namespace People
         { }
 
         /// <summary>
-        /// Gets or sets the <see cref="Child._age"/>.
-        /// Получает или задает  возраст.
+        /// Gets or sets the <see cref="Child._mother"/>.
         /// </summary>
-        public override int Age
+        public Adult? Mother
         {
-            get
-            {
-                return base.Age;
-            }
-
+            get => _mother;
             set
             {
-                if (value < _ageMin || value >= _ageMax)
-                {
-                    throw new ArgumentOutOfRangeException
-                        ($"Введенный возраст выходит из " +
-                        $"допустимого прела: {_ageMin} <= age < {_ageMax}");
-                }
-                base.Age = value;
+                ParentException(Mother, value, Gender.Female);
+
+                _mother = value;
             }
         }
+
+        /// <summary>
+        /// Gets or sets the <see cref="Child._father"/>.
+        /// </summary>
+        public Adult? Father
+        {
+            get => _father;
+            set
+            {
+                ParentException(Father, value, Gender.Male);
+
+                _father = value;
+            }
+        }
+
+        /// <summary>
+        /// Метод, выбрасывающий исключения при
+        /// некорректном вводе информации о родителе.
+        /// </summary>
+        /// <param name="oldParent"></param>
+        /// <param name="newParent"></param>
+        /// <param name="gender"></param>
+        /// <exception cref="ArgumentException"></exception>
+        private static void ParentException(Adult? oldParent, Adult? newParent,
+                                            Gender gender)
+        {
+            string parentType = gender == Gender.Female
+                ? "мать"
+                : "отец";
+
+            if (newParent?.Gender != gender && newParent is not null)
+            {
+                throw new ArgumentException("Неверный пол родителя!");
+            }
+            if (oldParent is not null)
+            {
+                throw new ArgumentException($"У ребенка уже есть "
+                                            + $"{parentType}!");
+            }
+        }
+
 
         /// <summary>
         /// Возвращает строку с информацией о <see cref="Child"/>.
@@ -84,27 +116,40 @@ namespace People
         /// <returns>Информация о <see cref="Child"/>.</returns>
         public override string GetInfo()
         {
+            return $"{GetInfoBase()}\n"
+                 + $"{GetInfoMother()}"
+                 + $"{GetInfoFather()}\n";
+        }
 
-            if (Mother is null && Father is null)
-            {
-                return base.GetInfo() + $"Место учебы: {PlacOfStudy}\n";
-            }
-            else if (Mother is not null && Father is null)
-            {
-                return base.GetInfo() + $"Место учебы: {PlacOfStudy}\n"
-                        + $"Мать: {Mother.FirstName} {Mother.LastName}\t";
-            }
-            else if (Mother is null && Father is not null)
-            {
-                return base.GetInfo() + $"Место учебы: {PlacOfStudy}\n"
-                        + $"Отец: {Father.FirstName} {Father.LastName}\t";
-            }
-            else
-            {
-                return base.GetInfo() + $"Место учебы: {PlacOfStudy}\n"
-                        + $"Мать: {Mother.FirstName} {Mother.LastName}\t"
-                        + $"Отец: {Father.FirstName} {Father.LastName}\t";
-            }
+        /// <summary>
+        /// Возвращает базовую информацию о <see cref="Child"/>.
+        /// </summary>
+        /// <returns>Строка.</returns>
+        protected string GetInfoBase()
+        {
+            return $"{base.GetInfo()} Место учебы: {PlacOfStudy}";
+        }
+
+        /// <summary>
+        /// Возвращает информацию о  <see cref="Child.Mother"/>.
+        /// </summary>
+        /// <returns>Строка.</returns>
+        protected string GetInfoMother()
+        {
+            return Mother is not null
+                ? $"Мать: {Mother.FirstName} {Mother.LastName}\t"
+                : "";
+        }
+
+        /// <summary>
+        /// Возвращает информацию о  <see cref="Child.Father"/>.
+        /// </summary>
+        /// <returns>Строка.</returns>
+        protected string GetInfoFather()
+        {
+            return Father is not null
+                ? $"Отец: {Father.FirstName} {Father.LastName}\t"
+                : "";
         }
 
         /// <summary>
@@ -115,7 +160,7 @@ namespace People
         public static Child GetRandomChild()
         {
             Child randomPerson = new Child();
-            randomPerson.RandomAge(_ageMin, _ageMax);
+            randomPerson.RandomAge();
             randomPerson.RandomGender();
             randomPerson.RandomNames();
             randomPerson.Learning();
@@ -129,10 +174,10 @@ namespace People
         protected void Learning()
         {
             string[] preschool =
-                                {
-                                  "Домашнее обучение",
-                                  "Детский сад \"Системное солнышко\""
-                                };
+            {
+              "Домашнее обучение",
+              "Детский сад \"Детский сад Солнышко\""
+            };
 
             string[] school = { "Домашнее обучение", "СОШ №10", "СОШ №2" };
 
@@ -147,6 +192,33 @@ namespace People
             else
             {
                 PlacOfStudy = RandomString(school);
+            }
+        }
+
+        /// <summary>
+        /// Присвоение ребенку родителей.
+        /// </summary>
+        /// <param name="mother">Мать.</param>
+        /// <param name="father">Отец.</param>
+        public void Adopt(Adult mother, Adult father)
+        {
+            Father = father;
+            Mother = mother;
+        }
+
+        /// <summary>
+        /// Присвоение ребенку родителей.
+        /// </summary>
+        /// <param name="parent">Родитель.</param>
+        public void Adopt(Adult parent)
+        {
+            if (parent.Gender == Gender.Female)
+            {
+                Mother = parent;
+            }
+            else
+            {
+                Father = parent;
             }
         }
     }
