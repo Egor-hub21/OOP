@@ -190,6 +190,9 @@ namespace People
             return randomAdult;
         }
 
+        /// <summary>
+        /// Генерирует случайный набор даных для объекта <see cref="Adult"/>.
+        /// </summary>
         protected override void RandomData()
         {
             base.RandomData();

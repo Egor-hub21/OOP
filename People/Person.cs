@@ -255,8 +255,8 @@ namespace People
         /// Проверяет на каком языке написано слово.
         /// </summary>
         /// <param name="word">Проверяемое слово.</param>
-        /// true - латиница, false - кириллица </param>
-        /// <returns></returns>
+        /// <param name="language">Тип языка.</param>
+        /// <returns>Булевая переменная.</returns>
         public static bool CheckWordLanguage(string word,
             Language language = Language.English)
         {

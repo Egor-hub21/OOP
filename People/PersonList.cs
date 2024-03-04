@@ -1,4 +1,3 @@
-
 namespace People
 {
     /// <summary>
@@ -191,25 +190,62 @@ namespace People
             }
             return personList;
         }
+
+        /// <summary>
+        /// Добавляет <see cref="Adult"/> супруга по их индексам в листе.
+        /// </summary>
+        /// <param name="womenIndex">Индекс женщины.</param>
+        /// <param name="manIndex">Индекс мужчины.</param>
         public void ListMarried(int womenIndex, int manIndex)
         {
             ConvertAdult(manIndex).GetMarried(ConvertAdult(womenIndex));
         }
 
+        /// <summary>
+        /// Присваивает <see cref="Child"/> родителей по их индексу
+        /// в данном листе.
+        /// </summary>
+        /// <param name="childIndex">Индекс ребенка.</param>
+        /// <param name="motherIndex">Индекс матери.</param>
+        /// <param name="fatherIndex">Индекс отца.</param>
         public void AdoptChild(int childIndex, int motherIndex, int fatherIndex)
         {
             ConvertChild(childIndex).Adopt(ConvertAdult(motherIndex),
                                            ConvertAdult(fatherIndex));
         }
 
+        /// <summary>
+        /// Воозвращает тип экземпляра <see cref="Person"/> по индексу в
+        /// <see cref="PersonList"/>.
+        /// </summary>
+        /// <param name="index">Индекс.</param>
+        /// <returns>Тип.</returns>
+        public Type GetTypePerson(int index)
+        {
+            return GetByIndex(index).GetType();
+        }
+
+        /// <summary>
+        /// Преобразовывает <see cref="Child"/> в
+        /// <see cref="Adult"/> по индексу в
+        /// <see cref="PersonList"/>.
+        /// <param name="index"></param>
+        /// <returns></returns>
         private Child ConvertChild(int index)
         {
             return ((Child)GetByIndex(index));
         }
+
+        /// <summary>
+        /// Преобразовывает <see cref="Person"/> в
+        /// <see cref="Adult"/> по индексу в
+        /// <see cref="PersonList"/>.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
         private Adult ConvertAdult(int index)
         {
             return ((Adult)GetByIndex(index));
         }
-
     }
 }

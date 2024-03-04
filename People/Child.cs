@@ -26,7 +26,7 @@ namespace People
         protected override int AgeMax { get; } = 17;
 
         /// <summary>
-        /// Конструктор
+        /// Конструктор.
         /// </summary>
         /// <param name="firstName">Имя.</param>
         /// <param name="lastName">Фамиоия.</param>
@@ -91,7 +91,8 @@ namespace People
         /// <param name="newParent"></param>
         /// <param name="gender"></param>
         /// <exception cref="ArgumentException"></exception>
-        private static void ParentException(Adult? oldParent, Adult? newParent,
+        private static void ParentException(Adult? oldParent,
+                                            Adult? newParent,
                                             Gender gender)
         {
             string parentType = gender == Gender.Female
@@ -159,13 +160,20 @@ namespace People
         /// <returns>Экземпляр класса <see cref="Child"/>.</returns>
         public static Child GetRandomChild()
         {
-            Child randomPerson = new Child();
-            randomPerson.RandomAge();
-            randomPerson.RandomGender();
-            randomPerson.RandomNames();
-            randomPerson.Learning();
+            Child randomChild = new Child();
+            randomChild.RandomGender();
+            randomChild.RandomData();
 
-            return randomPerson;
+            return randomChild;
+        }
+
+        /// <summary>
+        /// Генерирует случайный набор даных для объекта <see cref="Child"/>.
+        /// </summary>
+        protected override void RandomData()
+        {
+            base.RandomData();
+            Learning();
         }
 
         /// <summary>
@@ -173,28 +181,59 @@ namespace People
         /// </summary>
         protected void Learning()
         {
-            string[] preschool =
+            var teaching = new Dictionary<string, string[]>()
             {
-              "Домашнее обучение",
-              "Детский сад \"Детский сад Солнышко\""
+                {
+                    "baby",
+                    new string[]
+                    {
+                        "Домашнее обучение"
+                    }
+                },
+                {
+                    "preschool",
+                    new string[]
+                    {
+                        "Домашнее обучение",
+                        "Детский сад ",
+                        "Детский сад Солнышко"
+                    }
+                },
+                {
+                    "school",
+                    new string[]
+                    {
+                        "Домашнее обучение",
+                        "СОШ №10",
+                        "СОШ №2"
+                    }
+                },
             };
-
-            string[] school = { "Домашнее обучение", "СОШ №10", "СОШ №2" };
 
             if (Age < 2)
             {
-                PlacOfStudy = "Домашнее обучение";
+                RandomLearning(teaching, "baby");
             }
             else if (Age < 7)
             {
-                PlacOfStudy = RandomString(preschool);
+                RandomLearning(teaching, "preschool");
             }
             else
             {
-                PlacOfStudy = RandomString(school);
+                RandomLearning(teaching, "school");
             }
         }
 
+        /// <summary>
+        /// Генерирует случайное место учебы.
+        /// </summary>
+        /// <param name="teaching">Словарь с учебными заведениями.</param>
+        /// <param name="key">Ключ словаря (стадия образоваия)</param>
+        private void RandomLearning(Dictionary<string, string[]> teaching,
+                                                               string key)
+        {
+            PlacOfStudy = RandomString(teaching[key]);
+        }
         /// <summary>
         /// Присвоение ребенку родителей.
         /// </summary>

@@ -14,7 +14,7 @@ namespace ConsolePeople
         public static void Main()
         {
             var personList = new PersonList();
-            personList.AddPerson(Adult.GetRandomAdult());
+            personList.AddPerson(Person.GetRandomPerson());
             personList.AddPerson(Adult.GetRandomAdult(Gender.Female));
             personList.AddPerson(Adult.GetRandomAdult(Gender.Male));
             personList.ListMarried(2, 1);
@@ -27,10 +27,16 @@ namespace ConsolePeople
             personList.AdoptChild(6, 3, 4);
 
             ReadKey();
-
-            Console.WriteLine("b. Вывод содержимого списка на экран:");
+            Console.WriteLine("1. Вывод содержимого списка на экран:");
 
             Console.WriteLine(personList.PersonInfo());
+
+            ReadKey();
+            Console.WriteLine("2. Тип первого, четвертого и последнего "
+                                                  + "элемента списка:");
+            Console.WriteLine($"{personList.GetTypePerson(0)}, "
+                            + $"{personList.GetTypePerson(3)} и "
+                            + $"{personList.GetTypePerson(6)}");
 
         }
 
