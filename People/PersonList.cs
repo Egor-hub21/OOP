@@ -176,22 +176,6 @@ namespace People
         }
 
         /// <summary>
-        /// Генерирует список <see cref="PersonList"/>.
-        /// </summary>
-        /// <param name="quantity">Количество <see cref="Person"/>.</param>
-        /// <returns>Список персон.</returns>
-        public static PersonList GetRandomPersonList(int quantity)
-        {
-            PersonList personList = new PersonList();
-
-            for (int i = 0; i < quantity; i++)
-            {
-                personList.AddPerson(Person.GetRandomPerson());
-            }
-            return personList;
-        }
-
-        /// <summary>
         /// Добавляет <see cref="Adult"/> супруга по их индексам в листе.
         /// </summary>
         /// <param name="womenIndex">Индекс женщины.</param>

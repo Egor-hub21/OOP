@@ -23,7 +23,7 @@ namespace People
         /// <summary>
         /// Максимальный возраст.
         /// </summary>
-        protected override int AgeMax { get; } = 17;
+        public override int AgeMax { get; } = 17;
 
         /// <summary>
         /// Конструктор.
@@ -128,7 +128,18 @@ namespace People
         /// <returns>Строка.</returns>
         protected string GetInfoBase()
         {
-            return $"{base.GetInfo()} Место учебы: {PlacOfStudy}";
+            return $"{base.GetInfo()} {GetInfoPlacOfStudyr()}";
+        }
+
+        /// <summary>
+        /// Возвращает информацию о месте учебы.
+        /// </summary>
+        /// <returns>Строка.</returns>
+        protected string GetInfoPlacOfStudyr()
+        {
+            return PlacOfStudy is not null
+                ? $"{PlacOfStudy}\t"
+                : "Домашнее обучение";
         }
 
         /// <summary>
@@ -153,87 +164,6 @@ namespace People
                 : "";
         }
 
-        /// <summary>
-        /// Создает экземпляяр класса <see cref="Child"/>
-        /// со случайным набором полей.
-        /// </summary>
-        /// <returns>Экземпляр класса <see cref="Child"/>.</returns>
-        public static Child GetRandomChild()
-        {
-            Child randomChild = new Child();
-            randomChild.RandomGender();
-            randomChild.RandomData();
-
-            return randomChild;
-        }
-
-        /// <summary>
-        /// Генерирует случайный набор даных для объекта <see cref="Child"/>.
-        /// </summary>
-        protected override void RandomData()
-        {
-            base.RandomData();
-            Learning();
-        }
-
-        /// <summary>
-        /// Генерирует случайное место обучения.
-        /// </summary>
-        protected void Learning()
-        {
-            var teaching = new Dictionary<string, string[]>()
-            {
-                {
-                    "baby",
-                    new string[]
-                    {
-                        "Домашнее обучение"
-                    }
-                },
-                {
-                    "preschool",
-                    new string[]
-                    {
-                        "Домашнее обучение",
-                        "Детский сад ",
-                        "Детский сад Солнышко"
-                    }
-                },
-                {
-                    "school",
-                    new string[]
-                    {
-                        "Домашнее обучение",
-                        "СОШ №10",
-                        "СОШ №2"
-                    }
-                },
-            };
-
-            if (Age < 2)
-            {
-                RandomLearning(teaching, "baby");
-            }
-            else if (Age < 7)
-            {
-                RandomLearning(teaching, "preschool");
-            }
-            else
-            {
-                RandomLearning(teaching, "school");
-            }
-        }
-
-        /// <summary>
-        /// Генерирует случайное место учебы.
-        /// </summary>
-        /// <param name="teaching">Словарь с учебными заведениями.</param>
-        /// <param name="key">Ключ словаря (стадия образоваия)</param>
-        private void RandomLearning(Dictionary<string, string[]> teaching,
-                                                               string key)
-        {
-            PlacOfStudy = RandomString(teaching[key]);
-        }
         /// <summary>
         /// Присвоение ребенку родителей.
         /// </summary>

@@ -25,12 +25,12 @@ namespace People
         /// <summary>
         /// Минимальный и Максимальный возраст.
         /// </summary>
-        protected virtual int AgeMin { get; }
+        public virtual int AgeMin { get; }
 
         /// <summary>
         /// Минимальный возраст.
         /// </summary>
-        protected virtual int AgeMax { get; } = 100;
+        public virtual int AgeMax { get; } = 100;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Person"/> class.
@@ -162,94 +162,6 @@ namespace People
             return string.Join("-", words);
         }
 
-        /// <summary>
-        /// Создает экземпляяр класса <see cref="Person"/>
-        /// со случайным набором полей.
-        /// </summary>
-        /// <returns>Экземпляр класса <see cref="Person"/>.</returns>
-        public static Person GetRandomPerson()
-        {
-            Person randomPerson = new Person();
-            randomPerson.RandomGender();
-            randomPerson.RandomData();
-
-            return randomPerson;
-        }
-
-        /// <summary>
-        /// Создает экземпляяр класса <see cref="Person"/>
-        /// со случайным набором полей.
-        /// </summary>
-        /// <param name="gender">Пол.</param>
-        /// <returns>Экземпляр класса <see cref="Person"/>.</returns>
-        public static Person GetRandomPerson(Gender gender)
-        {
-            Person randomPerson = new Person();
-            randomPerson.Gender = gender;
-            randomPerson.RandomData();
-
-            return randomPerson;
-        }
-
-        /// <summary>
-        /// Присваивает объекту случайные
-        /// данные в зависимости от пола.
-        /// </summary>
-        protected virtual void RandomData()
-        {
-            RandomAge();
-            RandomNames();
-        }
-
-        /// <summary>
-        /// Создание рандомного возраста.
-        /// </summary>
-        protected void RandomAge()
-        {
-            Random random = new Random();
-            Age = random.Next(AgeMin, AgeMax);
-        }
-
-        /// <summary>
-        /// Создание рандомного пола.
-        /// </summary>
-        protected void RandomGender()
-        {
-            Random random = new Random();
-            Gender = (Gender)random.Next(
-                                   Enum.GetNames(typeof(Gender)).Length);
-        }
-
-        /// <summary>
-        /// Создание рандомных имен.
-        /// </summary>
-        protected void RandomNames()
-        {
-            // Создание пулла фамилий и имен
-            string[] manFirstNames = { "Александр", "Михаил", "Дмитрий",
-                                       "Иван", "Олег", "Николай", "Ален" };
-            string[] femFirstNames = { "Александра", "Анна", "Мария", "Ивана",
-                                       "Ольга", "Елена", "Екатерина" };
-            string[] unisexLastNames = { "Ямцун", "Ромм", "Резник", "Кулиш",
-                                         "Томпсон", "Думер", "Бумер",
-                                         "Герман", "Штраус" };
-            string[] manLastNames = { "Блохин", "Андреев", "Дорохов",
-                                      "Ермилов", "Ефимов", "Золотарев",
-                                      "Казаков" };
-
-            Random random = new Random();
-            int numLastNames = random.Next(2);
-
-            FirstName = Gender == Gender.Female
-                ? RandomString(femFirstNames)
-                : RandomString(manFirstNames);
-
-            LastName = numLastNames == 0
-                ? RandomString(unisexLastNames)
-                : Gender == Gender.Female
-                ? RandomString(manLastNames) + "а"
-                : RandomString(manLastNames);
-        }
 
         /// <summary>
         /// Проверяет на каком языке написано слово.
@@ -299,17 +211,6 @@ namespace People
                     && CheckWordLanguage(word2))
                 || (CheckWordLanguage(word1, Language.Russian)
                     && CheckWordLanguage(word2, Language.Russian));
-        }
-
-        /// <summary>
-        /// Производит выбор случайной строки из массива строк. 
-        /// </summary>
-        /// <param name="strings">Массива строк.</param>
-        /// <returns>Строка.</returns>
-        protected static string RandomString(string?[] strings)
-        {
-            Random random = new Random();
-            return strings[random.Next(strings.Length)];
         }
     }
 }

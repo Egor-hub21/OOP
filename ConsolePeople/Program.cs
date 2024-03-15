@@ -14,16 +14,16 @@ namespace ConsolePeople
         public static void Main()
         {
             var personList = new PersonList();
-            personList.AddPerson(Person.GetRandomPerson());
-            personList.AddPerson(Adult.GetRandomAdult(Gender.Female));
-            personList.AddPerson(Adult.GetRandomAdult(Gender.Male));
+            personList.AddPerson(RandomPerson.GetRandomPerson());
+            personList.AddPerson(RandomPerson.GetRandomAdult(Gender.Female));
+            personList.AddPerson(RandomPerson.GetRandomAdult(Gender.Male));
             personList.ListMarried(2, 1);
-            personList.AddPerson(Adult.GetRandomAdult(Gender.Female));
-            personList.AddPerson(Adult.GetRandomAdult(Gender.Male));
+            personList.AddPerson(RandomPerson.GetRandomAdult(Gender.Female));
+            personList.AddPerson(RandomPerson.GetRandomAdult(Gender.Male));
             personList.ListMarried(3, 4);
-            personList.AddPerson(Child.GetRandomChild());
+            personList.AddPerson(RandomPerson.GetRandomChild());
             personList.AdoptChild(5, 1, 2);
-            personList.AddPerson(Child.GetRandomChild());
+            personList.AddPerson(RandomPerson.GetRandomChild());
             personList.AdoptChild(6, 3, 4);
 
             ReadKey();

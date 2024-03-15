@@ -16,12 +16,6 @@ namespace People
         private int _passportNumber;
 
         /// <summary>
-        /// Cодержит неповторяющюся коллекцию паспортных данных.
-        /// </summary>
-        private static HashSet<int> _unicalPassport
-                       = new HashSet<int>();
-
-        /// <summary>
         /// Ссылка на супруга.
         /// </summary>
         private Adult? _spouse;
@@ -29,7 +23,7 @@ namespace People
         /// <summary>
         /// Минимальный возраст.
         /// </summary>
-        protected override int AgeMin { get; } = 18;
+        public override int AgeMin { get; } = 18;
 
         /// <summary>
         /// Конструктор.
@@ -60,8 +54,8 @@ namespace People
                               "Неизвестно",
                               18,
                               Gender.Male,
-                              RandomPassportData(4),
-                              RandomPassportData(6))
+                              1111,
+                              111111)
         { }
 
         /// <summary>
@@ -73,7 +67,7 @@ namespace People
 
             set
             {
-                DataControl(4, value, _unicalPassport);
+                ControlNumberSize(value, 4);
                 _passportSeries = value;
             }
         }
@@ -86,8 +80,26 @@ namespace People
             get => _passportNumber;
             set
             {
-                DataControl(6, value, _unicalPassport);
+                ControlNumberSize(value, 6);
                 _passportNumber = value;
+            }
+        }
+
+        /// <summary>
+        /// Генерирует исключение при вводе
+        /// недопустимого количества цифр.
+        /// </summary>
+        /// <param name="value">Проверяемое значение.</param>
+        /// <param name="size">Размер.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        protected static void ControlNumberSize(int value, int size)
+        {
+            if (value.ToString().Length != size)
+            {
+                throw new ArgumentOutOfRangeException($"Введено некорректное"
+                                                     + $" значение!\n"
+                                                     + $"Введите {size}"
+                                                     + $" символов");
             }
         }
 
@@ -147,7 +159,7 @@ namespace People
         /// <returns>Строка.</returns>
         protected string GetInfoPlaceOfWork()
         {
-            return Spouse == null
+            return PlaceOfWork == null
                 ? $"Безработный."
                 : $"Место работы:: {PlaceOfWork}";
         }
@@ -161,102 +173,6 @@ namespace People
             return Spouse == null
                 ? $"В браке, не состоит."
                 : $"Супруг: {Spouse.FirstName} {Spouse.LastName}";
-        }
-
-        /// <summary>
-        /// Создает экземпляяр класса <see cref="Adult"/>
-        /// со случайным набором полей.
-        /// </summary>
-        /// <returns>Экземпляр класса <see cref="Adult"/>.</returns>
-        public static Adult GetRandomAdult()
-        {
-            Adult randomAdult = new Adult();
-            randomAdult.RandomGender();
-            randomAdult.RandomData();
-            return randomAdult;
-        }
-
-        /// <summary>
-        /// Создает экземпляяр класса <see cref="Adult"/>
-        /// со случайным набором полей.
-        /// </summary>
-        /// <param name="gender">Пол.</param>
-        /// <returns>Экземпляр класса <see cref="Adult"/>.</returns>
-        public static Adult GetRandomAdult(Gender gender)
-        {
-            Adult randomAdult = new Adult();
-            randomAdult.Gender = gender;
-            randomAdult.RandomData();
-            return randomAdult;
-        }
-
-        /// <summary>
-        /// Генерирует случайный набор даных для объекта <see cref="Adult"/>.
-        /// </summary>
-        protected override void RandomData()
-        {
-            base.RandomData();
-            RandomWork();
-            PassportSeries = RandomPassportData(4);
-            PassportNumber = RandomPassportData(6);
-        }
-
-        /// <summary>
-        /// Генерирует случайное место работы.
-        /// </summary>
-        protected void RandomWork()
-        {
-            string?[] works =
-            {
-                "СО ЕЭС",
-                "Россети",
-                "Росатом",
-                "ФСК",
-                null
-            };
-
-            PlaceOfWork = RandomString(works);
-        }
-
-        /// <summary>
-        /// Генерирует случайное число из указанного диапазона. 
-        /// </summary>
-        /// <param name="size">Количество символов.</param>
-        /// <returns>Число.</returns>
-        public static int RandomPassportData(int size)
-        {
-            Random random = new Random();
-            int value;
-            int maxValue = (int)Math.Pow(10, size);
-            while (true)
-            {
-                value = random.Next(maxValue / 10, maxValue);
-
-                if (!_unicalPassport.Contains(value)
-                   && value.ToString().Length == size)
-                {
-                    return value;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Проверка уникальности паспортных данных.
-        /// </summary>
-        /// <param name="size">Размерность.</param>
-        /// <param name="value">Значение.</param>
-        /// <param name="unical">Список, уже существующих значений.</param>
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
-        private static void DataControl(int size, int value, HashSet<int> unical)
-        {
-            if (unical.Contains(value) || value.ToString().Length != size
-                || value < 0)
-            {
-                throw new ArgumentOutOfRangeException
-                            ($"Введено некорректное значение!\n"
-                           + $"Введите {size} символов");
-            }
-            _ = unical.Add(value);
         }
 
         /// <summary>
