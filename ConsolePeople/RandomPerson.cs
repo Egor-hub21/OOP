@@ -18,22 +18,8 @@ namespace ConsolePeople
         public static Person GetPerson()
         {
             Person randomPerson = new Person();
-            AssignDataPerson(randomPerson);
-            AssignDataPerson(randomPerson);
 
-            return randomPerson;
-        }
-
-        /// <summary>
-        /// Создает экземпляр класса <see cref="Person"/>
-        /// со случайным набором полей.
-        /// </summary>
-        /// <param name="gender">Пол.</param>
-        /// <returns>Экземпляр класса <see cref="Person"/>.</returns>
-        public static Person GetPerson(Gender gender)
-        {
-            Person randomPerson = new Person();
-            randomPerson.Gender = gender;
+            AssignGender(randomPerson);
             AssignDataPerson(randomPerson);
 
             return randomPerson;
@@ -116,12 +102,10 @@ namespace ConsolePeople
         public static Adult GetAdult()
         {
             Adult randomAdult = new Adult();
+
             AssignGender(randomAdult);
             AssignDataAdult(randomAdult);
-            if (randomAdult.Spouse is null)
-            {
-                AssignSpouse(randomAdult);
-            }
+            AssignSpouse(randomAdult);
 
             return randomAdult;
         }
@@ -134,13 +118,12 @@ namespace ConsolePeople
         /// <returns>Экземпляр класса <see cref="Adult"/>.</returns>
         public static Adult GetAdult(Gender gender)
         {
-            Adult randomAdult = new Adult();
-            randomAdult.Gender = gender;
-            AssignDataAdult(randomAdult);
-            if (randomAdult.Spouse is null)
+            Adult randomAdult = new Adult()
             {
-                AssignSpouse(randomAdult);
-            }
+                Gender = gender
+            };
+
+            AssignDataAdult(randomAdult);
 
             return randomAdult;
         }
@@ -211,23 +194,23 @@ namespace ConsolePeople
                         {
                             case Gender.Male:
                                 {
-                                    Adult randomSpouse = new Adult();
-                                    randomSpouse.Gender = Gender.Female;
-                                    AssignDataAdult(randomSpouse);
-                                    randomAdult.Spouse = randomSpouse;
+                                    Adult randomSpouse = GetAdult(Gender.Female);
+
                                     randomAdult.LastName =
                                         RemoveLastA(randomSpouse.LastName);
+
+                                    randomAdult.Spouse = randomSpouse;
                                 }
 
                                 break;
                             case Gender.Female:
                                 {
-                                    Adult randomSpouse = new Adult();
-                                    randomSpouse.Gender = Gender.Male;
-                                    AssignDataAdult(randomSpouse);
-                                    randomAdult.Spouse = randomSpouse;
+                                    Adult randomSpouse = GetAdult(Gender.Male);
+
                                     randomSpouse.LastName =
                                         RemoveLastA(randomAdult.LastName);
+
+                                    randomAdult.Spouse = randomSpouse;
                                 }
 
                                 break;
@@ -254,6 +237,7 @@ namespace ConsolePeople
         public static Child GetChild()
         {
             Child randomChild = new Child();
+
             AssignDataChild(randomChild);
 
             return randomChild;
@@ -267,20 +251,7 @@ namespace ConsolePeople
         {
             AssignDataPerson(randomChild);
             AssignPlaceOfStudy(randomChild);
-
-            Random random = new Random();
-            int numLastNames = random.Next(3);
-            switch (numLastNames)
-            {
-                case 0:
-                    AssignParents(randomChild);
-                    break;
-                case 1:
-                    AssignParent(randomChild);
-                    break;
-                default:
-                    break;
-            }
+            AssignParents(randomChild);
         }
 
         /// <summary>
@@ -350,59 +321,88 @@ namespace ConsolePeople
         /// <param name="child">Ребенок.</param>
         private static void AssignParents(Child child)
         {
-            Adult mother = new Adult();
-            mother.Gender = Gender.Female;
-            AssignDataAdult(mother);
+            Random random = new Random();
+            int numLastNames = random.Next(3);
+            switch (numLastNames)
+            {
+                case 0:
+                    {
+                        Adult mother = GetAdult(Gender.Female);
 
-            Adult father = new Adult();
-            father.Gender = Gender.Male;
-            AssignDataAdult(father);
+                        Adult father = GetAdult(Gender.Male);
 
-            child.LastName = RemoveLastA(mother.LastName);
-            father.LastName = RemoveLastA(mother.LastName);
+                        child.LastName = RemoveLastA(mother.LastName);
+                        father.LastName = RemoveLastA(mother.LastName);
 
-            child.Father = father;
-            child.Mother = mother;
+                        child.Father = father;
+                        child.Mother = mother;
 
-            child.Father.Spouse = child.Mother;
+                        child.Father.Spouse = child.Mother;
+                    }
+
+                    break;
+                case 1:
+                    {
+                        Adult parent = GetAdult();
+
+                        if (parent.Gender != child.Gender)
+                        {
+                            if (parent.Gender == Gender.Female)
+                            {
+                                child.LastName = RemoveLastA(parent.LastName);
+                            }
+                            else
+                            {
+                                parent.LastName = RemoveLastA(child.LastName);
+                            }
+                        }
+                        else
+                        {
+                            child.LastName = parent.LastName;
+
+                            if (parent.Gender == Gender.Female)
+                            {
+                                child.Mother = parent;
+                            }
+                            else
+                            {
+                                child.Father = parent;
+                            }
+                        }
+                    }
+
+                    break;
+                default:
+                    break;
+            }
+
         }
+        #endregion
 
         /// <summary>
-        /// Метод для назначения родителя для ребенка.
+        /// Добавляет в список рандомных людей.
         /// </summary>
-        /// <param name="child">Ребенок.</param>
-        private static void AssignParent(Child child)
+        /// <param name="count">Количество людей.</param>
+        /// <param name="peopleList">Список людей.</param>
+        public static void AddRandomPerson(int count, PersonList peopleList)
         {
-            Adult parent = GetAdult();
-
-            if (parent.Gender != child.Gender)
+            Random random = new Random();
+            for (int i = 0; i < count; i++)
             {
-                if (parent.Gender == Gender.Female)
+                var typeOfPerson = random.Next(2);
+                switch (typeOfPerson)
                 {
-                    child.LastName = RemoveLastA(parent.LastName);
-                }
-                else
-                {
-                    parent.LastName = RemoveLastA(child.LastName);
+                    case 0:
+                        peopleList.AddPerson(GetAdult());
+                        break;
+                    case 1:
+                        peopleList.AddPerson(GetChild());
+                        break;
+                    default:
+                        break;
                 }
             }
-            else
-            {
-                child.LastName = parent.LastName;
-
-                if (parent.Gender == Gender.Female)
-                {
-                    child.Mother = parent;
-                }
-                else
-                {
-                    child.Father = parent;
-                }
-            }
-
         }
-
-        #endregion
 
         /// <summary>
         /// Производит выбор случайной строки из массива строк.

@@ -14,8 +14,7 @@ namespace ConsolePeople
         public static void Main()
         {
             var personList = new PersonList();
-            AddRandomPerson(10, personList);
-
+            RandomPerson.AddRandomPerson(10, personList);
 
             ReadKey();
             Console.WriteLine("1. Вывод содержимого списка на экран:");
@@ -48,31 +47,6 @@ namespace ConsolePeople
         public static void PrintString(string text)
         {
             Console.WriteLine(text);
-        }
-
-        /// <summary>
-        /// Создает список с рандамными людьми.
-        /// </summary>
-        /// <param name="count">Количество людей.</param>
-        /// <param name="peopleList">Список людей.</param>
-        public static void AddRandomPerson(int count, PersonList peopleList)
-        {
-            Random random = new Random();
-            for (int i = 0; i < count; i++)
-            {
-                var typeOfPerson = random.Next(2);
-                switch (typeOfPerson)
-                {
-                    case 0:
-                        peopleList.AddPerson(RandomPerson.GetAdult());
-                        break;
-                    case 1:
-                        peopleList.AddPerson(RandomPerson.GetChild());
-                        break;
-                    default:
-                        break;
-                }
-            }
         }
     }
 }
