@@ -176,7 +176,7 @@ namespace People
         }
 
         /// <summary>
-        /// Присвоение ребенку родителей.
+        /// Присвоение ребенку родителя.
         /// </summary>
         /// <param name="parent">Родитель.</param>
         public void Adopt(Adult parent)

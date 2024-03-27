@@ -3,7 +3,7 @@ using People;
 namespace ConsolePeople
 {
     /// <summary>
-    /// Клас реализующий взаимодействие <see cref="Person"/>
+    /// Класс реализующий взаимодействие <see cref="Person"/>
     /// с пользователем.
     /// </summary>
     public class ConsolePerson
@@ -86,8 +86,8 @@ namespace ConsolePeople
                                 default:
                                     {
                                         throw new ArgumentException
-                                            ("Никоректный ввод. При вводе "
-                                            + "разрешино использовать "
+                                            ("Некорректный ввод. При вводе "
+                                            + "разрешено использовать "
                                             + "следующие символы: М,Ж,M,F.");
                                     }
                             }
@@ -116,7 +116,7 @@ namespace ConsolePeople
         }
 
         /// <summary>
-        /// Вспомогательный метод зацикливаня действий пользователя.
+        /// Вспомогательный метод зацикливания действий пользователя.
         /// </summary>
         /// <param name="tryAction">Действие.</param>
         /// <param name="catchActionDictionary">Словарь Key:Тип исключения,

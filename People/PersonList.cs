@@ -116,7 +116,7 @@ namespace People
         }
 
         /// <summary>
-        /// Возращает значение индекса <see cref="Person"/>
+        /// Возвращает значение индекса <see cref="Person"/>
         /// в списке <see cref="PersonList"/>
         /// (если <see cref="Person"/> не является членом
         /// <see cref="PersonList"/> то индекс равен "-1").
@@ -144,7 +144,7 @@ namespace People
         }
 
         /// <summary>
-        /// Возращает элемент класса <see cref="PersonList"/> по идексу.
+        /// Возвращает элемент класса <see cref="PersonList"/> по идексу.
         /// </summary>
         /// <param name="index">Индекс.</param>
         /// <returns>Элемент класса <see cref="PersonList"/>.</returns>
@@ -182,7 +182,7 @@ namespace People
         /// <param name="manIndex">Индекс мужчины.</param>
         public void ListMarried(int womenIndex, int manIndex)
         {
-            ConvertAdult(manIndex).GetMarried(ConvertAdult(womenIndex));
+            ConvertAdult(manIndex).CreateMarried(ConvertAdult(womenIndex));
         }
 
         /// <summary>

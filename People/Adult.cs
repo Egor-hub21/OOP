@@ -29,7 +29,7 @@ namespace People
         /// Конструктор.
         /// </summary>
         /// <param name="firstName">Имя.</param>
-        /// <param name="lastName">Фамиоия.</param>
+        /// <param name="lastName">Фамилия.</param>
         /// <param name="age">Возраст.</param>
         /// <param name="gender">Пол.</param>
         /// <param name="passportSeries">Серия паспорта.</param>
@@ -148,13 +148,13 @@ namespace People
         public override string GetInfo()
         {
             return base.GetInfo()
-                  + $"Паспортыне данные: {PassportSeries} {PassportNumber}\t"
+                  + $"Паспортные данные: {PassportSeries} {PassportNumber}\t"
                   + $"{GetInfoPlaceOfWork()}\t"
                   + $"{GetInfoStateOfMarriage()}\n";
         }
 
         /// <summary>
-        /// Возвращиет информацию о работе.
+        /// Возвращает информацию о работе.
         /// </summary>
         /// <returns>Строка.</returns>
         protected string GetInfoPlaceOfWork()
@@ -165,7 +165,7 @@ namespace People
         }
 
         /// <summary>
-        /// Возвращиет информацию о состоянии брака.
+        /// Возвращает информацию о состоянии брака.
         /// </summary>
         /// <returns>Строка.</returns>
         protected string GetInfoStateOfMarriage()
@@ -176,18 +176,18 @@ namespace People
         }
 
         /// <summary>
-        /// Создает супружускую пару.
+        /// Создает супружескую пару.
         /// </summary>
         /// <param name="spouse"></param>
-        public void GetMarried(Adult spouse)
+        public void CreateMarried(Adult spouse)
         {
             Spouse = spouse;
         }
 
         /// <summary>
-        /// Удаляет супружускую пару.
+        /// Удаляет супружескую пару.
         /// </summary>
-        public void Divorce()
+        public void СreateDivorce()
         {
             if (Spouse != null)
             {
