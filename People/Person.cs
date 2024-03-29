@@ -97,6 +97,7 @@ namespace People
                                         $"использовались " +
                                         $"недопустимые символы");
                 }
+
                 _firstName = CorrectionRegister(value);
             }
         }
@@ -131,6 +132,7 @@ namespace People
                                         $" использованием разных" +
                                         $" алфавитов");
                 }
+
                 _lastName = CorrectionRegister(value);
             }
         }
@@ -161,7 +163,6 @@ namespace People
 
             return string.Join("-", words);
         }
-
 
         /// <summary>
         /// Проверяет на каком языке написано слово.

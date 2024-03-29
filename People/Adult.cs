@@ -1,7 +1,7 @@
 namespace People
 {
     /// <summary>
-    /// Класс взрослый
+    /// Класс взрослый.
     /// </summary>
     public class Adult : Person
     {
@@ -26,7 +26,7 @@ namespace People
         public override int AgeMin { get; } = 18;
 
         /// <summary>
-        /// Конструктор.
+        /// Initializes a new instance of the <see cref="Adult"/> class.
         /// </summary>
         /// <param name="firstName">Имя.</param>
         /// <param name="lastName">Фамилия.</param>
@@ -35,6 +35,7 @@ namespace People
         /// <param name="passportSeries">Серия паспорта.</param>
         /// <param name="passportNumber">Номер паспорта.</param>
         /// <param name="placeOfWork">Место работы.</param>
+        /// <param name="spouse">Супруг.</param>
         public Adult(string firstName, string lastName,
                      int age, Gender gender, int passportSeries,
                      int passportNumber, string? placeOfWork = null,
@@ -91,7 +92,7 @@ namespace People
         /// </summary>
         /// <param name="value">Проверяемое значение.</param>
         /// <param name="size">Размер.</param>
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        /// <exception cref="ArgumentOutOfRangeException">Исключени.</exception>
         protected static void ControlNumberSize(int value, int size)
         {
             if (value.ToString().Length != size)
@@ -121,11 +122,13 @@ namespace People
                     throw new ArgumentException($"Пол супругов не " +
                                                 $"должен совпадать!");
                 }
+
                 if (value?.Spouse is not null && value?.Spouse != this)
                 {
                     throw new ArgumentException($"Предполагаемый супруг,"
                                                 + $" уже в браке!");
                 }
+
                 if (Spouse is not null && Spouse != value)
                 {
                     throw new ArgumentException($"Adult уже состоит"
@@ -178,7 +181,7 @@ namespace People
         /// <summary>
         /// Создает супружескую пару.
         /// </summary>
-        /// <param name="spouse"></param>
+        /// <param name="spouse">Супруг.</param>
         public void CreateMarried(Adult spouse)
         {
             Spouse = spouse;

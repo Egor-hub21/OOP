@@ -1,7 +1,7 @@
 namespace People
 {
     /// <summary>
-    /// Класс ребенок
+    /// Класс ребенок.
     /// </summary>
     public class Child : Person
     {
@@ -29,7 +29,7 @@ namespace People
         /// Конструктор.
         /// </summary>
         /// <param name="firstName">Имя.</param>
-        /// <param name="lastName">Фамиоия.</param>
+        /// <param name="lastName">Фамилия.</param>
         /// <param name="age">Возраст.</param>
         /// <param name="gender">Пол.</param>
         /// <param name="mother">Ссылка на мать.</param>
@@ -46,7 +46,7 @@ namespace People
         }
 
         /// <summary>
-        /// Конструктор с начальными данными
+        /// Конструктор с начальными данными.
         /// </summary>
         public Child() : this("Неизвестно",
                               "Неизвестно",
@@ -87,10 +87,10 @@ namespace People
         /// Метод, выбрасывающий исключения при
         /// некорректном вводе информации о родителе.
         /// </summary>
-        /// <param name="oldParent"></param>
-        /// <param name="newParent"></param>
-        /// <param name="gender"></param>
-        /// <exception cref="ArgumentException"></exception>
+        /// <param name="oldParent">Старый родитель.</param>
+        /// <param name="newParent">Новый родитель.</param>
+        /// <param name="gender">Пол.</param>
+        /// <exception cref="ArgumentException">Исключение.</exception>
         private static void ParentException(Adult? oldParent,
                                             Adult? newParent,
                                             Gender gender)
@@ -103,13 +103,13 @@ namespace People
             {
                 throw new ArgumentException("Неверный пол родителя!");
             }
+
             if (oldParent is not null)
             {
                 throw new ArgumentException($"У ребенка уже есть "
                                             + $"{parentType}!");
             }
         }
-
 
         /// <summary>
         /// Возвращает строку с информацией о <see cref="Child"/>.

@@ -54,6 +54,7 @@ namespace People
         /// </summary>
         /// <param name="index">Номер члена в
         /// списке  <see cref="PersonList"/>.</param>
+        /// <returns>Строка с информацией о персоне.</returns>
         public string PersonInfo(int index)
         {
             CheckIndexValidity(index);
@@ -67,6 +68,7 @@ namespace People
         /// Метод для вывода информации о  всех  <see cref="Person"/>
         /// в списке  <see cref="PersonList"/>.
         /// </summary>
+        /// <returns>Строка с информацией о персоне.</returns>
         public string PersonInfo()
         {
             string info = "";
@@ -158,7 +160,6 @@ namespace People
         ///  Возвращает сообщение об ошибке при неверном индексе.
         /// </summary>
         /// <param name="index">Индекс.</param>
-        /// <returns>Сообщение.</returns>
         private void CheckIndexValidity(int index)
         {
             if (index < 0)
@@ -166,6 +167,7 @@ namespace People
                 throw new ArgumentOutOfRangeException($"Введенное число" +
                                                       $" меньше нуля.");
             }
+
             if (_peopleList.Count - 1 < index)
             {
                 throw new ArgumentException($"Список не содержит {index}-й" +
@@ -199,7 +201,7 @@ namespace People
         }
 
         /// <summary>
-        /// Воозвращает тип экземпляра <see cref="Person"/> по индексу в
+        /// Возвращает тип экземпляра <see cref="Person"/> по индексу в
         /// <see cref="PersonList"/>.
         /// </summary>
         /// <param name="index">Индекс.</param>
@@ -210,11 +212,11 @@ namespace People
         }
 
         /// <summary>
-        /// Преобразовывает <see cref="Child"/> в
-        /// <see cref="Adult"/> по индексу в
+        /// Преобразовывает <see cref="Person"/> в
+        /// <see cref="Child"/> по индексу в
         /// <see cref="PersonList"/>.
         /// <param name="index"></param>
-        /// <returns></returns>
+        /// <returns><see cref="Child"/></returns>
         private Child ConvertChild(int index)
         {
             return ((Child)GetByIndex(index));
@@ -225,8 +227,8 @@ namespace People
         /// <see cref="Adult"/> по индексу в
         /// <see cref="PersonList"/>.
         /// </summary>
-        /// <param name="index"></param>
-        /// <returns></returns>
+        /// <param name="index">Индекс.</param>
+        /// <returns><see cref="Adult"/>.</returns>
         private Adult ConvertAdult(int index)
         {
             return ((Adult)GetByIndex(index));

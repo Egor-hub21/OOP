@@ -1,7 +1,7 @@
 namespace People
 {
     /// <summary>
-    /// Перечесление возможных значений пола.
+    /// Перечисление возможных значений пола.
     /// </summary>
     public enum Gender
     {
