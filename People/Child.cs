@@ -3,7 +3,7 @@ namespace People
     /// <summary>
     /// Класс ребенок.
     /// </summary>
-    public class Child : Person
+    public class Child : PersonBase
     {
         /// <summary>
         /// Ссылка на мать.
@@ -16,6 +16,7 @@ namespace People
         private Adult? _father;
 
         //TODO: validation
+
         /// <summary>
         /// Название места учебы.
         /// </summary>

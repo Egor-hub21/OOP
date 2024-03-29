@@ -3,18 +3,18 @@ using People;
 namespace ConsolePeople
 {
     /// <summary>
-    /// Класс реализующий взаимодействие <see cref="Person"/>
+    /// Класс реализующий взаимодействие <see cref="PersonBase"/>
     /// с пользователем.
     /// </summary>
     public class ConsolePerson
     {
         /// <summary>
-        /// Чтения <see cref="Person"/> с клавиатуры.
+        /// Чтения <see cref="PersonBase"/> с клавиатуры.
         /// </summary>
-        /// <returns>Экземпляр класса <see cref="Person"/>.</returns>
-        public static Person ConsoleReadPerson()
+        /// <returns>Экземпляр класса <see cref="PersonBase"/>.</returns>
+        public static PersonBase ConsoleReadPerson()
         {
-            Person сonsolePerson = new Person();
+            PersonBase сonsolePerson = new PersonBase();
 
             var catchDictioary = new Dictionary<Type, Action<string>>()
             {

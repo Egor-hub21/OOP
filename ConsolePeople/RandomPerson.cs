@@ -11,13 +11,13 @@ namespace ConsolePeople
         #region RandomPerson
 
         /// <summary>
-        /// Создает экземпляр класса <see cref="Person"/>
+        /// Создает экземпляр класса <see cref="PersonBase"/>
         /// со случайным набором полей.
         /// </summary>
-        /// <returns>Экземпляр класса <see cref="Person"/>.</returns>
-        public static Person GetPerson()
+        /// <returns>Экземпляр класса <see cref="PersonBase"/>.</returns>
+        public static PersonBase GetPerson()
         {
-            Person randomPerson = new Person();
+            PersonBase randomPerson = new PersonBase();
 
             AssignGender(randomPerson);
             AssignDataPerson(randomPerson);
@@ -30,7 +30,7 @@ namespace ConsolePeople
         /// данные в зависимости от пола.
         /// </summary>
         /// <param name="randomPerson">Экземпляр класса.</param>
-        private static void AssignDataPerson(Person randomPerson)
+        private static void AssignDataPerson(PersonBase randomPerson)
         {
             AssignAge(randomPerson);
             AssignNames(randomPerson);
@@ -40,7 +40,7 @@ namespace ConsolePeople
         /// Создание случайного возраста.
         /// </summary>
         /// <param name="randomPerson">Экземпляр класса.</param>
-        private static void AssignAge(Person randomPerson)
+        private static void AssignAge(PersonBase randomPerson)
         {
             Random random = new Random();
             randomPerson.Age = random.Next(randomPerson.AgeMin,
@@ -51,7 +51,7 @@ namespace ConsolePeople
         /// Создание случайного пола.
         /// </summary>
         /// <param name="randomPerson">Экземпляр класса.</param>
-        private static void AssignGender(Person randomPerson)
+        private static void AssignGender(PersonBase randomPerson)
         {
             Random random = new Random();
             randomPerson.Gender = (Gender)random.Next(
@@ -62,7 +62,7 @@ namespace ConsolePeople
         /// Создание случайного имен.
         /// </summary>
         /// <param name="randomPerson">Экземпляр класса.</param>
-        protected static void AssignNames(Person randomPerson)
+        protected static void AssignNames(PersonBase randomPerson)
         {
             // Создание пула фамилий и имен
             string[] manFirstNames = { "Александр", "Михаил", "Дмитрий",

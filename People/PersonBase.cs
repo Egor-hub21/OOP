@@ -2,11 +2,12 @@ using System.Text.RegularExpressions;
 
 namespace People
 {
-    //TODO: abstract
+    //TODO: abstract +
+
     /// <summary>
-    /// Класс Person, содержащий: имя, фамилию, возраст, пол.
+    /// Класс PersonBase, содержащий: имя, фамилию, возраст, пол.
     /// </summary>
-    public class Person
+    public class PersonBase
     {
         /// <summary>
         /// Возраст.
@@ -34,20 +35,20 @@ namespace People
         public virtual int AgeMax { get; } = 100;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Person"/> class.
+        /// Initializes a new instance of the <see cref="PersonBase"/> class.
         /// </summary>
-        public Person() : this("Неизвестно", "Неизвестно", 18, Gender.Male)
+        public PersonBase() : this("Неизвестно", "Неизвестно", 18, Gender.Male)
         { }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Person"/> class.
-        /// Конструктор класса <see cref="Person"/>.
+        /// Initializes a new instance of the <see cref="PersonBase"/> class.
+        /// Конструктор класса <see cref="PersonBase"/>.
         /// </summary>
         /// <param name="firstName">Имя.</param>
         /// <param name="lastName">Фамилия.</param>
         /// <param name="age">Возраст.</param>
         /// <param name="gender">Пол.</param>
-        public Person(string firstName, string lastName, int age,
+        public PersonBase(string firstName, string lastName, int age,
                       Gender gender)
         {
             FirstName = firstName;
@@ -57,7 +58,7 @@ namespace People
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="Person._age"/>.
+        /// Gets or sets the <see cref="PersonBase._age"/>.
         /// Получает или задает  возраст.
         /// </summary>
         public int Age
@@ -82,7 +83,7 @@ namespace People
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="Person._firstName"/>.
+        /// Gets or sets the <see cref="PersonBase._firstName"/>.
         /// Получает или задает имя.
         /// </summary>
         public string FirstName
@@ -104,13 +105,13 @@ namespace People
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="Person._gender"/>.
+        /// Gets or sets the <see cref="PersonBase._gender"/>.
         /// Получает или задает  пол.
         /// </summary>
         public Gender Gender { get; set; }
 
         /// <summary>
-        /// Gets or sets the <see cref="Person._lastName"/>.
+        /// Gets or sets the <see cref="PersonBase._lastName"/>.
         /// Получает или задает  фамилию.
         /// </summary>
         public string LastName
@@ -139,9 +140,9 @@ namespace People
         }
 
         /// <summary>
-        /// Возвращает строку с информацией о <see cref="Person"/>.
+        /// Возвращает строку с информацией о <see cref="PersonBase"/>.
         /// </summary>
-        /// <returns>Информация о <see cref="Person"/>.</returns>
+        /// <returns>Информация о <see cref="PersonBase"/>.</returns>
         public virtual string GetInfo()
         {
             return $"Имя: {FirstName}\tФамилия: {LastName}\t" +

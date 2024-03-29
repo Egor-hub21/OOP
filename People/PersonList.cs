@@ -2,14 +2,14 @@ namespace People
 {
     /// <summary>
     /// Класс PersonList, описывающий абстракцию списка,
-    /// содержащего объекты класса Person.
+    /// содержащего объекты класса PersonBase.
     /// </summary>
     public class PersonList
     {
         /// <summary>
-        /// Лист класса <see cref="Person"/>.
+        /// Лист класса <see cref="PersonBase"/>.
         /// </summary>
-        private List<Person> _peopleList;
+        private List<PersonBase> _peopleList;
 
         /// <summary>
         /// Количество записей в листе.
@@ -23,7 +23,7 @@ namespace People
         /// </summary>
         public PersonList()
         {
-            _peopleList = new List<Person>();
+            _peopleList = new List<PersonBase>();
             _count = 0;
         }
 
@@ -37,19 +37,19 @@ namespace People
         }
 
         /// <summary>
-        /// Метод для добавления <see cref="Person"/>
+        /// Метод для добавления <see cref="PersonBase"/>
         /// в <see cref="PersonList"/>.
         /// </summary>
         /// <param name="person">Экземпляр класса
-        /// <see cref="Person"/>.</param>
-        public void AddPerson(Person person)
+        /// <see cref="PersonBase"/>.</param>
+        public void AddPerson(PersonBase person)
         {
             _peopleList.Add(person);
             _count++;
         }
 
         /// <summary>
-        /// Метод для вывода информации о <see cref="Person"/>
+        /// Метод для вывода информации о <see cref="PersonBase"/>
         /// по index в списке  <see cref="PersonList"/>.
         /// </summary>
         /// <param name="index">Номер члена в
@@ -65,7 +65,7 @@ namespace People
         }
 
         /// <summary>
-        /// Метод для вывода информации о  всех  <see cref="Person"/>
+        /// Метод для вывода информации о  всех  <see cref="PersonBase"/>
         /// в списке  <see cref="PersonList"/>.
         /// </summary>
         /// <returns>Строка с информацией о персоне.</returns>
@@ -118,15 +118,15 @@ namespace People
         }
 
         /// <summary>
-        /// Возвращает значение индекса <see cref="Person"/>
+        /// Возвращает значение индекса <see cref="PersonBase"/>
         /// в списке <see cref="PersonList"/>
-        /// (если <see cref="Person"/> не является членом
+        /// (если <see cref="PersonBase"/> не является членом
         /// <see cref="PersonList"/> то индекс равен "-1").
         /// </summary>
         /// <param name="setPerson"асс>Экземпляр класса
-        /// <see cref="Person"/>.</param>
-        /// <returns>Индекс экземпляра класса <see cref="Person"/>.</returns>
-        public int GetIndex(Person setPerson)
+        /// <see cref="PersonBase"/>.</param>
+        /// <returns>Индекс экземпляра класса <see cref="PersonBase"/>.</returns>
+        public int GetIndex(PersonBase setPerson)
         {
             int index = -1;
 
@@ -150,7 +150,7 @@ namespace People
         /// </summary>
         /// <param name="index">Индекс.</param>
         /// <returns>Элемент класса <see cref="PersonList"/>.</returns>
-        public Person GetByIndex(int index)
+        public PersonBase GetByIndex(int index)
         {
             CheckIndexValidity(index);
             return _peopleList[index];
@@ -203,7 +203,7 @@ namespace People
 
         //TODO: remove
         /// <summary>
-        /// Возвращает тип экземпляра <see cref="Person"/> по индексу в
+        /// Возвращает тип экземпляра <see cref="PersonBase"/> по индексу в
         /// <see cref="PersonList"/>.
         /// </summary>
         /// <param name="index">Индекс.</param>
@@ -214,7 +214,7 @@ namespace People
         }
 
         /// <summary>
-        /// Преобразовывает <see cref="Person"/> в
+        /// Преобразовывает <see cref="PersonBase"/> в
         /// <see cref="Child"/> по индексу в
         /// <see cref="PersonList"/>.
         /// <param name="index"></param>
@@ -225,7 +225,7 @@ namespace People
         }
 
         /// <summary>
-        /// Преобразовывает <see cref="Person"/> в
+        /// Преобразовывает <see cref="PersonBase"/> в
         /// <see cref="Adult"/> по индексу в
         /// <see cref="PersonList"/>.
         /// </summary>

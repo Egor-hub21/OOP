@@ -3,7 +3,7 @@ namespace People
     /// <summary>
     /// Класс взрослый.
     /// </summary>
-    public class Adult : Person
+    public class Adult : PersonBase
     {
         /// <summary>
         /// Серия паспорта.
