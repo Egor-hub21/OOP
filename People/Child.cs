@@ -18,7 +18,7 @@ namespace People
         /// <summary>
         /// Название места учебы.
         /// </summary>
-        public string PlacOfStudy { get; set; }
+        public string PlaceOfStudy { get; set; }
 
         /// <summary>
         /// Максимальный возраст.
@@ -42,7 +42,7 @@ namespace People
         {
             Mother = mother;
             Father = father;
-            PlacOfStudy = placOfStudy;
+            PlaceOfStudy = placOfStudy;
         }
 
         /// <summary>
@@ -137,8 +137,8 @@ namespace People
         /// <returns>Строка.</returns>
         protected string GetInfoPlacOfStudyr()
         {
-            return PlacOfStudy is not null
-                ? $"{PlacOfStudy}\t"
+            return PlaceOfStudy is not null
+                ? $"{PlaceOfStudy}\t"
                 : "Домашнее обучение";
         }
 

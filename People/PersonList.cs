@@ -146,7 +146,7 @@ namespace People
         }
 
         /// <summary>
-        /// Возвращает элемент класса <see cref="PersonList"/> по идексу.
+        /// Возвращает элемент класса <see cref="PersonList"/> по индексу.
         /// </summary>
         /// <param name="index">Индекс.</param>
         /// <returns>Элемент класса <see cref="PersonList"/>.</returns>
@@ -164,16 +164,16 @@ namespace People
         {
             if (index < 0)
             {
-                throw new ArgumentOutOfRangeException($"Введенное число" +
-                                                      $" меньше нуля.");
+                throw new ArgumentOutOfRangeException($"Введенное число"
+                                                      + $" меньше нуля.");
             }
 
             if (_peopleList.Count - 1 < index)
             {
-                throw new ArgumentException($"Список не содержит {index}-й" +
-                                            $" элемент (последний элемент " +
-                                            $"списка:" +
-                                            $"{_peopleList.Count - 1})");
+                throw new ArgumentException($"Список не содержит {index}-й"
+                                            + $" элемент (последний элемент "
+                                            + $"списка:"
+                                            + $"{_peopleList.Count - 1})");
             }
         }
 
@@ -184,7 +184,7 @@ namespace People
         /// <param name="manIndex">Индекс мужчины.</param>
         public void ListMarried(int womenIndex, int manIndex)
         {
-            ConvertAdult(manIndex).CreateMarried(ConvertAdult(womenIndex));
+            ConvertAdult(manIndex).CreateMarriage(ConvertAdult(womenIndex));
         }
 
         /// <summary>
@@ -194,7 +194,8 @@ namespace People
         /// <param name="childIndex">Индекс ребенка.</param>
         /// <param name="motherIndex">Индекс матери.</param>
         /// <param name="fatherIndex">Индекс отца.</param>
-        public void AdoptChild(int childIndex, int motherIndex, int fatherIndex)
+        public void AdoptChild(int childIndex, int motherIndex,
+                                                int fatherIndex)
         {
             ConvertChild(childIndex).Adopt(ConvertAdult(motherIndex),
                                            ConvertAdult(fatherIndex));

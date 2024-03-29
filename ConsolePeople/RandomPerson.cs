@@ -64,7 +64,7 @@ namespace ConsolePeople
         /// <param name="randomPerson">Экземпляр класса.</param>
         protected static void AssignNames(Person randomPerson)
         {
-            // Создание пулла фамилий и имен
+            // Создание пула фамилий и имен
             string[] manFirstNames = { "Александр", "Михаил", "Дмитрий",
                                        "Иван", "Олег", "Николай", "Ален" };
             string[] femFirstNames = { "Александра", "Анна", "Мария", "Ивана",
@@ -312,7 +312,7 @@ namespace ConsolePeople
         private static void RandomLearning(Dictionary<string, string[]> teaching,
                                                string key, Child randomChild)
         {
-            randomChild.PlacOfStudy = RandomString(teaching[key]);
+            randomChild.PlaceOfStudy = RandomString(teaching[key]);
         }
 
         /// <summary>

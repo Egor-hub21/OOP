@@ -92,7 +92,8 @@ namespace People
         /// </summary>
         /// <param name="value">Проверяемое значение.</param>
         /// <param name="size">Размер.</param>
-        /// <exception cref="ArgumentOutOfRangeException">Исключени.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// Исключение.</exception>
         protected static void ControlNumberSize(int value, int size)
         {
             if (value.ToString().Length != size)
@@ -182,7 +183,7 @@ namespace People
         /// Создает супружескую пару.
         /// </summary>
         /// <param name="spouse">Супруг.</param>
-        public void CreateMarried(Adult spouse)
+        public void CreateMarriage(Adult spouse)
         {
             Spouse = spouse;
         }
@@ -190,7 +191,7 @@ namespace People
         /// <summary>
         /// Удаляет супружескую пару.
         /// </summary>
-        public void СreateDivorce()
+        public void DeleteMarriage()
         {
             if (Spouse != null)
             {
