@@ -37,7 +37,7 @@ namespace ConsolePeople
         }
 
         /// <summary>
-        /// Создание рандомного возраста.
+        /// Создание случайного возраста.
         /// </summary>
         /// <param name="randomPerson">Экземпляр класса.</param>
         private static void AssignAge(Person randomPerson)
@@ -48,7 +48,7 @@ namespace ConsolePeople
         }
 
         /// <summary>
-        /// Создание рандомного пола.
+        /// Создание случайного пола.
         /// </summary>
         /// <param name="randomPerson">Экземпляр класса.</param>
         private static void AssignGender(Person randomPerson)
@@ -59,7 +59,7 @@ namespace ConsolePeople
         }
 
         /// <summary>
-        /// Создание рандомных имен.
+        /// Создание случайного имен.
         /// </summary>
         /// <param name="randomPerson">Экземпляр класса.</param>
         protected static void AssignNames(Person randomPerson)
@@ -304,7 +304,7 @@ namespace ConsolePeople
         }
 
         /// <summary>
-        /// Подметод для выбора из словаря случайного места учебы и
+        /// Под метод для выбора из словаря случайного места учебы и
         /// назначения его ребенку место учебы.
         /// </summary>
         /// <param name="teaching">Словарь с учебными заведениями.</param>
@@ -380,7 +380,7 @@ namespace ConsolePeople
         #endregion
 
         /// <summary>
-        /// Добавляет в список рандомных людей.
+        /// Добавляет в список случайных людей.
         /// </summary>
         /// <param name="count">Количество людей.</param>
         /// <param name="peopleList">Список людей.</param>

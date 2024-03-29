@@ -34,15 +34,15 @@ namespace People
         /// <param name="gender">Пол.</param>
         /// <param name="mother">Ссылка на мать.</param>
         /// <param name="father">Ссылка на отца.</param>
-        /// <param name="placOfStudy">Название места учебы.</param>
+        /// <param name="placeOfStudy">Название места учебы.</param>
         public Child(string firstName, string lastName,
-                     int age, Gender gender, string placOfStudy,
+                     int age, Gender gender, string placeOfStudy,
                      Adult? mother = null, Adult? father = null)
             : base(firstName, lastName, age, gender)
         {
             Mother = mother;
             Father = father;
-            PlaceOfStudy = placOfStudy;
+            PlaceOfStudy = placeOfStudy;
         }
 
         /// <summary>
@@ -128,14 +128,14 @@ namespace People
         /// <returns>Строка.</returns>
         protected string GetInfoBase()
         {
-            return $"{base.GetInfo()} {GetInfoPlacOfStudyr()}";
+            return $"{base.GetInfo()} {GetInfoPlaceOfStudy()}";
         }
 
         /// <summary>
         /// Возвращает информацию о месте учебы.
         /// </summary>
         /// <returns>Строка.</returns>
-        protected string GetInfoPlacOfStudyr()
+        protected string GetInfoPlaceOfStudy()
         {
             return PlaceOfStudy is not null
                 ? $"{PlaceOfStudy}\t"

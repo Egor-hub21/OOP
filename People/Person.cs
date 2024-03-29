@@ -169,7 +169,7 @@ namespace People
         /// </summary>
         /// <param name="word">Проверяемое слово.</param>
         /// <param name="language">Тип языка.</param>
-        /// <returns>Булевая переменная.</returns>
+        /// <returns>Логическая переменная.</returns>
         public static bool CheckWordLanguage(string word,
             Language language = Language.English)
         {
@@ -192,7 +192,7 @@ namespace People
         /// с использованием символов одного языка.
         /// </summary>
         /// <param name="word">Слово (Имя, Фамилия).</param>
-        /// <returns>Булевая переменная.</returns>
+        /// <returns>Логическая переменная.</returns>
         public static bool CheckWordSameLanguage(string word)
         {
             return CheckWordLanguage(word)
@@ -204,7 +204,7 @@ namespace People
         /// </summary>
         /// <param name="word1">Слово (Имя).</param>
         /// <param name="word2">Слово (Фамилия).</param>
-        /// <returns>Булевая переменная.</returns>
+        /// <returns>Логическая переменная.</returns>
         public static bool CheckCharacterStylesWords(string word1,
                                                      string word2)
         {
