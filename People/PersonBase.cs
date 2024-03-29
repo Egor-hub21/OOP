@@ -7,7 +7,7 @@ namespace People
     /// <summary>
     /// Класс PersonBase, содержащий: имя, фамилию, возраст, пол.
     /// </summary>
-    public class PersonBase
+    public abstract class PersonBase
     {
         /// <summary>
         /// Возраст.
@@ -33,12 +33,6 @@ namespace People
         /// Минимальный возраст.
         /// </summary>
         public virtual int AgeMax { get; } = 100;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PersonBase"/> class.
-        /// </summary>
-        public PersonBase() : this("Неизвестно", "Неизвестно", 18, Gender.Male)
-        { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PersonBase"/> class.

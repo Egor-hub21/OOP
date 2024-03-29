@@ -11,21 +11,6 @@ namespace ConsolePeople
         #region RandomPerson
 
         /// <summary>
-        /// Создает экземпляр класса <see cref="PersonBase"/>
-        /// со случайным набором полей.
-        /// </summary>
-        /// <returns>Экземпляр класса <see cref="PersonBase"/>.</returns>
-        public static PersonBase GetPerson()
-        {
-            PersonBase randomPerson = new PersonBase();
-
-            AssignGender(randomPerson);
-            AssignDataPerson(randomPerson);
-
-            return randomPerson;
-        }
-
-        /// <summary>
         /// Присваивает объекту случайные
         /// данные в зависимости от пола.
         /// </summary>
@@ -65,16 +50,16 @@ namespace ConsolePeople
         protected static void AssignNames(PersonBase randomPerson)
         {
             // Создание пула фамилий и имен
-            string[] manFirstNames = { "Александр", "Михаил", "Дмитрий",
-                                       "Иван", "Олег", "Николай", "Ален" };
-            string[] femFirstNames = { "Александра", "Анна", "Мария", "Ивана",
-                                       "Ольга", "Елена", "Екатерина" };
-            string[] unisexLastNames = { "Ямцун", "Ромм", "Резник", "Кулиш",
+            string[] manFirstNames = [ "Александр", "Михаил", "Дмитрий",
+                                       "Иван", "Олег", "Николай", "Ален" ];
+            string[] femFirstNames = [ "Александра", "Анна", "Мария", "Ивана",
+                                       "Ольга", "Елена", "Екатерина" ];
+            string[] unisexLastNames = [ "Ямцун", "Ромм", "Резник", "Кулиш",
                                          "Томпсон", "Думер", "Бумер",
-                                         "Герман", "Штраус" };
-            string[] manLastNames = { "Блохин", "Андреев", "Дорохов",
+                                         "Герман", "Штраус" ];
+            string[] manLastNames = [ "Блохин", "Андреев", "Дорохов",
                                       "Ермилов", "Ефимов", "Золотарев",
-                                      "Казаков" };
+                                      "Казаков" ];
 
             Random random = new Random();
             int numLastNames = random.Next(2);
@@ -147,14 +132,14 @@ namespace ConsolePeople
         /// <param name="randomAdult">Экземпляр класса.</param>
         private static void AssignWork(Adult randomAdult)
         {
-            string?[] works =
-            {
+            string[] works =
+            [
                 "СО ЕЭС",
                 "Россети",
                 "Росатом",
                 "ФСК",
-                null
-            };
+                ""
+            ];
 
             randomAdult.PlaceOfWork = RandomString(works);
         }
@@ -169,11 +154,10 @@ namespace ConsolePeople
             Random random = new Random();
 
             int maxValue = (int)Math.Pow(10, size);
-            //TODO: 
-            while (true)
-            {
-                return random.Next(maxValue / 10, maxValue);
-            }
+
+            //TODO: +
+            return random.Next(maxValue / 10, maxValue);
+
         }
 
         /// <summary>
@@ -267,14 +251,14 @@ namespace ConsolePeople
                     "baby",
                     new string[]
                     {
-                        "Домашнее обучение"
+                        ""
                     }
                 },
                 {
                     "preschool",
                     new string[]
                     {
-                        "Домашнее обучение",
+                        "",
                         "Детский сад ",
                         "Детский сад Солнышко"
                     }
@@ -283,7 +267,7 @@ namespace ConsolePeople
                     "school",
                     new string[]
                     {
-                        "Домашнее обучение",
+                        "",
                         "СОШ №10",
                         "СОШ №2"
                     }
@@ -385,7 +369,7 @@ namespace ConsolePeople
         /// </summary>
         /// <param name="count">Количество людей.</param>
         /// <param name="peopleList">Список людей.</param>
-        public static void AddRandomPerson(int count, PersonList peopleList)
+        public static void AddRandomPeople(int count, PersonList peopleList)
         {
             Random random = new Random();
             for (int i = 0; i < count; i++)
@@ -410,7 +394,7 @@ namespace ConsolePeople
         /// </summary>
         /// <param name="strings">Массива строк.</param>
         /// <returns>Строка.</returns>
-        private static string RandomString(string?[] strings)
+        private static string RandomString(string[] strings)
         {
             Random random = new Random();
             return strings[random.Next(strings.Length)];

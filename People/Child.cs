@@ -6,6 +6,11 @@ namespace People
     public class Child : PersonBase
     {
         /// <summary>
+        /// Место учебы.
+        /// </summary>
+        private string _placeOfStudy;
+
+        /// <summary>
         /// Ссылка на мать.
         /// </summary>
         private Adult? _mother;
@@ -15,12 +20,25 @@ namespace People
         /// </summary>
         private Adult? _father;
 
-        //TODO: validation
+        //TODO: validation +
 
         /// <summary>
         /// Название места учебы.
         /// </summary>
-        public string PlaceOfStudy { get; set; }
+        public string PlaceOfStudy
+        {
+            get => _placeOfStudy;
+            set
+            {
+                if (value is null)
+                {
+                    throw new NullReferenceException("Не введено "
+                                                  + "место учебы!");
+                }
+
+                _placeOfStudy = value;
+            }
+        }
 
         /// <summary>
         /// Максимальный возраст.
@@ -38,7 +56,7 @@ namespace People
         /// <param name="father">Ссылка на отца.</param>
         /// <param name="placeOfStudy">Название места учебы.</param>
         public Child(string firstName, string lastName,
-                     int age, Gender gender, string placeOfStudy,
+                     int age, Gender gender, string placeOfStudy = "",
                      Adult? mother = null, Adult? father = null)
             : base(firstName, lastName, age, gender)
         {
@@ -53,8 +71,7 @@ namespace People
         public Child() : this("Неизвестно",
                               "Неизвестно",
                               6,
-                              Gender.Male,
-                              "Домашнее обучение")
+                              Gender.Male)
         { }
 
         /// <summary>
@@ -191,6 +208,18 @@ namespace People
             {
                 Father = parent;
             }
+        }
+
+        /// <summary>
+        /// Метод возвращает строку когда
+        /// ребенок бездельничает.
+        /// </summary>
+        /// <returns>Строка.</returns>
+        public string Laze()
+        {
+            return string.IsNullOrEmpty(PlaceOfStudy)
+                ? "Бездельничать дома"
+                : $"Бездельничать в {PlaceOfStudy}";
         }
     }
 }

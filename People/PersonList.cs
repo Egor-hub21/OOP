@@ -23,7 +23,7 @@ namespace People
         /// </summary>
         public PersonList()
         {
-            _peopleList = new List<PersonBase>();
+            _peopleList = [];
             _count = 0;
         }
 
@@ -177,63 +177,7 @@ namespace People
             }
         }
 
-        /// <summary>
-        /// Добавляет <see cref="Adult"/> супруга по их индексам в листе.
-        /// </summary>
-        /// <param name="womenIndex">Индекс женщины.</param>
-        /// <param name="manIndex">Индекс мужчины.</param>
-        public void ListMarried(int womenIndex, int manIndex)
-        {
-            ConvertAdult(manIndex).CreateMarriage(ConvertAdult(womenIndex));
-        }
+        //TODO: remove +
 
-        /// <summary>
-        /// Присваивает <see cref="Child"/> родителей по их индексу
-        /// в данном листе.
-        /// </summary>
-        /// <param name="childIndex">Индекс ребенка.</param>
-        /// <param name="motherIndex">Индекс матери.</param>
-        /// <param name="fatherIndex">Индекс отца.</param>
-        public void AdoptChild(int childIndex, int motherIndex,
-                                                int fatherIndex)
-        {
-            ConvertChild(childIndex).Adopt(ConvertAdult(motherIndex),
-                                           ConvertAdult(fatherIndex));
-        }
-
-        //TODO: remove
-        /// <summary>
-        /// Возвращает тип экземпляра <see cref="PersonBase"/> по индексу в
-        /// <see cref="PersonList"/>.
-        /// </summary>
-        /// <param name="index">Индекс.</param>
-        /// <returns>Тип.</returns>
-        public Type GetTypePerson(int index)
-        {
-            return GetByIndex(index).GetType();
-        }
-
-        /// <summary>
-        /// Преобразовывает <see cref="PersonBase"/> в
-        /// <see cref="Child"/> по индексу в
-        /// <see cref="PersonList"/>.
-        /// <param name="index"></param>
-        /// <returns><see cref="Child"/></returns>
-        private Child ConvertChild(int index)
-        {
-            return ((Child)GetByIndex(index));
-        }
-
-        /// <summary>
-        /// Преобразовывает <see cref="PersonBase"/> в
-        /// <see cref="Adult"/> по индексу в
-        /// <see cref="PersonList"/>.
-        /// </summary>
-        /// <param name="index">Индекс.</param>
-        /// <returns><see cref="Adult"/>.</returns>
-        private Adult ConvertAdult(int index)
-        {
-            return ((Adult)GetByIndex(index));
-        }
     }
 }

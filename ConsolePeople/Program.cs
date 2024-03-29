@@ -14,7 +14,7 @@ namespace ConsolePeople
         public static void Main()
         {
             var personList = new PersonList();
-            RandomPerson.AddRandomPerson(10, personList);
+            RandomPerson.AddRandomPeople(10, personList);
 
             ReadKey();
             Console.WriteLine("1. Вывод содержимого списка на экран:");
@@ -24,10 +24,31 @@ namespace ConsolePeople
             ReadKey();
             Console.WriteLine("2. Тип первого, четвертого и последнего "
                                                   + "элемента списка:");
-            //TODO: добавить специфичный для типа метод
-            Console.WriteLine($"{personList.GetTypePerson(0)}, "
-                            + $"{personList.GetTypePerson(3)} и "
-                            + $"{personList.GetTypePerson(6)}");
+
+            //TODO: добавить специфичный для типа метод +
+
+            Console.WriteLine($"{GetTypePerson(personList, 0)}, "
+                            + $"{GetTypePerson(personList, 3)} и "
+                            + $"{GetTypePerson(personList, 6)}");
+
+            ReadKey();
+
+            for (int i = 0; i < personList.Count; i++)
+            {
+                if (personList.GetByIndex(i) is Adult)
+                {
+                    Adult newAdult = (Adult)personList.GetByIndex(i);
+                    Console.WriteLine($"{newAdult.FirstName} {newAdult.LastName}: "
+                                                        + $"{newAdult.Work()}");
+                }
+
+                else if (personList.GetByIndex(i) is Child)
+                {
+                    Child newChild = (Child)personList.GetByIndex(i);
+                    Console.WriteLine($"{newChild.FirstName} {newChild.LastName}: "
+                                                        + $"{newChild.Laze()}");
+                }
+            }
 
         }
 
@@ -48,6 +69,18 @@ namespace ConsolePeople
         public static void PrintString(string text)
         {
             Console.WriteLine(text);
+        }
+
+        /// <summary>
+        /// Возвращает тип экземпляра <see cref="PersonBase"/> по индексу в
+        /// <see cref="PersonList"/>.
+        /// </summary>
+        /// <param name="personList">Экземпляр класса <see cref="PersonList"/>.</param>
+        /// <param name="index">Индекс.</param>
+        /// <returns>Тип.</returns>
+        public static Type GetTypePerson(PersonList personList, int index)
+        {
+            return personList.GetByIndex(index).GetType();
         }
     }
 }

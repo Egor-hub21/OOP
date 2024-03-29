@@ -6,6 +6,11 @@ namespace People
     public class Adult : PersonBase
     {
         /// <summary>
+        /// Место работы.
+        /// </summary>
+        private string _placeOfWork;
+
+        /// <summary>
         /// Серия паспорта.
         /// </summary>
         private int _passportSeries;
@@ -38,7 +43,7 @@ namespace People
         /// <param name="spouse">Супруг.</param>
         public Adult(string firstName, string lastName,
                      int age, Gender gender, int passportSeries,
-                     int passportNumber, string? placeOfWork = null,
+                     int passportNumber, string placeOfWork = "",
                      Adult? spouse = null)
             : base(firstName, lastName, age, gender)
         {
@@ -108,7 +113,21 @@ namespace People
         /// <summary>
         /// Gets or sets the <see cref="Adult._placeOfWork"/>.
         /// </summary>
-        public string? PlaceOfWork { get; set; }
+        public string PlaceOfWork
+        {
+            get => _placeOfWork;
+            set
+            {
+                if (value is null)
+                {
+                    throw new NullReferenceException("Не введено "
+                                                  + "место работы!");
+                }
+
+                _placeOfWork = value;
+
+            }
+        }
 
         /// <summary>
         /// Gets or sets the <see cref="Adult._spouse"/>.
@@ -203,6 +222,17 @@ namespace People
                 throw new NullReferenceException("Adult не состоит"
                                                 + " в браке!");
             }
+        }
+
+        /// <summary>
+        /// Возвращает строку при действии работать.
+        /// </summary>
+        /// <returns>Строка.</returns>
+        public string Work()
+        {
+            return PlaceOfWork is not null
+                ? "Опять работа"
+                : "Чил";
         }
 
     }
