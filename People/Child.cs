@@ -15,6 +15,7 @@ namespace People
         /// </summary>
         private Adult? _father;
 
+        //TODO: validation
         /// <summary>
         /// Название места учебы.
         /// </summary>

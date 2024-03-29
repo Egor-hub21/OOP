@@ -2,6 +2,7 @@ using System.Text.RegularExpressions;
 
 namespace People
 {
+    //TODO: abstract
     /// <summary>
     /// Класс Person, содержащий: имя, фамилию, возраст, пол.
     /// </summary>

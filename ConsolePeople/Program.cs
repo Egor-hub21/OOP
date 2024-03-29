@@ -24,6 +24,7 @@ namespace ConsolePeople
             ReadKey();
             Console.WriteLine("2. Тип первого, четвертого и последнего "
                                                   + "элемента списка:");
+            //TODO: добавить специфичный для типа метод
             Console.WriteLine($"{personList.GetTypePerson(0)}, "
                             + $"{personList.GetTypePerson(3)} и "
                             + $"{personList.GetTypePerson(6)}");

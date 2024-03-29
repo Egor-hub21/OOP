@@ -201,6 +201,7 @@ namespace People
                                            ConvertAdult(fatherIndex));
         }
 
+        //TODO: remove
         /// <summary>
         /// Возвращает тип экземпляра <see cref="Person"/> по индексу в
         /// <see cref="PersonList"/>.
