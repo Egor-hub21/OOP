@@ -25,8 +25,6 @@ namespace ConsolePeople
             Console.WriteLine("2. Тип первого, четвертого и последнего "
                                                   + "элемента списка:");
 
-            //TODO: добавить специфичный для типа метод +
-
             Console.WriteLine($"{GetTypePerson(personList, 0)}, "
                             + $"{GetTypePerson(personList, 3)} и "
                             + $"{GetTypePerson(personList, 6)}");
@@ -35,21 +33,17 @@ namespace ConsolePeople
 
             for (int i = 0; i < personList.Count; i++)
             {
-                if (personList.GetByIndex(i) is Adult)
+                var person = personList.GetByIndex(i);
+                Console.WriteLine($"{person.GetInfo()} ");
+                if (person is Adult newAdult)
                 {
-                    Adult newAdult = (Adult)personList.GetByIndex(i);
-                    Console.WriteLine($"{newAdult.FirstName} {newAdult.LastName}: "
-                                                        + $"{newAdult.Work()}");
+                    Console.WriteLine($"{newAdult.Work()}");
                 }
-
-                else if (personList.GetByIndex(i) is Child)
+                else if (person is Child newChild)
                 {
-                    Child newChild = (Child)personList.GetByIndex(i);
-                    Console.WriteLine($"{newChild.FirstName} {newChild.LastName}: "
-                                                        + $"{newChild.Laze()}");
+                    Console.WriteLine($"{newChild.Laze()}");
                 }
             }
-
         }
 
         /// <summary>

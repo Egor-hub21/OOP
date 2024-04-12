@@ -176,8 +176,5 @@ namespace People
                                             + $"{_peopleList.Count - 1})");
             }
         }
-
-        //TODO: remove +
-
     }
 }

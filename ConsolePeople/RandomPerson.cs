@@ -155,9 +155,7 @@ namespace ConsolePeople
 
             int maxValue = (int)Math.Pow(10, size);
 
-            //TODO: +
             return random.Next(maxValue / 10, maxValue);
-
         }
 
         /// <summary>
