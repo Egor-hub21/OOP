@@ -15,7 +15,7 @@ namespace People
         /// </summary>
         private int _passportSeries;
 
-        /// <summary>
+        /// <summary>р
         /// Номер паспорта.
         /// </summary>
         private int _passportNumber;
@@ -232,7 +232,7 @@ namespace People
         {
             return PlaceOfWork is not null
                 ? "Опять работа"
-                : "Чил";
+                : "";
         }
 
     }
