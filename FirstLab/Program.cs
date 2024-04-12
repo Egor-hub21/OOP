@@ -1,4 +1,4 @@
-using static FirstLab.Gender;
+using People;
 
 namespace FirstLab
 {
@@ -13,71 +13,74 @@ namespace FirstLab
         /// </summary>
         public static void Main()
         {
-            Console.WriteLine("a. Программное создание двух списков персон, в каждом из которых по три человека.\n");
+            PrintString("a. Программное создание двух списков " +
+                       "персон, в каждом из которых по три человека.\n");
 
-            PersonList personList1 = new PersonList();
-            personList1.AddPerson(new Person("1", "1", 1, Male));
-            personList1.AddPerson(new Person("2", "2", 2, Female));
-            personList1.AddPerson(new Person("3", "3", 3, Male));
+            PersonList personList1 = PersonList.GetRandomPersonList(3);
 
-            PersonList personList2 = new PersonList();
-            personList2.AddPerson(new Person("2", "2", 2, Female));
-            personList2.AddPerson(new Person("3", "3", 3, Male));
-            personList2.AddPerson(new Person("4", "4", 4, Female));
+            PersonList personList2 = PersonList.GetRandomPersonList(2);
+            personList2.AddPerson(Person.GetRandomPerson());
 
             ReadKey();
 
-            Console.WriteLine("b. Вывод содержимого каждого списка на экран.");
+            PrintString("b. Вывод содержимого " +
+                              "каждого списка на экран.");
 
-            Console.WriteLine("\nПервый список:");
-            personList1.Print();
+            PrintString("\nПервый список:");
+            PrintString(personList1.PersonInfo());
 
-            Console.WriteLine("\nВторой список:");
-            personList2.Print();
-
-            ReadKey();
-
-            Console.WriteLine("c. Добавление нового человека в первый список");
-            personList1.AddPerson(new Person("5", "5", 5, Male));
-            personList1.Print(personList1.GetCount() - 1);
-
-            Console.WriteLine("\nПервый список:");
-            personList1.Print();
+            PrintString("\nВторой список:");
+            PrintString(personList2.PersonInfo());
 
             ReadKey();
 
-            Console.WriteLine("d. Копирование второго человека из первого списка в конец второго списка");
-            personList2.AddPerson(personList1.GetByIndex(1));
+            PrintString("c. Добавление нового " +
+                              "человека в первый список");
+            personList1.AddPerson(ConsolePerson.ConsoleReadPerson());
+            PrintString
+                    (personList1.PersonInfo(personList1.Count - 1));
 
-            Console.WriteLine("\nВторой человек в первом списке:");
-            personList1.Print(1);
-
-            Console.WriteLine("\nПоследний человек во втором:");
-            personList2.Print(personList2.GetCount() - 1);
-
-            ReadKey();
-
-            Console.WriteLine("e. Удаление второго человека из первого списка");
-            personList1.Print(1);
-            personList1.DeletePerson(1);
-
-            Console.WriteLine("\nПервый список:");
-            personList1.Print();
-
-            Console.WriteLine("\nВторой список:");
-            personList2.Print();
+            PrintString("\nПервый список:");
+            PrintString(personList1.PersonInfo());
 
             ReadKey();
 
-            Console.WriteLine("f. Очистка второго списка");
+            PrintString("d. Копирование второго человека " +
+                              "из первого списка в конец второго списка");
+            int index = 1;
+
+            personList2.AddPerson(personList1.GetByIndex(index));
+
+            PrintString("\nВторой человек в первом списке:");
+            PrintString(personList1.PersonInfo(index));
+
+            PrintString("\nПоследний человек во втором:");
+            PrintString
+                    (personList2.PersonInfo(personList2.Count - index));
+
+            ReadKey();
+
+            PrintString("e. Удаление второго " +
+                              "человека из первого списка");
+            PrintString(personList1.PersonInfo(index));
+            personList1.DeletePerson(index);
+
+            PrintString("\nПервый список:");
+            PrintString(personList1.PersonInfo());
+
+            PrintString("\nВторой список:");
+            PrintString(personList2.PersonInfo());
+
+            ReadKey();
+
+            PrintString("f. Очистка второго списка");
             personList2.Clear();
 
-            Console.WriteLine("\nВторой список:");
-            personList2.Print();
+            PrintString("\nВторой список:");
+            PrintString(personList2.PersonInfo());
 
-            Console.WriteLine("\nПервый список:");
-            personList1.Print();
-
+            PrintString("\nПервый список:");
+            PrintString(personList1.PersonInfo());
         }
 
         /// <summary>
@@ -86,8 +89,17 @@ namespace FirstLab
         /// </summary>
         public static void ReadKey()
         {
-            Console.WriteLine("Чтобы продолжить, нажмите любую клавишу.\n");
+            PrintString("Чтобы продолжить, нажмите любую клавишу.\n");
             _ = Console.ReadKey();
+        }
+
+        /// <summary>
+        /// Вывод строки на экран.
+        /// </summary>
+        /// <param name="text">Строка.</param>
+        public static void PrintString(string text)
+        {
+            Console.WriteLine(text);
         }
     }
 }

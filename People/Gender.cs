@@ -1,4 +1,4 @@
-namespace FirstLab
+namespace People
 {
     /// <summary>
     /// Перечесление возможных значений пола.
@@ -6,12 +6,12 @@ namespace FirstLab
     public enum Gender
     {
         /// <summary>
-        /// Представляет мужской гендер.
+        /// Представляет мужской пол.
         /// </summary>
         Male,
 
         /// <summary>
-        /// Представляет женский гендер.
+        /// Представляет женский пол.
         /// </summary>
         Female,
     }

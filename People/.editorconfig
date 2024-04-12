@@ -495,7 +495,7 @@ dotnet_diagnostic.CA1028.severity = none
 dotnet_diagnostic.CA1030.severity = none
 
 # Do not catch general exception types
-dotnet_diagnostic.CA1031.severity = none
+dotnet_diagnostic.CA1031.severity = error
 
 # Implement standard exception constructors
 dotnet_diagnostic.CA1032.severity = none
