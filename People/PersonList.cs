@@ -1,19 +1,18 @@
-
 namespace People
 {
     /// <summary>
     /// Класс PersonList, описывающий абстракцию списка,
-    /// содержащего объекты класса Person.
+    /// содержащего объекты класса PersonBase.
     /// </summary>
     public class PersonList
     {
         /// <summary>
-        /// Лист класса <see cref="Person"/>.
+        /// Лист класса <see cref="PersonBase"/>.
         /// </summary>
-        private List<Person> _peopleList;
+        private List<PersonBase> _peopleList;
 
         /// <summary>
-        /// Количество записей в лесте.
+        /// Количество записей в листе.
         /// </summary>
         private int _count;
 
@@ -24,13 +23,13 @@ namespace People
         /// </summary>
         public PersonList()
         {
-            _peopleList = new List<Person>();
+            _peopleList = [];
             _count = 0;
         }
 
         /// <summary>
         /// Gets or sets the <see cref="PersonList._count"/>.
-        /// Получает количество записей в лесте.
+        /// Получает количество записей в листе.
         /// </summary>
         public int Count
         {
@@ -38,23 +37,24 @@ namespace People
         }
 
         /// <summary>
-        /// Метод для добавления <see cref="Person"/>
+        /// Метод для добавления <see cref="PersonBase"/>
         /// в <see cref="PersonList"/>.
         /// </summary>
         /// <param name="person">Экземпляр класса
-        /// <see cref="Person"/>.</param>
-        public void AddPerson(Person person)
+        /// <see cref="PersonBase"/>.</param>
+        public void AddPerson(PersonBase person)
         {
             _peopleList.Add(person);
             _count++;
         }
 
         /// <summary>
-        /// Метод для вывода информации о <see cref="Person"/>
+        /// Метод для вывода информации о <see cref="PersonBase"/>
         /// по index в списке  <see cref="PersonList"/>.
         /// </summary>
         /// <param name="index">Номер члена в
         /// списке  <see cref="PersonList"/>.</param>
+        /// <returns>Строка с информацией о персоне.</returns>
         public string PersonInfo(int index)
         {
             CheckIndexValidity(index);
@@ -65,9 +65,10 @@ namespace People
         }
 
         /// <summary>
-        /// Метод для вывода информации о  всех  <see cref="Person"/>
+        /// Метод для вывода информации о  всех  <see cref="PersonBase"/>
         /// в списке  <see cref="PersonList"/>.
         /// </summary>
+        /// <returns>Строка с информацией о персоне.</returns>
         public string PersonInfo()
         {
             string info = "";
@@ -117,15 +118,15 @@ namespace People
         }
 
         /// <summary>
-        /// Возращает значение индекса <see cref="Person"/>
+        /// Возвращает значение индекса <see cref="PersonBase"/>
         /// в списке <see cref="PersonList"/>
-        /// (если <see cref="Person"/> не является членом
+        /// (если <see cref="PersonBase"/> не является членом
         /// <see cref="PersonList"/> то индекс равен "-1").
         /// </summary>
         /// <param name="setPerson"асс>Экземпляр класса
-        /// <see cref="Person"/>.</param>
-        /// <returns>Индекс экземпляра класса <see cref="Person"/>.</returns>
-        public int GetIndex(Person setPerson)
+        /// <see cref="PersonBase"/>.</param>
+        /// <returns>Индекс экземпляра класса <see cref="PersonBase"/>.</returns>
+        public int GetIndex(PersonBase setPerson)
         {
             int index = -1;
 
@@ -145,11 +146,11 @@ namespace People
         }
 
         /// <summary>
-        /// Возращает элемент класса <see cref="PersonList"/> по идексу.
+        /// Возвращает элемент класса <see cref="PersonList"/> по индексу.
         /// </summary>
         /// <param name="index">Индекс.</param>
         /// <returns>Элемент класса <see cref="PersonList"/>.</returns>
-        public Person GetByIndex(int index)
+        public PersonBase GetByIndex(int index)
         {
             CheckIndexValidity(index);
             return _peopleList[index];
@@ -159,38 +160,21 @@ namespace People
         ///  Возвращает сообщение об ошибке при неверном индексе.
         /// </summary>
         /// <param name="index">Индекс.</param>
-        /// <returns>Сообщение.</returns>
         private void CheckIndexValidity(int index)
         {
             if (index < 0)
             {
-                throw new ArgumentOutOfRangeException($"Введенное число" +
-                                                      $" меньше нуля.");
+                throw new ArgumentOutOfRangeException($"Введенное число"
+                                                      + $" меньше нуля.");
             }
+
             if (_peopleList.Count - 1 < index)
             {
-                throw new ArgumentException($"Список не содержит {index}-й" +
-                                            $" элемент (последний элемент " +
-                                            $"списка:" +
-                                            $"{_peopleList.Count - 1})");
+                throw new ArgumentException($"Список не содержит {index}-й"
+                                            + $" элемент (последний элемент "
+                                            + $"списка:"
+                                            + $"{_peopleList.Count - 1})");
             }
         }
-
-        /// <summary>
-        /// Генерирует список <see cref="PersonList"/>.
-        /// </summary>
-        /// <param name="quantity">Количество <see cref="Person"/>.</param>
-        /// <returns>Список персон.</returns>
-        public static PersonList GetRandomPersonList(int quantity)
-        {
-            PersonList personList = new PersonList();
-
-            for (int i = 0; i < quantity; i++)
-            {
-                personList.AddPerson(Person.GetRandomPerson());
-            }
-            return personList;
-        }
-
     }
 }

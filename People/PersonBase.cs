@@ -3,9 +3,9 @@ using System.Text.RegularExpressions;
 namespace People
 {
     /// <summary>
-    /// Класс Person, содержащий: имя, фамилию, возраст, пол.
+    /// Класс PersonBase, содержащий: имя, фамилию, возраст, пол.
     /// </summary>
-    public class Person
+    public abstract class PersonBase
     {
         /// <summary>
         /// Возраст.
@@ -23,30 +23,25 @@ namespace People
         private string _lastName;
 
         /// <summary>
-        /// Минимальный возраст.
+        /// Минимальный и Максимальный возраст.
         /// </summary>
-        private const int _ageMin = 0;
+        public virtual int AgeMin { get; }
 
         /// <summary>
         /// Минимальный возраст.
         /// </summary>
-        private const int _ageMax = 100;
+        public virtual int AgeMax { get; } = 100;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Person"/> class.
-        /// </summary>
-        public Person() : this("Неизвестно", "Неизвестно", 18, Gender.Male)
-        { }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Person"/> class.
-        /// Конструктор класса <see cref="Person"/>.
+        /// Initializes a new instance of the <see cref="PersonBase"/> class.
+        /// Конструктор класса <see cref="PersonBase"/>.
         /// </summary>
         /// <param name="firstName">Имя.</param>
         /// <param name="lastName">Фамилия.</param>
         /// <param name="age">Возраст.</param>
         /// <param name="gender">Пол.</param>
-        public Person(string firstName, string lastName, int age, Gender gender)
+        public PersonBase(string firstName, string lastName, int age,
+                      Gender gender)
         {
             FirstName = firstName;
             LastName = lastName;
@@ -55,7 +50,7 @@ namespace People
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="Person._age"/>.
+        /// Gets or sets the <see cref="PersonBase._age"/>.
         /// Получает или задает  возраст.
         /// </summary>
         public int Age
@@ -67,22 +62,20 @@ namespace People
 
             set
             {
-                if (value < _ageMin || value >= _ageMax)
+                if (value < AgeMin || value >= AgeMax)
                 {
                     throw new ArgumentOutOfRangeException
                         ($"Введенный возраст выходит из " +
-                        $"допустимого прела: {_ageMin} <= age < {_ageMax}");
+                        $"допустимого прела: {AgeMin} <= age < {AgeMax}");
                 }
-                else
-                {
-                    _age = value;
-                }
+
+                _age = value;
 
             }
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="Person._firstName"/>.
+        /// Gets or sets the <see cref="PersonBase._firstName"/>.
         /// Получает или задает имя.
         /// </summary>
         public string FirstName
@@ -98,21 +91,19 @@ namespace People
                                         $"использовались " +
                                         $"недопустимые символы");
                 }
-                else
-                {
-                    _firstName = CorrectionRegister(value);
-                }
+
+                _firstName = CorrectionRegister(value);
             }
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="Person._gender"/>.
+        /// Gets or sets the <see cref="PersonBase._gender"/>.
         /// Получает или задает  пол.
         /// </summary>
         public Gender Gender { get; set; }
 
         /// <summary>
-        /// Gets or sets the <see cref="Person._lastName"/>.
+        /// Gets or sets the <see cref="PersonBase._lastName"/>.
         /// Получает или задает  фамилию.
         /// </summary>
         public string LastName
@@ -135,18 +126,16 @@ namespace People
                                         $" использованием разных" +
                                         $" алфавитов");
                 }
-                else
-                {
-                    _lastName = CorrectionRegister(value);
-                }
+
+                _lastName = CorrectionRegister(value);
             }
         }
 
         /// <summary>
-        /// Возвращает строку с информацией о <see cref="Person"/>.
+        /// Возвращает строку с информацией о <see cref="PersonBase"/>.
         /// </summary>
-        /// <returns>Информация о <see cref="Person"/>.</returns>
-        public string GetInfo()
+        /// <returns>Информация о <see cref="PersonBase"/>.</returns>
+        public virtual string GetInfo()
         {
             return $"Имя: {FirstName}\tФамилия: {LastName}\t" +
                     $"Возраст: {Age}\tПол: {Gender}\n";
@@ -170,55 +159,11 @@ namespace People
         }
 
         /// <summary>
-        /// Создает экземпляяр класса <see cref="Person"/>
-        /// со случайным набором полей.
-        /// </summary>
-        /// <returns>Экземпляр класса <see cref="Person"/>.</returns>
-        public static Person GetRandomPerson()
-        {
-
-            Person randomPerson = new Person();
-
-            string[] manFirstNames = { "Александр", "Михаил", "Дмитрий",
-                                       "Иван", "Олег", "Николай", "Ален" };
-            string[] femFirstNames = { "Александра", "Анна", "Мария",
-                                       "Ивана", "Ольга", "Елена",
-                                                        "Екатерина" };
-            string[] unisexLastNames = { "Ямцун", "Ромм", "Резник", "Кулиш",
-                                         "Томпсон", "Думер", "Бумер",
-                                         "Герман", "Штраус" };
-            string[] manLastNames = { "Блохин", "Андреев", "Дорохов",
-                                      "Ермилов", "Ефимов", "Золотарев",
-                                      "Казаков" };
-
-            Random random = new Random();
-
-            randomPerson.Age = random.Next(_ageMin, _ageMax);
-            randomPerson.Gender = (Gender)random.Next(
-                                   Enum.GetNames(typeof(Gender)).Length);
-
-            int numLastNames = random.Next(2);
-
-
-            randomPerson.FirstName = randomPerson.Gender == Gender.Female
-                ? RandomString(femFirstNames)
-                : RandomString(manFirstNames);
-
-            randomPerson.LastName = numLastNames == 0
-                ? RandomString(unisexLastNames)
-                : randomPerson.Gender == Gender.Female
-                ? RandomString(manLastNames) + "а"
-                : RandomString(manLastNames);
-
-            return randomPerson;
-        }
-
-        /// <summary>
         /// Проверяет на каком языке написано слово.
         /// </summary>
         /// <param name="word">Проверяемое слово.</param>
-        /// true - латиница, false - кириллица </param>
-        /// <returns></returns>
+        /// <param name="language">Тип языка.</param>
+        /// <returns>Логическая переменная.</returns>
         public static bool CheckWordLanguage(string word,
             Language language = Language.English)
         {
@@ -241,7 +186,7 @@ namespace People
         /// с использованием символов одного языка.
         /// </summary>
         /// <param name="word">Слово (Имя, Фамилия).</param>
-        /// <returns>Булевая переменная.</returns>
+        /// <returns>Логическая переменная.</returns>
         public static bool CheckWordSameLanguage(string word)
         {
             return CheckWordLanguage(word)
@@ -253,7 +198,7 @@ namespace People
         /// </summary>
         /// <param name="word1">Слово (Имя).</param>
         /// <param name="word2">Слово (Фамилия).</param>
-        /// <returns>Булевая переменная.</returns>
+        /// <returns>Логическая переменная.</returns>
         public static bool CheckCharacterStylesWords(string word1,
                                                      string word2)
         {
@@ -261,17 +206,6 @@ namespace People
                     && CheckWordLanguage(word2))
                 || (CheckWordLanguage(word1, Language.Russian)
                     && CheckWordLanguage(word2, Language.Russian));
-        }
-
-        /// <summary>
-        /// Производит выбор случайной строки из массива строк. 
-        /// </summary>
-        /// <param name="strings">Массива строк.</param>
-        /// <returns>Строка.</returns>
-        protected static string RandomString(string[] strings)
-        {
-            Random random = new Random();
-            return strings[random.Next(strings.Length)];
         }
     }
 }
