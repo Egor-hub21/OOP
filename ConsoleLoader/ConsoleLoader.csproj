@@ -26,8 +26,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\People\People.csproj" />
-  </ItemGroup>
-
 </Project>
