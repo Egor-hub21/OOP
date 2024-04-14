@@ -1,3 +1,5 @@
+using GeometricFigures;
+
 namespace ConsoleLoader
 {
     /// <summary>
@@ -11,7 +13,9 @@ namespace ConsoleLoader
         /// </summary>
         public static void Main()
         {
-            Console.WriteLine("Привет");
+            GeometricFigureBase newCircel = ConsoleFigures.ConsoleReadTriangle();
+            Console.WriteLine(newCircel.GetArea());
+
         }
     }
 }
