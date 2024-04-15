@@ -41,10 +41,7 @@ namespace GeometricFigures
 
             set
             {
-                if (value <= 0)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(value));
-                }
+                CheckNumberPositivity(value);
 
                 _length = value;
             }
@@ -58,10 +55,7 @@ namespace GeometricFigures
             get => _width;
             set
             {
-                if (value <= 0)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(value));
-                }
+                CheckNumberPositivity(value);
 
                 _width = value;
             }

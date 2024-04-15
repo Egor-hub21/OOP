@@ -24,5 +24,17 @@ namespace GeometricFigures
         /// <returns>Информация.</returns>
         public abstract string GetInfo();
 
+        /// <summary>
+        /// Выбрасывает исключение если число меньше или равно нулю.
+        /// </summary>
+        /// <param name="number">Число.</param>
+        /// <exception cref="ArgumentOutOfRangeException">Исключение.</exception>
+        protected static void CheckNumberPositivity(double number)
+        {
+            if (number <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(number), "Число должно быть больше нуля.");
+            }
+        }
     }
 }

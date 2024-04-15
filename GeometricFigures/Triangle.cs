@@ -48,10 +48,7 @@ namespace GeometricFigures
 
             set
             {
-                if (value <= 0)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(value));
-                }
+                CheckNumberPositivity(value);
 
                 _firstSide = value;
             }
@@ -66,10 +63,7 @@ namespace GeometricFigures
 
             set
             {
-                if (value <= 0)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(value));
-                }
+                CheckNumberPositivity(value);
 
                 _secondSide = value;
             }
@@ -84,10 +78,7 @@ namespace GeometricFigures
 
             set
             {
-                if (value.Degrees <= 0)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(value));
-                }
+                CheckNumberPositivity(value.Degrees);
 
                 _angle = value;
             }

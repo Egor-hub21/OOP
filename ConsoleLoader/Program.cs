@@ -13,6 +13,7 @@ namespace ConsoleLoader
         /// </summary>
         public static void Main()
         {
+            double t = Convert.ToDouble(Console.ReadLine());
             GeometricFigureBase newCircel = ConsoleFigures.ConsoleReadTriangle();
             Console.WriteLine(newCircel.GetArea());
 

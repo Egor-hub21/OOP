@@ -24,16 +24,23 @@ namespace ConsoleLoader
                         Console.WriteLine($"Возникло исключение {message}");
                     }
                 },
+                {
+                    typeof(FormatException),
+                    (string message) =>
+                    {
+                        Console.WriteLine($"Возникло исключение {message}");
+                    }
+                },
             };
 
-            List<Action> actions =
-            [
+            var actions = new List<Action>()
+            {
                 () =>
                 {
                     Console.WriteLine("Введите радиус");
                     circle.Radius = Convert.ToDouble(Console.ReadLine());
                 },
-            ];
+            };
 
             foreach (Action action in actions)
             {
@@ -60,10 +67,17 @@ namespace ConsoleLoader
                         Console.WriteLine($"Возникло исключение {message}");
                     }
                 },
+                {
+                    typeof(FormatException),
+                    (string message) =>
+                    {
+                        Console.WriteLine($"Возникло исключение {message}");
+                    }
+                },
             };
 
-            List<Action> actions =
-            [
+            var actions = new List<Action>()
+            {
                 () =>
                     {
                         Console.WriteLine("Введите длину");
@@ -74,7 +88,7 @@ namespace ConsoleLoader
                     Console.WriteLine("Введите ширину");
                     rectangle.Width = Convert.ToDouble(Console.ReadLine());
                 },
-            ];
+            };
 
             foreach (Action action in actions)
             {
@@ -101,10 +115,17 @@ namespace ConsoleLoader
                         Console.WriteLine($"Возникло исключение {message}");
                     }
                 },
+                {
+                    typeof(FormatException),
+                    (string message) =>
+                    {
+                        Console.WriteLine($"Возникло исключение {message}");
+                    }
+                },
             };
 
-            List<Action> actions =
-            [
+            var actions = new List<Action>()
+            {
                 () =>
                 {
                     Console.WriteLine("Введите первую сторону");
@@ -117,10 +138,10 @@ namespace ConsoleLoader
                 },
                 () =>
                 {
-                    Console.WriteLine("Введите третью сторону");
+                    Console.WriteLine("Угол");
                     triangle.Angle = new Angle(Convert.ToDouble(Console.ReadLine()));
                 },
-            ];
+            };
 
             foreach (Action action in actions)
             {
@@ -130,7 +151,14 @@ namespace ConsoleLoader
             return triangle;
         }
 
-        private static void ActionHandler(Action tryAction, Dictionary<Type, Action<string>> catchActionDictionary)
+        /// <summary>
+        /// Зацикливает выполнение программы до ее корректного завершения.
+        /// </summary>
+        /// <param name="tryAction">Действия.</param>
+        /// <param name="catchActionDictionary">Словарь в котором хранятся
+        /// действия в случае возникновения исключений.</param>
+        private static void ActionHandler(Action tryAction,
+            Dictionary<Type, Action<string>> catchActionDictionary)
         {
             while (true)
             {

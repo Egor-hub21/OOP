@@ -34,10 +34,7 @@ namespace GeometricFigures
 
             set
             {
-                if (value <= 0)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(value));
-                }
+                CheckNumberPositivity(value);
 
                 _radius = value;
             }
