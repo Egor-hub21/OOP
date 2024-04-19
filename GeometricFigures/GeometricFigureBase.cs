@@ -33,7 +33,7 @@ namespace GeometricFigures
         {
             if (number <= 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(number), "Число должно быть больше нуля.");
+                throw new ArgumentOutOfRangeException("Число должно быть больше нуля.");
             }
         }
     }

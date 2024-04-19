@@ -8,10 +8,58 @@ namespace ConsoleLoader
     public static class ConsoleFigures
     {
         /// <summary>
+        /// Создание фигуры.
+        /// </summary>
+        /// <returns>Фигура.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">.</exception>
+        public static GeometricFigureBase ReadFigure()
+        {
+            GeometricFigureBase figureBase = new Circle();
+
+            var actions = new List<Action>()
+            {
+                () =>
+                {
+                    Console.WriteLine("Номера фигур:\n" +
+                        "\t1 - Круг;\n" +
+                        "\t2 - Прямоугольник;\n" +
+                        "\t3 - Треугольник.\n" +
+                        "Введите номер фигуры:");
+                },
+
+                () =>
+                {
+                    ConsoleKeyInfo keyInfo = Console.ReadKey();
+
+                    Console.WriteLine();
+
+                    switch (keyInfo.KeyChar)
+                    {
+                        case '1':
+                            figureBase = ReadCircle();
+                            break;
+                        case '2':
+                            figureBase = ReadRectangle();
+                            break;
+                        case '3':
+                            figureBase = ReadRectangle();
+                            break;
+                        default:
+                             throw new ArgumentOutOfRangeException("\nВы нажали недопустимую клавишу");
+                    }
+                },
+            };
+
+            ActionHandler(actions);
+
+            return figureBase;
+        }
+
+        /// <summary>
         /// Ввод данных о круге с консоли.
         /// </summary>
         /// <returns>Круг.</returns>
-        public static Circle ConsoleReadCircle()
+        public static Circle ReadCircle()
         {
             Circle circle = new Circle();
 
@@ -24,14 +72,16 @@ namespace ConsoleLoader
                 },
             };
 
-            return ConsoleReadFigure(circle, actions);
+            ActionHandler(actions);
+
+            return circle;
         }
 
         /// <summary>
         /// Ввод данных о прямоугольнике с консоли.
         /// </summary>
         /// <returns>прямоугольник.</returns>
-        public static Rectangle ConsoleReadRectangle()
+        public static Rectangle ReadRectangle()
         {
             Rectangle rectangle = new Rectangle();
 
@@ -49,14 +99,16 @@ namespace ConsoleLoader
                 },
             };
 
-            return ConsoleReadFigure(rectangle, actions);
+            ActionHandler(actions);
+
+            return rectangle;
         }
 
         /// <summary>
         /// Ввод данных о треугольнике с консоли.
         /// </summary>
         /// <returns>треугольник.</returns>
-        public static Triangle ConsoleReadTriangle()
+        public static Triangle ReadTriangle()
         {
             Triangle triangle = new Triangle();
 
@@ -79,17 +131,17 @@ namespace ConsoleLoader
                 },
             };
 
-            return ConsoleReadFigure(triangle, actions);
+            ActionHandler(actions);
+
+            return triangle;
         }
 
         /// <summary>
-        /// Создание геометрической фигуры.
+        /// Зацикливает выполнение программы до ее корректного завершения.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="figure"> Геометрическая фигура.</param>
         /// <param name="assignActions">Действия для создания фигуры.</param>
-        /// <returns>Геометрическая фигура.</returns>
-        private static T ConsoleReadFigure<T>(T figure, List<Action> assignActions)
+        /// действия в случае возникновения исключений.</param>
+        private static void ActionHandler(List<Action> assignActions)
         {
             Dictionary<Type, Action<string>> catchDictionary = new Dictionary<Type, Action<string>>()
             {
@@ -111,34 +163,20 @@ namespace ConsoleLoader
 
             foreach (var assignAction in assignActions)
             {
-                ActionHandler(assignAction, catchDictionary);
-            }
-
-            return figure;
-        }
-
-        /// <summary>
-        /// Зацикливает выполнение программы до ее корректного завершения.
-        /// </summary>
-        /// <param name="tryAction">Действия.</param>
-        /// <param name="catchActionDictionary">Словарь в котором хранятся
-        /// действия в случае возникновения исключений.</param>
-        private static void ActionHandler(Action tryAction,
-            Dictionary<Type, Action<string>> catchActionDictionary)
-        {
-            while (true)
-            {
-                try
+                while (true)
                 {
-                    tryAction.Invoke();
-                    return;
-                }
-                catch (Exception ex)
-                {
-                    catchActionDictionary[ex.GetType()].Invoke(ex.Message);
-                }
+                    try
+                    {
+                        assignAction.Invoke();
+                        break;
+                    }
+                    catch (Exception ex)
+                    {
+                        catchDictionary[ex.GetType()].Invoke(ex.Message);
+                    }
 
-                Console.WriteLine("\n!Ошибка ввода!\nПопробуйте снова:");
+                    Console.WriteLine("\n!Ошибка ввода!\nПопробуйте снова:\n");
+                }
             }
         }
 

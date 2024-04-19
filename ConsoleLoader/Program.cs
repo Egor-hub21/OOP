@@ -13,8 +13,24 @@ namespace ConsoleLoader
         /// </summary>
         public static void Main()
         {
-            GeometricFigureBase newCircel = ConsoleFigures.ConsoleReadTriangle();
-            Console.WriteLine(newCircel.GetArea());
+            while (true)
+            {
+                GeometricFigureBase newFigur = ConsoleFigures.ReadFigure();
+                Console.WriteLine(newFigur.GetArea());
+
+                Console.WriteLine("Введите символ 'y',продолжить выполнение программы :");
+                ConsoleKeyInfo userInput = Console.ReadKey();
+                Console.WriteLine();
+
+                switch (userInput.KeyChar)
+                {
+                    case 'y':
+                        Console.WriteLine("Продолжение выполнения программы.");
+                        break;
+                    default:
+                        return;
+                }
+            }
 
         }
     }

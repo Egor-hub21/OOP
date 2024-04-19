@@ -93,9 +93,9 @@ namespace GeometricFigures
         /// <inheritdoc/>
         public override string GetInfo()
         {
-            return $"Стороны треугольника :{FirstSide};"
-                + $" {SecondSide};"
-                + $" {Angle.Degrees};";
+            return $"Первая сторона: {FirstSide}; "
+                + $"Вторая сторона: {SecondSide}; "
+                + $"Угол м/у ними: {Angle.Degrees};";
         }
 
         /// <inheritdoc/>
