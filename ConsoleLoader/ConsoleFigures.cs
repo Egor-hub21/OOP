@@ -42,9 +42,10 @@ namespace ConsoleLoader
                             figureBase = ReadRectangle();
                             break;
                         case '3':
-                            figureBase = ReadRectangle();
+                            figureBase = ReadTriangle();
                             break;
                         default:
+                            //TODO: RSDN
                              throw new ArgumentOutOfRangeException("\nВы нажали недопустимую клавишу");
                     }
                 },
@@ -88,10 +89,10 @@ namespace ConsoleLoader
             var actions = new List<Action>()
             {
                 () =>
-                    {
-                        Console.WriteLine("Введите длину");
-                        rectangle.Length = Convert.ToDouble(Console.ReadLine());
-                    },
+                {
+                    Console.WriteLine("Введите длину");
+                    rectangle.Length = Convert.ToDouble(Console.ReadLine());
+                },
                 () =>
                 {
                     Console.WriteLine("Введите ширину");
@@ -143,6 +144,7 @@ namespace ConsoleLoader
         /// действия в случае возникновения исключений.</param>
         private static void ActionHandler(List<Action> assignActions)
         {
+            //TODO: RSDN
             Dictionary<Type, Action<string>> catchDictionary = new Dictionary<Type, Action<string>>()
             {
                 {

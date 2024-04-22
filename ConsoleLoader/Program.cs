@@ -15,8 +15,8 @@ namespace ConsoleLoader
         {
             while (true)
             {
-                GeometricFigureBase newFigur = ConsoleFigures.ReadFigure();
-                Console.WriteLine(newFigur.GetArea());
+                GeometricFigureBase newFigure = ConsoleFigures.ReadFigure();
+                Console.WriteLine(newFigure.GetArea());
 
                 Console.WriteLine("Введите символ 'y',продолжить выполнение программы :");
                 ConsoleKeyInfo userInput = Console.ReadKey();

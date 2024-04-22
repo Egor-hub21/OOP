@@ -5,6 +5,7 @@ namespace GeometricFigures
     /// </summary>
     public struct Angle
     {
+        //TODO: XML
         private double _degrees;
 
         /// <summary>
