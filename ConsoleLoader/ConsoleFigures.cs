@@ -45,8 +45,9 @@ namespace ConsoleLoader
                             figureBase = ReadTriangle();
                             break;
                         default:
-                            //TODO: RSDN
-                             throw new ArgumentOutOfRangeException("\nВы нажали недопустимую клавишу");
+                            //TODO: RSDN +
+                             throw new ArgumentOutOfRangeException
+                                ("\nВы нажали недопустимую клавишу");
                     }
                 },
             };
@@ -69,7 +70,8 @@ namespace ConsoleLoader
                 () =>
                 {
                     Console.WriteLine("Введите радиус");
-                    circle.Radius = Convert.ToDouble(Console.ReadLine());
+                    circle.Radius =
+                        ReadNumbersFromConsole();
                 },
             };
 
@@ -91,12 +93,12 @@ namespace ConsoleLoader
                 () =>
                 {
                     Console.WriteLine("Введите длину");
-                    rectangle.Length = Convert.ToDouble(Console.ReadLine());
+                    rectangle.Length = ReadNumbersFromConsole();
                 },
                 () =>
                 {
                     Console.WriteLine("Введите ширину");
-                    rectangle.Width = Convert.ToDouble(Console.ReadLine());
+                    rectangle.Width = ReadNumbersFromConsole();
                 },
             };
 
@@ -118,17 +120,18 @@ namespace ConsoleLoader
                 () =>
                 {
                     Console.WriteLine("Введите первую сторону");
-                    triangle.FirstSide = Convert.ToDouble(Console.ReadLine());
+                    triangle.FirstSide = ReadNumbersFromConsole();
                 },
                 () =>
                 {
                     Console.WriteLine("Введите вторую сторону");
-                    triangle.SecondSide = Convert.ToDouble(Console.ReadLine());
+                    triangle.SecondSide = ReadNumbersFromConsole();
                 },
                 () =>
                 {
                     Console.WriteLine("Угол");
-                    triangle.Angle = new Angle(Convert.ToDouble(Console.ReadLine()));
+                    triangle.Angle =
+                        new Angle(ReadNumbersFromConsole());
                 },
             };
 
@@ -144,8 +147,9 @@ namespace ConsoleLoader
         /// действия в случае возникновения исключений.</param>
         private static void ActionHandler(List<Action> assignActions)
         {
-            //TODO: RSDN
-            Dictionary<Type, Action<string>> catchDictionary = new Dictionary<Type, Action<string>>()
+            //TODO: RSDN +
+            Dictionary<Type, Action<string>> catchDictionary =
+                new Dictionary<Type, Action<string>>()
             {
                 {
                     typeof(ArgumentOutOfRangeException),
@@ -177,9 +181,15 @@ namespace ConsoleLoader
                         catchDictionary[ex.GetType()].Invoke(ex.Message);
                     }
 
-                    Console.WriteLine("\n!Ошибка ввода!\nПопробуйте снова:\n");
+                    Console.WriteLine("\n!Ошибка ввода!"
+                        + "\nПопробуйте снова:\n");
                 }
             }
+        }
+
+        private static double ReadNumbersFromConsole()
+        {
+            return Convert.ToDouble(Console.ReadLine().Replace('.', ','));
         }
 
     }

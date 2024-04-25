@@ -79,6 +79,11 @@ namespace GeometricFigures
             set
             {
                 CheckNumberPositivity(value.Degrees);
+                if (value.Degrees >= 180)
+                {
+                    throw new ArgumentOutOfRangeException(
+                        "Угол треугольника должен быть меньше 180!");
+                }
 
                 _angle = value;
             }

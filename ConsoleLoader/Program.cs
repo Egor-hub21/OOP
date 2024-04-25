@@ -15,21 +15,22 @@ namespace ConsoleLoader
         {
             while (true)
             {
-                GeometricFigureBase newFigure = ConsoleFigures.ReadFigure();
-                Console.WriteLine(newFigure.GetArea());
+                Console.WriteLine("Чтобы выйти из программы, нажмите \"x\", "
+                    + "для начала работы - любую другую клавишу :");
 
-                Console.WriteLine("Введите символ 'y',продолжить выполнение программы :");
                 ConsoleKeyInfo userInput = Console.ReadKey();
                 Console.WriteLine();
 
                 switch (userInput.KeyChar)
                 {
-                    case 'y':
-                        Console.WriteLine("Продолжение выполнения программы.");
-                        break;
-                    default:
+                    case 'x':
                         return;
+                    default:
+                        break;
                 }
+
+                GeometricFigureBase newFigure = ConsoleFigures.ReadFigure();
+                Console.WriteLine(Math.Round(newFigure.GetArea(), 2));
             }
 
         }
