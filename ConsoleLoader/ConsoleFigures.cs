@@ -36,18 +36,29 @@ namespace ConsoleLoader
                     switch (keyInfo.KeyChar)
                     {
                         case '1':
+                        {
                             figureBase = ReadCircle();
                             break;
+                        }
+
                         case '2':
+                        {
                             figureBase = ReadRectangle();
                             break;
+                        }
+
                         case '3':
+                        {
                             figureBase = ReadTriangle();
                             break;
+                        }
+
                         default:
+                        {
                             //TODO: RSDN +
                              throw new ArgumentOutOfRangeException
                                 ("\nВы нажали недопустимую клавишу");
+                        }
                     }
                 },
             };

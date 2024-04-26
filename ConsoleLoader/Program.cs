@@ -24,9 +24,14 @@ namespace ConsoleLoader
                 switch (userInput.KeyChar)
                 {
                     case 'x':
+                    {
                         return;
+                    }
+
                     default:
+                    {
                         break;
+                    }
                 }
 
                 GeometricFigureBase newFigure = ConsoleFigures.ReadFigure();
