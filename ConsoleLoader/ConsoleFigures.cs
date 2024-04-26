@@ -196,7 +196,12 @@ namespace ConsoleLoader
             }
         }
 
-        //TODO: XML
+        //TODO: XML +
+
+        /// <summary>
+        /// Ввод чисел с консоли.
+        /// </summary>
+        /// <returns>Число.</returns>
         private static double ReadNumbersFromConsole()
         {
             return Convert.ToDouble(Console.ReadLine().Replace('.', ','));
