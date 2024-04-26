@@ -5,8 +5,6 @@ namespace GeometricFigures
     /// </summary>
     public struct Angle
     {
-        //TODO: XML +
-
         /// <summary>
         /// Градусы.
         /// </summary>

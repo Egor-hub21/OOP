@@ -55,7 +55,6 @@ namespace ConsoleLoader
 
                         default:
                         {
-                            //TODO: RSDN +
                              throw new ArgumentOutOfRangeException
                                 ("\nВы нажали недопустимую клавишу");
                         }
@@ -158,7 +157,6 @@ namespace ConsoleLoader
         /// действия в случае возникновения исключений.</param>
         private static void ActionHandler(List<Action> assignActions)
         {
-            //TODO: RSDN +
             Dictionary<Type, Action<string>> catchDictionary =
                 new Dictionary<Type, Action<string>>()
             {
@@ -198,6 +196,7 @@ namespace ConsoleLoader
             }
         }
 
+        //TODO: XML
         private static double ReadNumbersFromConsole()
         {
             return Convert.ToDouble(Console.ReadLine().Replace('.', ','));
