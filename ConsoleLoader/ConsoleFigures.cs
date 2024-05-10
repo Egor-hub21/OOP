@@ -196,8 +196,6 @@ namespace ConsoleLoader
             }
         }
 
-        //TODO: XML +
-
         /// <summary>
         /// Ввод чисел с консоли.
         /// </summary>
