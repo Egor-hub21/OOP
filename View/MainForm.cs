@@ -1,3 +1,7 @@
+using GeometricFigures;
+using System.ComponentModel;
+using System.Windows.Forms;
+
 namespace View
 {
     public partial class MainForm : Form
@@ -5,17 +9,35 @@ namespace View
         public MainForm()
         {
             InitializeComponent();
+            InitializeFigures();
+            PopulateDataGridView();
 
-            Button addButton = new Button();
+            addButton.Click += new EventHandler(openAddForm);
+        }
 
-            addButton.Text = "Добавить";
-            addButton.Location = new Point(100, 100);
-            addButton.Size = new Size(100, 100);
-            addButton.Name = "addButton";
+        private void openAddForm(object sender, EventArgs e)
+        {
+            AddForm addForm = new AddForm();
+            addForm.Show();
+        }
 
-            addButton.Click += new EventHandler(button1_Click);
+        private void InitializeFigures()
+        {
+            GeometricFigures = new BindingList<GeometricFigureBase>
+            {
+                new Circle(1),
+                new GeometricFigures.Rectangle(2,2),
+                new Triangle(1,2, new Angle(90)),
+            };
+        }
 
-            this.Controls.Add(addButton);
+        private void PopulateDataGridView()
+        {
+            figureDataGrid.Rows.Clear();
+            foreach (var figure in GeometricFigures)
+            {
+                figureDataGrid.Rows.Add(figure.GetType().Name, figure.GetInfo(), figure.GetArea());
+            }
         }
     }
 }

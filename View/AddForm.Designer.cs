@@ -6,6 +6,12 @@
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
+        private MyButton okButton;
+        private MyButton cancelButton;
+        private ComboBox comboBox;
+
+        private FigureParametersBox figureParametersBox;
+
 
         /// <summary>
         /// Clean up any resources being used.
@@ -20,6 +26,49 @@
             base.Dispose(disposing);
         }
 
+        private void comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.Controls.Remove(figureParametersBox);
+            figureParametersBox.Dispose();
+            CircleParametersBox groupBoxCircle = new()
+            {
+                Location = new Point(200, 50),
+                Size = new Size(200, 200),
+                Text = "CircleParameters",
+            };
+
+            RectangleParametersBox groupBoxRectangle = new()
+            {
+                Location = new Point(200, 50),
+                Size = new Size(200, 200),
+                Text = "RectangleParameters",
+            };
+
+            TriangleParametersBox groupBoxTriangle  = new()
+            {
+                Location = new Point(200, 50),
+                Size = new Size(200, 200),
+                Text = "TriangleParameters",
+            };
+            switch (comboBox.SelectedIndex)
+            {
+                case 0:
+                    figureParametersBox = groupBoxCircle;
+                    break;
+                case 1:
+                    figureParametersBox = groupBoxRectangle;
+                    break;
+                case 2:
+                    figureParametersBox = groupBoxTriangle;
+                    break;
+                default:
+                    figureParametersBox.Visible = false;
+
+                    break;
+            }
+            this.Controls.Add(figureParametersBox);
+        }
+
         #region Windows Form Designer generated code
 
         /// <summary>
@@ -28,16 +77,57 @@
         /// </summary>
         private void InitializeComponent()
         {
-            SuspendLayout();
+            // 
+            // okButton
+            // 
+            okButton = new MyButton()
+            {
+                Text = "Ok",
+                Location = new Point(50, 170),
+                Name = "okButton",
+            };
+            // 
+            // cancelButton
+            // 
+            cancelButton = new MyButton()
+            {
+                Text = "Cancel",
+                Location = new Point(50, 210),
+                Name = "cancelButton",
+            };
+            // 
+            // comboBox
+            // 
+            List<string> myList = new List<string> { "Circle", "Rectangle", "Triangle" };
+            comboBox = new ComboBox()
+            {
+                Location = new Point(50, 50),
+                DropDownStyle = ComboBoxStyle.DropDownList,
+                DataSource = myList,
+            };
+            // 
+            // groupBoxCircle
+            // 
+            figureParametersBox = new FigureParametersBox()
+            {
+                Location = new Point(200, 50),
+                Size = new Size(200, 200),
+                Text = "FigureParameters",
+            };
             // 
             // AddForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            int widhtForm = 450;//400;
+            int heightForm = 300;//200;
+
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            this.ClientSize = new System.Drawing.Size(widhtForm, heightForm);
             Name = "AddForm";
             Text = "AddForm";
-            ResumeLayout(false);
+            this.Controls.Add(okButton);
+            this.Controls.Add(cancelButton);
+            this.Controls.Add(comboBox);
+            //this.Controls.Add(figureParametersBox);
         }
 
         #endregion
