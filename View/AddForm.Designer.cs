@@ -29,41 +29,31 @@
         private void comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.Controls.Remove(figureParametersBox);
-            figureParametersBox.Dispose();
-            CircleParametersBox groupBoxCircle = new()
-            {
-                Location = new Point(200, 50),
-                Size = new Size(200, 200),
-                Text = "CircleParameters",
-            };
 
-            RectangleParametersBox groupBoxRectangle = new()
-            {
-                Location = new Point(200, 50),
-                Size = new Size(200, 200),
-                Text = "RectangleParameters",
-            };
-
-            TriangleParametersBox groupBoxTriangle  = new()
-            {
-                Location = new Point(200, 50),
-                Size = new Size(200, 200),
-                Text = "TriangleParameters",
-            };
             switch (comboBox.SelectedIndex)
             {
                 case 0:
-                    figureParametersBox = groupBoxCircle;
+                    figureParametersBox = new CircleParametersBox()
+                    {
+                        Location = figureParametersBox.Location,
+                    };
                     break;
                 case 1:
-                    figureParametersBox = groupBoxRectangle;
+                    figureParametersBox = new RectangleParametersBox()
+                    {
+                        Location = figureParametersBox.Location,
+
+                    };
                     break;
                 case 2:
-                    figureParametersBox = groupBoxTriangle;
+                    figureParametersBox = new TriangleParametersBox()
+                    {
+                        Location = figureParametersBox.Location,
+
+                    };
                     break;
                 default:
-                    figureParametersBox.Visible = false;
-
+                    figureParametersBox.Visible = true;
                     break;
             }
             this.Controls.Add(figureParametersBox);

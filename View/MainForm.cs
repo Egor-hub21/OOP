@@ -17,7 +17,8 @@ namespace View
 
         private void openAddForm(object sender, EventArgs e)
         {
-            AddForm addForm = new AddForm();
+            AddForm addForm = new AddForm(this);
+            addForm.GeometricFigures = GeometricFigures;
             addForm.Show();
         }
 
@@ -31,7 +32,7 @@ namespace View
             };
         }
 
-        private void PopulateDataGridView()
+        public void PopulateDataGridView()
         {
             figureDataGrid.Rows.Clear();
             foreach (var figure in GeometricFigures)

@@ -4,23 +4,44 @@ namespace View
 {
     public class RectangleParametersBox : FigureParametersBox
     {
-        public NumericBox lenghtTextBox { get; private set; }
+        public NumericBox lengthTextBox { get; private set; }
         public NumericBox widthSideTextBox { get; private set; }
 
+        public Label lenghtLabel { get; set; }
+        public Label widthLabel { get; set; }
 
         public RectangleParametersBox()
         {
-            lenghtTextBox = new NumericBox()
+            lenghtLabel = new Label()
             {
-                Location = new Point(0, 0),
+                Text = "Lenght :",
+                Dock = DockStyle.Bottom,
             };
-            this.Controls.Add(lenghtTextBox);
+
+            widthLabel = new Label()
+            {
+                Text = "Width :",
+                Dock = DockStyle.Bottom,
+            };
+
+            lengthTextBox = new NumericBox()
+            {
+                Dock = DockStyle.Bottom,
+            };
+            
 
             widthSideTextBox = new NumericBox()
             {
-                Location = new Point(0, 50),
+                Dock = DockStyle.Bottom,
             };
-            this.Controls.Add(widthSideTextBox);
+
+            Size = new Size(200, 120);
+            Text = "CircleParameters";
+
+            Controls.Add(lenghtLabel);
+            Controls.Add(lengthTextBox);
+            Controls.Add(widthLabel);
+            Controls.Add(widthSideTextBox);
         }
     }
 }

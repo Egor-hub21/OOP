@@ -4,17 +4,27 @@ namespace View
 {
     public class CircleParametersBox : FigureParametersBox
     {
-        public NumericBox radiusTextBox { get; private set; }
+        public NumericBox radiusTextBox { get; set; }
+        public Label radiusLabel { get; set; }
 
         public CircleParametersBox()
         {
+            radiusLabel = new Label()
+            {
+                Text = "Radius :",
+                Dock = DockStyle.Bottom,
+            };
+
             radiusTextBox = new NumericBox()
             {
                 Dock = DockStyle.Bottom,
-                Location = new Point(0, 0),
             };
 
-            this.Controls.Add(radiusTextBox);
+            Size = new Size(200, 75);
+            Text = "CircleParameters";
+
+            Controls.Add(radiusLabel);
+            Controls.Add(radiusTextBox);
         }
     }
 }
