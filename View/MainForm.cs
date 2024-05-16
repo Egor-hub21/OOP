@@ -13,6 +13,7 @@ namespace View
             PopulateDataGridView();
 
             addButton.Click += new EventHandler(openAddForm);
+            removeButton.Click += new EventHandler(figureDataGrid_DeletingLine);
         }
 
         private void openAddForm(object sender, EventArgs e)
@@ -38,6 +39,23 @@ namespace View
             foreach (var figure in GeometricFigures)
             {
                 figureDataGrid.Rows.Add(figure.GetType().Name, figure.GetInfo(), figure.GetArea());
+            }
+        }
+
+        private void figureDataGrid_DeletingLine(object sender, EventArgs e)
+        {
+            if (figureDataGrid.SelectedRows.Count > 0)
+            {
+                // Получаем выделенную строку
+                int selectedIndex = figureDataGrid.SelectedRows[0].Index;
+
+                GeometricFigures.RemoveAt(selectedIndex);
+
+                PopulateDataGridView();
+            }
+            else
+            {
+                MessageBox.Show("Выделите строку в таблице!");
             }
         }
     }

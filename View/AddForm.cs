@@ -35,7 +35,7 @@ namespace View
                 }
                 else
                 {
-                    MessageBox.Show("Please fill in all fields");
+                    MessageBox.Show("Пожалуйста, заполните все поля");
                 }
             }
             else if (figureParametersBox is RectangleParametersBox rectangleParametersBox)
@@ -54,7 +54,7 @@ namespace View
                 }
                 else
                 {
-                    MessageBox.Show("Please fill in all fields");
+                    MessageBox.Show("Пожалуйста, заполните все поля");
                 }
             }
             else if (figureParametersBox is TriangleParametersBox triangleParametersBox)
@@ -75,7 +75,7 @@ namespace View
                 }
                 else
                 {
-                    MessageBox.Show("Please fill in all fields");
+                    MessageBox.Show("Пожалуйста, заполните все поля");
                 }
             }
         }

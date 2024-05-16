@@ -54,12 +54,12 @@ namespace View
             Size = new Size(200, 165);
             Text = "TriangleParameters";
 
-            Controls.Add(angelLabel);
-            Controls.Add(firstSideTextBox);
             Controls.Add(firstSideLabel);
-            Controls.Add(angleTextBox);
+            Controls.Add(firstSideTextBox);
             Controls.Add(secondSideLabel);
             Controls.Add(secondSideTextBox);
+            Controls.Add(angelLabel);
+            Controls.Add(angleTextBox);
         }
     }
 }
