@@ -26,39 +26,6 @@
             base.Dispose(disposing);
         }
 
-        private void comboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            this.Controls.Remove(figureParametersBox);
-
-            switch (comboBox.SelectedIndex)
-            {
-                case 0:
-                    figureParametersBox = new CircleParametersBox()
-                    {
-                        Location = figureParametersBox.Location,
-                    };
-                    break;
-                case 1:
-                    figureParametersBox = new RectangleParametersBox()
-                    {
-                        Location = figureParametersBox.Location,
-
-                    };
-                    break;
-                case 2:
-                    figureParametersBox = new TriangleParametersBox()
-                    {
-                        Location = figureParametersBox.Location,
-
-                    };
-                    break;
-                default:
-                    figureParametersBox.Visible = true;
-                    break;
-            }
-            this.Controls.Add(figureParametersBox);
-        }
-
         #region Windows Form Designer generated code
 
         /// <summary>

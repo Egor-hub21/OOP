@@ -1,11 +1,12 @@
 using GeometricFigures;
 using System.ComponentModel;
-using System.Windows.Forms;
 
 namespace View
 {
     public partial class MainForm : Form
     {
+        public BindingList<GeometricFigureBase> GeometricFigures { get; set; }
+
         public MainForm()
         {
             InitializeComponent();
@@ -35,23 +36,18 @@ namespace View
 
         public void PopulateDataGridView()
         {
-            figureDataGrid.Rows.Clear();
-            foreach (var figure in GeometricFigures)
-            {
-                figureDataGrid.Rows.Add(figure.GetType().Name, figure.GetInfo(), figure.GetArea());
-            }
+            figureDataGrid.DataSource = GeometricFigures;
         }
 
         private void figureDataGrid_DeletingLine(object sender, EventArgs e)
         {
             if (figureDataGrid.SelectedRows.Count > 0)
             {
-                // Получаем выделенную строку
-                int selectedIndex = figureDataGrid.SelectedRows[0].Index;
-
-                GeometricFigures.RemoveAt(selectedIndex);
-
-                PopulateDataGridView();
+                // Удаляем выбранные строки из списка
+                foreach (DataGridViewRow row in figureDataGrid.SelectedRows)
+                {
+                    figureDataGrid.Rows.Remove(row);
+                }
             }
             else
             {

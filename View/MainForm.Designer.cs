@@ -16,7 +16,6 @@ namespace View
         private Button removeButton;
         private DataGridView figureDataGrid;
 
-        public BindingList<GeometricFigureBase> GeometricFigures { get; set; }
 
         /// <summary>
         ///  Clean up any resources being used.
@@ -65,16 +64,9 @@ namespace View
                 Location = new Point(0, 20),
                 Dock = DockStyle.Fill,
                 Name = "figureDataGrid",
-                //AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
+                AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
                 ReadOnly = true,
             };
-            figureDataGrid.Columns.Add("Type", "Тип");
-            figureDataGrid.Columns.Add("Parameters", "Параметры");
-            figureDataGrid.Columns.Add("Square", "Площадь");
-            figureDataGrid.Columns[0].Width = 100;
-            figureDataGrid.Columns[1].Width = 350;
-            figureDataGrid.Columns[2].Width = 100;
-
             // 
             // figuresGroupBox
             // 

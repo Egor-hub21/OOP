@@ -7,6 +7,26 @@ namespace GeometricFigures
     public abstract class GeometricFigureBase
     {
         /// <summary>
+        /// Тип фигуры.
+        /// </summary>
+        public abstract string TypeFigure { get; }
+
+        /// <summary>
+        /// Площадь фигуры.
+        /// </summary>
+        public abstract double Area { get; }
+
+        /// <summary>
+        /// Периметр фигуры.
+        /// </summary>
+        public abstract double Perimeter { get; }
+
+        /// <summary>
+        /// Информацию о фигуре в форме строки.
+        /// </summary>
+        public abstract string Info { get; }
+
+        /// <summary>
         /// Возвращает площадь фигуры.
         /// </summary>
         /// <returns>Площадь.</returns>

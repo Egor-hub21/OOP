@@ -90,6 +90,18 @@ namespace GeometricFigures
         }
 
         /// <inheritdoc/>
+        public override string TypeFigure { get => GetType().Name; }
+
+        /// <inheritdoc/>
+        public override double Area { get => GetArea(); }
+
+        /// <inheritdoc/>
+        public override double Perimeter { get => GetPerimeter(); }
+
+        /// <inheritdoc/>
+        public override string Info { get => GetInfo(); }
+
+        /// <inheritdoc/>
         public override double GetArea()
         {
             return 0.5 * FirstSide * SecondSide * Math.Sin(Angle.Radians);

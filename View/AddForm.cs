@@ -19,6 +19,39 @@ namespace View
             okButton.Click += new EventHandler(button1_Click);
         }
 
+        private void comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Controls.Remove(figureParametersBox);
+
+            switch (comboBox.SelectedIndex)
+            {
+                case 0:
+                    figureParametersBox = new CircleParametersBox()
+                    {
+                        Location = figureParametersBox.Location,
+                    };
+                    break;
+                case 1:
+                    figureParametersBox = new RectangleParametersBox()
+                    {
+                        Location = figureParametersBox.Location,
+
+                    };
+                    break;
+                case 2:
+                    figureParametersBox = new TriangleParametersBox()
+                    {
+                        Location = figureParametersBox.Location,
+
+                    };
+                    break;
+                default:
+                    figureParametersBox.Visible = true;
+                    break;
+            }
+            Controls.Add(figureParametersBox);
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             bool invalidInput;
@@ -31,7 +64,6 @@ namespace View
                     {
                         Radius = Convert.ToDouble(circleParametersBox.radiusTextBox.Text),
                     });
-                    mainForm.PopulateDataGridView();
                 }
                 else
                 {
@@ -50,7 +82,6 @@ namespace View
                         Length = Convert.ToDouble(rectangleParametersBox.lengthTextBox.Text),
                         Width = Convert.ToDouble(rectangleParametersBox.widthSideTextBox.Text),
                     });
-                    mainForm.PopulateDataGridView();
                 }
                 else
                 {
@@ -71,7 +102,6 @@ namespace View
                         FirstSide = Convert.ToDouble(triangleParametersBox.firstSideTextBox.Text),
                         SecondSide = Convert.ToDouble(triangleParametersBox.secondSideTextBox.Text),
                     });
-                    mainForm.PopulateDataGridView();
                 }
                 else
                 {
