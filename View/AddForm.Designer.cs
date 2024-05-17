@@ -1,4 +1,4 @@
-﻿namespace View
+namespace View
 {
     partial class AddForm
     {
@@ -9,7 +9,6 @@
         private MyButton okButton;
         private MyButton cancelButton;
         private ComboBox comboBox;
-
         private FigureParametersBox figureParametersBox;
 
 
@@ -55,12 +54,10 @@
             // 
             // comboBox
             // 
-            List<string> myList = new List<string> { "Circle", "Rectangle", "Triangle" };
             comboBox = new ComboBox()
             {
                 Location = new Point(50, 50),
                 DropDownStyle = ComboBoxStyle.DropDownList,
-                DataSource = myList,
             };
             // 
             // groupBoxCircle
@@ -78,13 +75,13 @@
             int heightForm = 300;//200;
 
             FormBorderStyle = FormBorderStyle.FixedDialog;
-            this.ClientSize = new System.Drawing.Size(widhtForm, heightForm);
+            ClientSize = new System.Drawing.Size(widhtForm, heightForm);
             Name = "AddForm";
             Text = "AddForm";
-            this.Controls.Add(okButton);
-            this.Controls.Add(cancelButton);
-            this.Controls.Add(comboBox);
-            //this.Controls.Add(figureParametersBox);
+            Controls.Add(okButton);
+            Controls.Add(cancelButton);
+            Controls.Add(comboBox);
+            Controls.Add(figureParametersBox);
         }
 
         #endregion

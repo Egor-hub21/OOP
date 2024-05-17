@@ -1,21 +1,33 @@
-﻿using testWinForms;
-
 namespace View
 {
+    /// <summary>
+    /// FigureParametersBox для ввода данных о круге.
+    /// </summary>
     public class CircleParametersBox : FigureParametersBox
     {
-        public NumericBox radiusTextBox { get; set; }
-        public Label radiusLabel { get; set; }
+        /// <summary>
+        /// Текстовое поле для ввода радиуса.
+        /// </summary>
+        public NumericBox RadiusTextBox { get; set; }
 
+        /// <summary>
+        /// Название поля для ввода радиуса.
+        /// </summary>
+        public Label RadiusLabel { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the
+        /// <see cref="CircleParametersBox"/> class.
+        /// </summary>
         public CircleParametersBox()
         {
-            radiusLabel = new Label()
+            RadiusLabel = new Label()
             {
                 Text = "Radius :",
                 Dock = DockStyle.Bottom,
             };
 
-            radiusTextBox = new NumericBox()
+            RadiusTextBox = new NumericBox()
             {
                 Dock = DockStyle.Bottom,
             };
@@ -23,8 +35,8 @@ namespace View
             Size = new Size(200, 75);
             Text = "CircleParameters";
 
-            Controls.Add(radiusLabel);
-            Controls.Add(radiusTextBox);
+            Controls.Add(RadiusLabel);
+            Controls.Add(RadiusTextBox);
         }
     }
 }

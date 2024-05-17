@@ -65,30 +65,12 @@ namespace GeometricFigures
         public override string TypeFigure { get => GetType().Name; }
 
         /// <inheritdoc/>
-        public override double Area { get => GetArea(); }
+        public override double Area { get => Width * Length; }
 
         /// <inheritdoc/>
-        public override double Perimeter { get => GetPerimeter(); }
+        public override double Perimeter { get => (Width * 2) + (2 * Length); }
 
         /// <inheritdoc/>
-        public override string Info { get => GetInfo(); }
-
-        /// <inheritdoc/>
-        public override double GetArea()
-        {
-            return Width * Length;
-        }
-
-        /// <inheritdoc/>
-        public override string GetInfo()
-        {
-            return $"Длина: {Length}, Ширина: {Width}";
-        }
-
-        /// <inheritdoc/>
-        public override double GetPerimeter()
-        {
-            return (Width * 2) + (2 * Length);
-        }
+        public override string Info { get => $"Длина: {Length}, Ширина: {Width}"; }
     }
 }

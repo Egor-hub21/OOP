@@ -1,119 +1,254 @@
-﻿using System.ComponentModel;
 using GeometricFigures;
-
 
 namespace View
 {
+    /// <summary>
+    /// Форма для добавление фигуры. 
+    /// </summary>
     public partial class AddForm : Form
     {
-        //TODO: incapsulation
-        public BindingList<GeometricFigureBase> GeometricFigures { get; set; }
-        public GeometricFigureBase GeometricFigure { get; }
+        //TODO: remove argument +
 
-        //TODO: incapsulation
-        private MainForm mainForm;
-
-        //TODO: remove argument
-        public AddForm(MainForm owner)
+        /// <summary>
+        /// Initializes a new instance of the
+        /// <see cref="AddForm"/> class.
+        /// </summary>
+        public AddForm()
         {
-            mainForm = owner;
             InitializeComponent();
+            FillComboBox();
             comboBox.SelectedIndexChanged += new EventHandler(comboBox_SelectedIndexChanged);
-            okButton.Click += new EventHandler(button1_Click);
+            okButton.Click += new EventHandler(okButton_Click);
+            cancelButton.Click += new EventHandler(cancel_Click);
         }
 
-        public EventHandler FigureAdded;
+        /// <summary>
+        /// Фигура.
+        /// </summary>
+        private GeometricFigureBase GeometricFigure { get; set; }
 
+        /// <summary>
+        /// Событие на добавление фигуры.
+        /// </summary>
+        public EventHandler FigureAdded { get; set; }
+
+        /// <summary>
+        /// Событие на удаление фигуры.
+        /// </summary>
+        public EventHandler FigureDeleted { get; set; }
+
+        /// <summary>
+        /// Заполняет ComboBox данными.
+        /// </summary>
+        private void FillComboBox()
+        {
+            List<string> myList = new() 
+                { "Circle", "Rectangle", "Triangle" };
+            comboBox.DataSource = myList;
+            comboBox.SelectedItem = myList[0];
+            SetFigureParametersBox();
+        }
+
+        /// <summary>
+        /// Отображение ввода данных.
+        /// </summary>
+        /// <param name="sender">.</param>
+        /// <param name="e">.</param>
         private void comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SetFigureParametersBox();
+        }
+
+        /// <summary>
+        /// Определяет вид FigureParametersBox.
+        /// </summary>
+        private void SetFigureParametersBox()
         {
             Controls.Remove(figureParametersBox);
 
-            switch (comboBox.SelectedIndex)
+            Dictionary<int, FigureParametersBox> figureParametersBoxes =
+                new()
             {
-                case 0:
-                    figureParametersBox = new CircleParametersBox()
+                {
+                    0,
+                    new CircleParametersBox()
                     {
                         Location = figureParametersBox.Location,
-                    };
-                    break;
-                case 1:
-                    figureParametersBox = new RectangleParametersBox()
+                    }
+                },
+                {
+                    1,
+                    new RectangleParametersBox()
                     {
                         Location = figureParametersBox.Location,
+                    }
+                },
+                {
+                    2,
+                    new TriangleParametersBox()
+                    {
+                        Location = figureParametersBox.Location,
+                    }
+                },
+            };
 
-                    };
-                    break;
-                case 2:
-                    figureParametersBox = new TriangleParametersBox()
-                    {
-                        Location = figureParametersBox.Location,
+            figureParametersBox = figureParametersBoxes[comboBox.SelectedIndex];
 
-                    };
-                    break;
-                default:
-                    figureParametersBox.Visible = true;
-                    break;
-            }
             Controls.Add(figureParametersBox);
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Добавление фигуры.
+        /// </summary>
+        /// <param name="sender">.</param>
+        /// <param name="e">.</param>
+        private void okButton_Click(object sender, EventArgs e)
         {
-            bool invalidInput;
-            if (figureParametersBox is CircleParametersBox circleParametersBox) 
+            Dictionary<Type, Action<string>> catchDictionary =
+                new Dictionary<Type, Action<string>>()
             {
-                invalidInput = string.IsNullOrWhiteSpace(circleParametersBox.radiusTextBox.Text);
-                if (!invalidInput)
                 {
-                    GeometricFigures.Add(new Circle
+                    typeof(ArgumentOutOfRangeException),
+                    (string message) =>
                     {
-                        Radius = Convert.ToDouble(circleParametersBox.radiusTextBox.Text),
-                    });
-                }
-                else
+                        _ = MessageBox.Show($"Возникло исключение {message}");
+                    }
+                },
                 {
-                    MessageBox.Show("Пожалуйста, заполните все поля");
-                }
-            }
-            else if (figureParametersBox is RectangleParametersBox rectangleParametersBox)
-            {
-                invalidInput = string.IsNullOrWhiteSpace(rectangleParametersBox.lengthTextBox.Text)
-                          || string.IsNullOrWhiteSpace(rectangleParametersBox.widthSideTextBox.Text);
+                    typeof(FormatException),
+                    (string message) =>
+                    {
+                        _ = MessageBox.Show($"Возникло исключение {message}");
+                    }
+                },
+            };
 
-                if (!invalidInput)
-                {
-                    GeometricFigures.Add(new GeometricFigures.Rectangle
-                    {
-                        Length = Convert.ToDouble(rectangleParametersBox.lengthTextBox.Text),
-                        Width = Convert.ToDouble(rectangleParametersBox.widthSideTextBox.Text),
-                    });
-                }
-                else
-                {
-                    MessageBox.Show("Пожалуйста, заполните все поля");
-                }
-            }
-            else if (figureParametersBox is TriangleParametersBox triangleParametersBox)
+            Dictionary<Type, Func<GeometricFigureBase>> geometricFigures
+                = new()
             {
-                invalidInput = string.IsNullOrWhiteSpace(triangleParametersBox.angleTextBox.Text)
-                          || string.IsNullOrWhiteSpace(triangleParametersBox.firstSideTextBox.Text)
-                          || string.IsNullOrWhiteSpace(triangleParametersBox.secondSideTextBox.Text);
-
-                if (!invalidInput)
                 {
-                    GeometricFigures.Add(new GeometricFigures.Triangle
+                    typeof(CircleParametersBox),
+                    () =>
                     {
-                        Angle = new Angle( Convert.ToDouble(triangleParametersBox.angleTextBox.Text)),
-                        FirstSide = Convert.ToDouble(triangleParametersBox.firstSideTextBox.Text),
-                        SecondSide = Convert.ToDouble(triangleParametersBox.secondSideTextBox.Text),
-                    });
-                }
-                else
+                        return new Circle
+                            {
+                                Radius = Convert.ToDouble(
+                                    ((CircleParametersBox)figureParametersBox)
+                                    .RadiusTextBox.Text),
+                            };
+                    }
+                },
                 {
-                    MessageBox.Show("Пожалуйста, заполните все поля");
+                    typeof(RectangleParametersBox),
+                    () =>
+                    {
+                        return new GeometricFigures.Rectangle
+                        {
+                            Length = Convert.ToDouble(
+                                ((RectangleParametersBox)figureParametersBox).
+                                LengthTextBox.Text),
+                            Width = Convert.ToDouble(
+                                ((RectangleParametersBox)figureParametersBox)
+                                .WidthSideTextBox.Text),
+                        };
+                    }
+
+                },
+                {
+                    typeof(TriangleParametersBox),
+                    () =>
+                    {
+                        return new Triangle
+                        {
+                            Angle = new Angle( Convert.ToDouble(
+                                ((TriangleParametersBox)figureParametersBox)
+                                .AngleTextBox.Text)),
+                            FirstSide = Convert.ToDouble(
+                                ((TriangleParametersBox)figureParametersBox)
+                                .FirstSideTextBox.Text),
+                            SecondSide = Convert.ToDouble(
+                                ((TriangleParametersBox)figureParametersBox)
+                                .SecondSideTextBox.Text),
+                        };
+                    }
+
+                },
+
+            };
+            Dictionary<Type, Func<bool>> invalidInputs = new()
+            {
+                {
+                    typeof(CircleParametersBox),
+                    () =>
+                    {
+                        return string.IsNullOrWhiteSpace(
+                            ((CircleParametersBox)figureParametersBox)
+                            .RadiusTextBox.Text);
+                    }
+                },
+                {
+                    typeof(RectangleParametersBox),
+                    () =>
+                    {
+                        return string.IsNullOrWhiteSpace(
+                                ((RectangleParametersBox)figureParametersBox)
+                                .LengthTextBox.Text)
+                            || string.IsNullOrWhiteSpace(
+                                ((RectangleParametersBox)figureParametersBox)
+                            .WidthSideTextBox.Text);
+                    }
+                },
+                {
+                    typeof(TriangleParametersBox),
+                    () =>
+                    {
+                        return string.IsNullOrWhiteSpace(
+                            ((TriangleParametersBox)figureParametersBox)
+                            .AngleTextBox.Text)
+                        || string.IsNullOrWhiteSpace(
+                            ((TriangleParametersBox)figureParametersBox)
+                            .FirstSideTextBox.Text)
+                        || string.IsNullOrWhiteSpace(
+                            ((TriangleParametersBox)figureParametersBox)
+                            .SecondSideTextBox.Text);
+                    }
+                },
+            };
+
+            if (!invalidInputs[figureParametersBox.GetType()].Invoke())
+            {
+                try
+                {
+                    GeometricFigure = geometricFigures[figureParametersBox.GetType()].Invoke();
+                }
+                catch (Exception ex)
+                {
+                    catchDictionary[ex.GetType()].Invoke(ex.Message);
                 }
             }
-            FigureAdded?.Invoke(this, new FigureAddedEventArgs(GeometricFigure));
+            else
+            {
+                _ = MessageBox.Show("Пожалуйста, заполните все поля");
+            }
+
+            if (GeometricFigure is not null)
+            {
+                FigureAdded?.Invoke(this, new FigureAddedEventArgs(GeometricFigure));
+            }
         }
+
+        /// <summary>
+        /// Отмена добаления фигуры.
+        /// </summary>
+        /// <param name="sender">.</param>
+        /// <param name="e">.</param>
+        private void cancel_Click(object sender, EventArgs e)
+        {
+            if (GeometricFigure is not null)
+            {
+                FigureDeleted?.Invoke(this, new FigureDeletedEventArgs(GeometricFigure));
+            }
+        }
+
     }
 }

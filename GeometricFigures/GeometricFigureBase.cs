@@ -1,3 +1,4 @@
+using System.ComponentModel;
 
 namespace GeometricFigures
 {
@@ -9,40 +10,26 @@ namespace GeometricFigures
         /// <summary>
         /// Тип фигуры.
         /// </summary>
+        [DisplayName("Тип фигуры")]
         public abstract string TypeFigure { get; }
 
         /// <summary>
         /// Площадь фигуры.
         /// </summary>
+        [DisplayName("Площадь")]
         public abstract double Area { get; }
 
         /// <summary>
         /// Периметр фигуры.
         /// </summary>
+        [DisplayName("Периметр")]
         public abstract double Perimeter { get; }
 
         /// <summary>
         /// Информацию о фигуре в форме строки.
         /// </summary>
+        [DisplayName("Информация")]
         public abstract string Info { get; }
-
-        /// <summary>
-        /// Возвращает площадь фигуры.
-        /// </summary>
-        /// <returns>Площадь.</returns>
-        public abstract double GetArea();
-
-        /// <summary>
-        /// Возвращает периметр фигуры.
-        /// </summary>
-        /// <returns>Периметр.</returns>
-        public abstract double GetPerimeter();
-
-        /// <summary>
-        /// Возвращает информацию о фигуре в форме строки.
-        /// </summary>
-        /// <returns>Информация.</returns>
-        public abstract string GetInfo();
 
         /// <summary>
         /// Выбрасывает исключение если число меньше или равно нулю.

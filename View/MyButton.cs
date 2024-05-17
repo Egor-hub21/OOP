@@ -1,7 +1,15 @@
-﻿namespace View
+namespace View
 {
+    /// <summary>
+    /// .
+    /// </summary>
     public class MyButton : Button
     {
+
+        /// <summary>
+        /// Initializes a new instance of the
+        /// <see cref="MyButton"/> class.
+        /// </summary>
         public MyButton()
         {
             Font = new Font("Arial", 10);

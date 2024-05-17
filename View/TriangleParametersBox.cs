@@ -1,51 +1,77 @@
-﻿using testWinForms;
-
 namespace View
 {
+    /// <summary>
+    /// FigureParametersBox для ввода данных о треугольникке.
+    /// </summary>
     public class TriangleParametersBox : FigureParametersBox
     {
-        public NumericBox angleTextBox { get; private set; }
-        public NumericBox firstSideTextBox { get; private set; }
-        public NumericBox secondSideTextBox { get; private set; }
+        /// <summary>
+        /// Текстовое поле для ввода угла.
+        /// </summary>
+        public NumericBox AngleTextBox { get; private set; }
 
-        public Label angelLabel { get; set; }
-        public Label firstSideLabel { get; set; }
-        public Label secondSideLabel { get; set; }
+        /// <summary>
+        /// Текстовое поле для ввода первой стороны.
+        /// </summary>
+        public NumericBox FirstSideTextBox { get; private set; }
 
+        /// <summary>
+        /// Текстовое поле для ввода второй стороны.
+        /// </summary>
+        public NumericBox SecondSideTextBox { get; private set; }
 
+        /// <summary>
+        /// Название поля для ввода угла.
+        /// </summary>
+        public Label AngelLabel { get; set; }
+
+        /// <summary>
+        /// Название поля для ввода первой стороны.
+        /// </summary>
+        public Label FirstSideLabel { get; set; }
+
+        /// <summary>
+        /// Название поля для ввода второй стороны.
+        /// </summary>
+        public Label SecondSideLabel { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the
+        /// <see cref="TriangleParametersBox"/> class.
+        /// </summary>
         public TriangleParametersBox()
         {
-            angelLabel = new Label()
+            AngelLabel = new Label()
             {
                 Text = "Angel :",
                 Dock = DockStyle.Bottom,
             };
 
-            firstSideLabel = new Label()
+            FirstSideLabel = new Label()
             {
                 Text = "FirstSide :",
                 Dock = DockStyle.Bottom,
             };
 
-            secondSideLabel = new Label()
+            SecondSideLabel = new Label()
             {
                 Text = "SecondSide :",
                 Dock = DockStyle.Bottom,
             };
 
-            angleTextBox = new NumericBox()
+            AngleTextBox = new NumericBox()
             {
                 Dock = DockStyle.Bottom,
                 Location = new Point(0, 0),
             };
 
-            firstSideTextBox = new NumericBox()
+            FirstSideTextBox = new NumericBox()
             {
                 Dock = DockStyle.Bottom,
                 Location = new Point(0, 50),
             };
 
-            secondSideTextBox = new NumericBox()
+            SecondSideTextBox = new NumericBox()
             {
                 Dock = DockStyle.Bottom,
                 Location = new Point(0, 100),
@@ -54,12 +80,12 @@ namespace View
             Size = new Size(200, 165);
             Text = "TriangleParameters";
 
-            Controls.Add(firstSideLabel);
-            Controls.Add(firstSideTextBox);
-            Controls.Add(secondSideLabel);
-            Controls.Add(secondSideTextBox);
-            Controls.Add(angelLabel);
-            Controls.Add(angleTextBox);
+            Controls.Add(FirstSideLabel);
+            Controls.Add(FirstSideTextBox);
+            Controls.Add(SecondSideLabel);
+            Controls.Add(SecondSideTextBox);
+            Controls.Add(AngelLabel);
+            Controls.Add(AngleTextBox);
         }
     }
 }

@@ -44,30 +44,12 @@ namespace GeometricFigures
         public override string TypeFigure { get => GetType().Name; }
 
         /// <inheritdoc/>
-        public override double Area { get => GetArea(); }
+        public override double Area { get => Math.PI * Math.Pow(Radius, 2); }
 
         /// <inheritdoc/>
-        public override double Perimeter { get => GetPerimeter(); }
+        public override double Perimeter { get => 2 * Math.PI * Radius; }
 
         /// <inheritdoc/>
-        public override string Info { get => GetInfo(); }
-
-        /// <inheritdoc/>
-        public override double GetArea()
-        {
-            return Math.PI * Math.Pow(Radius, 2);
-        }
-
-        /// <inheritdoc/>
-        public override string GetInfo()
-        {
-            return $"Радиус: {Radius}";
-        }
-
-        /// <inheritdoc/>
-        public override double GetPerimeter()
-        {
-            return 2 * Math.PI * Radius;
-        }
+        public override string Info { get => $"Радиус: {Radius}"; }
     }
 }

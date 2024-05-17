@@ -93,32 +93,25 @@ namespace GeometricFigures
         public override string TypeFigure { get => GetType().Name; }
 
         /// <inheritdoc/>
-        public override double Area { get => GetArea(); }
-
-        /// <inheritdoc/>
-        public override double Perimeter { get => GetPerimeter(); }
-
-        /// <inheritdoc/>
-        public override string Info { get => GetInfo(); }
-
-        /// <inheritdoc/>
-        public override double GetArea()
+        public override double Area
         {
-            return 0.5 * FirstSide * SecondSide * Math.Sin(Angle.Radians);
+            get => 0.5 * FirstSide
+                * SecondSide
+                * Math.Sin(Angle.Radians);
         }
 
         /// <inheritdoc/>
-        public override string GetInfo()
+        public override double Perimeter
         {
-            return $"Первая сторона: {FirstSide}; "
+            get => FirstSide + SecondSide + GetThirdSide();
+        }
+
+        /// <inheritdoc/>
+        public override string Info
+        {
+            get => $"Первая сторона: {FirstSide}; "
                 + $"Вторая сторона: {SecondSide}; "
                 + $"Угол м/у ними: {Angle.Degrees};";
-        }
-
-        /// <inheritdoc/>
-        public override double GetPerimeter()
-        {
-            return FirstSide + SecondSide + GetThirdSide();
         }
 
         /// <summary>

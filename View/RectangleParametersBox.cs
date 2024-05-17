@@ -1,36 +1,54 @@
-﻿using testWinForms;
-
 namespace View
 {
+    /// <summary>
+    /// FigureParametersBox для ввода данных о прямоугольнике.
+    /// </summary>
     public class RectangleParametersBox : FigureParametersBox
     {
-        public NumericBox lengthTextBox { get; private set; }
-        public NumericBox widthSideTextBox { get; private set; }
+        /// <summary>
+        /// Текстовое поле для ввода длинны.
+        /// </summary>
+        public NumericBox LengthTextBox { get; private set; }
 
-        public Label lenghtLabel { get; set; }
-        public Label widthLabel { get; set; }
+        /// <summary>
+        /// Текстовое поле для ввода ширины.
+        /// </summary>
+        public NumericBox WidthSideTextBox { get; private set; }
 
+        /// <summary>
+        /// Название поля для ввода длинны.
+        /// </summary>
+        public Label LenghtLabel { get; set; }
+
+        /// <summary>
+        /// Название поля для ввода ширины.
+        /// </summary>
+        public Label WidthLabel { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the
+        /// <see cref="RectangleParametersBox"/> class.
+        /// </summary>
         public RectangleParametersBox()
         {
-            lenghtLabel = new Label()
+            LenghtLabel = new Label()
             {
                 Text = "Lenght :",
                 Dock = DockStyle.Bottom,
             };
 
-            widthLabel = new Label()
+            WidthLabel = new Label()
             {
                 Text = "Width :",
                 Dock = DockStyle.Bottom,
             };
 
-            lengthTextBox = new NumericBox()
+            LengthTextBox = new NumericBox()
             {
                 Dock = DockStyle.Bottom,
             };
-            
 
-            widthSideTextBox = new NumericBox()
+            WidthSideTextBox = new NumericBox()
             {
                 Dock = DockStyle.Bottom,
             };
@@ -38,10 +56,10 @@ namespace View
             Size = new Size(200, 120);
             Text = "CircleParameters";
 
-            Controls.Add(lenghtLabel);
-            Controls.Add(lengthTextBox);
-            Controls.Add(widthLabel);
-            Controls.Add(widthSideTextBox);
+            Controls.Add(LenghtLabel);
+            Controls.Add(LengthTextBox);
+            Controls.Add(WidthLabel);
+            Controls.Add(WidthSideTextBox);
         }
     }
 }

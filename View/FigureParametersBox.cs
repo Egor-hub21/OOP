@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace View
 {
+    /// <summary>
+    /// GroupBox для ввода данных о геометрической фигуре.
+    /// </summary>
     public class FigureParametersBox : GroupBox
     {
-        public FigureParametersBox() 
-        { 
-        
-        }
+        /// <summary>
+        /// Initializes a new instance of the
+        /// <see cref="FigureParametersBox"/> class.
+        /// </summary>
+        public FigureParametersBox()
+        { }
     }
 }
