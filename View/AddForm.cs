@@ -6,11 +6,14 @@ namespace View
 {
     public partial class AddForm : Form
     {
-        public BindingList<GeometricFigureBase> GeometricFigures { get; set;}
-        public GeometricFigureBase GeometricFigure { get; set; }
+        //TODO: incapsulation
+        public BindingList<GeometricFigureBase> GeometricFigures { get; set; }
+        public GeometricFigureBase GeometricFigure { get; }
 
+        //TODO: incapsulation
         private MainForm mainForm;
 
+        //TODO: remove argument
         public AddForm(MainForm owner)
         {
             mainForm = owner;
@@ -18,6 +21,8 @@ namespace View
             comboBox.SelectedIndexChanged += new EventHandler(comboBox_SelectedIndexChanged);
             okButton.Click += new EventHandler(button1_Click);
         }
+
+        public EventHandler FigureAdded;
 
         private void comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -108,6 +113,7 @@ namespace View
                     MessageBox.Show("Пожалуйста, заполните все поля");
                 }
             }
+            FigureAdded?.Invoke(this, new FigureAddedEventArgs(GeometricFigure));
         }
     }
 }

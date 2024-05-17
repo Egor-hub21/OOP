@@ -16,6 +16,7 @@ namespace testWinForms
         private void textBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             char symbol = e.KeyChar;
+            //TODO: refactor
             if ((symbol == 46) && Text.IndexOf(',') != -1)
             {
                 e.Handled = true;

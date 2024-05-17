@@ -5,6 +5,7 @@ namespace View
 {
     public partial class MainForm : Form
     {
+        //TODO: incapsulation
         public BindingList<GeometricFigureBase> GeometricFigures { get; set; }
 
         public MainForm()
@@ -17,11 +18,21 @@ namespace View
             removeButton.Click += new EventHandler(figureDataGrid_DeletingLine);
         }
 
+        //TODO: RSDN
         private void openAddForm(object sender, EventArgs e)
         {
             AddForm addForm = new AddForm(this);
+            addForm.FigureAdded += new EventHandler(FigureAdded);
+            
             addForm.GeometricFigures = GeometricFigures;
-            addForm.Show();
+            addForm.Show();                        
+        }
+
+        private void FigureAdded(object sender, EventArgs geometricFigure)
+        {
+            FigureAddedEventArgs addedEventArgs = geometricFigure as FigureAddedEventArgs;
+
+            GeometricFigures.Add(addedEventArgs?.GeometricFigure);
         }
 
         private void InitializeFigures()
