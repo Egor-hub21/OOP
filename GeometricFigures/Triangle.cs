@@ -90,7 +90,10 @@ namespace GeometricFigures
         }
 
         /// <inheritdoc/>
-        public override string TypeFigure { get => GetType().Name; }
+        public override string TypeFigure
+        {
+            get => TypeFigures.Triangle.ToString();
+        }
 
         /// <inheritdoc/>
         public override double Area

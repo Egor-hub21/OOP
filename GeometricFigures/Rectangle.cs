@@ -62,7 +62,10 @@ namespace GeometricFigures
         }
 
         /// <inheritdoc/>
-        public override string TypeFigure { get => GetType().Name; }
+        public override string TypeFigure
+        {
+            get => TypeFigures.Rectangle.ToString();
+        }
 
         /// <inheritdoc/>
         public override double Area { get => Width * Length; }

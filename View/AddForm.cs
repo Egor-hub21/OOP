@@ -20,6 +20,9 @@ namespace View
             comboBox.SelectedIndexChanged += new EventHandler(comboBox_SelectedIndexChanged);
             okButton.Click += new EventHandler(okButton_Click);
             cancelButton.Click += new EventHandler(cancel_Click);
+#if DEBUG
+            randomButton.Click += new EventHandler(randomButton_Click);
+#endif
         }
 
         /// <summary>
@@ -42,10 +45,11 @@ namespace View
         /// </summary>
         private void FillComboBox()
         {
-            List<string> myList = new() 
-                { "Circle", "Rectangle", "Triangle" };
-            comboBox.DataSource = myList;
-            comboBox.SelectedItem = myList[0];
+            TypeFigures[] colorsArray = 
+                (TypeFigures[])Enum.GetValues(typeof(TypeFigures));
+
+            comboBox.DataSource = colorsArray;
+            comboBox.SelectedItem = colorsArray.GetValue(0);
             SetFigureParametersBox();
         }
 
@@ -66,25 +70,25 @@ namespace View
         {
             Controls.Remove(figureParametersBox);
 
-            Dictionary<int, FigureParametersBox> figureParametersBoxes =
+            Dictionary<TypeFigures, FigureParametersBox> figureParametersBoxes =
                 new()
             {
                 {
-                    0,
+                    TypeFigures.Circle,
                     new CircleParametersBox()
                     {
                         Location = figureParametersBox.Location,
                     }
                 },
                 {
-                    1,
+                    TypeFigures.Rectangle,
                     new RectangleParametersBox()
                     {
                         Location = figureParametersBox.Location,
                     }
                 },
                 {
-                    2,
+                    TypeFigures.Triangle,
                     new TriangleParametersBox()
                     {
                         Location = figureParametersBox.Location,
@@ -92,7 +96,8 @@ namespace View
                 },
             };
 
-            figureParametersBox = figureParametersBoxes[comboBox.SelectedIndex];
+            figureParametersBox = 
+                figureParametersBoxes[(TypeFigures)comboBox.SelectedItem];
 
             Controls.Add(figureParametersBox);
         }
@@ -249,6 +254,65 @@ namespace View
                 FigureDeleted?.Invoke(this, new FigureDeletedEventArgs(GeometricFigure));
             }
         }
+
+#if DEBUG
+        /// <summary>
+        /// Заполнение полей рандомными данными
+        /// </summary>
+        /// <param name="sender">.</param>
+        /// <param name="e">.</param>
+        private void randomButton_Click(object sender, EventArgs e)
+        {
+            Random random = new Random();
+            int minValue = 1;
+            int maxValue = 179;
+
+            Dictionary<Type, Action> geometricFigures
+                = new()
+            {
+                {
+                    typeof(CircleParametersBox),
+                    () =>
+                    {
+                        ((CircleParametersBox)figureParametersBox)
+                            .RadiusTextBox.Text = 
+                                $"{random.Next(minValue,maxValue)}";
+                    }
+                },
+                {
+                    typeof(RectangleParametersBox),
+                    () =>
+                    {
+                        ((RectangleParametersBox)figureParametersBox)
+                            .LengthTextBox.Text =
+                                $"{random.Next(minValue,maxValue)}";
+                        ((RectangleParametersBox)figureParametersBox)
+                            .WidthSideTextBox.Text =
+                                $"{random.Next(minValue,maxValue)}";
+                    }
+
+                },
+                {
+                    typeof(TriangleParametersBox),
+                    () =>
+                    {
+                        ((TriangleParametersBox)figureParametersBox)
+                            .AngleTextBox.Text  =
+                                $"{random.Next(minValue,maxValue)}";
+                        ((TriangleParametersBox)figureParametersBox)
+                            .FirstSideTextBox.Text =
+                                $"{random.Next(minValue,maxValue)}";
+                        ((TriangleParametersBox)figureParametersBox)
+                            .SecondSideTextBox.Text =
+                                $"{random.Next(minValue,maxValue)}";
+                    }
+
+                },
+            };
+           
+            geometricFigures[figureParametersBox.GetType()].Invoke();
+        }
+#endif
 
     }
 }

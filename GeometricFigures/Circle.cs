@@ -41,7 +41,10 @@ namespace GeometricFigures
         }
 
         /// <inheritdoc/>
-        public override string TypeFigure { get => GetType().Name; }
+        public override string TypeFigure
+        {
+            get => TypeFigures.Circle.ToString();
+        }
 
         /// <inheritdoc/>
         public override double Area { get => Math.PI * Math.Pow(Radius, 2); }

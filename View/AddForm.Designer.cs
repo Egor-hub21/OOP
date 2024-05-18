@@ -10,6 +10,9 @@ namespace View
         private MyButton cancelButton;
         private ComboBox comboBox;
         private FigureParametersBox figureParametersBox;
+#if DEBUG
+        private MyButton randomButton;
+#endif
 
 
         /// <summary>
@@ -33,6 +36,17 @@ namespace View
         /// </summary>
         private void InitializeComponent()
         {
+#if DEBUG
+            // 
+            // randomButton
+            // 
+            randomButton = new MyButton()
+            {
+                Text = "Random",
+                Location = new Point(50, 250),
+                Name = "randomButton",
+            };
+#endif
             // 
             // okButton
             // 
@@ -82,6 +96,9 @@ namespace View
             Controls.Add(cancelButton);
             Controls.Add(comboBox);
             Controls.Add(figureParametersBox);
+#if DEBUG
+            Controls.Add(randomButton);
+#endif
         }
 
         #endregion
