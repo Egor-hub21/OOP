@@ -26,7 +26,7 @@ namespace GeometricFigures
         { }
 
         /// <summary>
-        /// Get Set <see cref="_radius"/>.
+        /// Gets or sets get Set <see cref="_radius"/>.
         /// </summary>
         public double Radius
         {

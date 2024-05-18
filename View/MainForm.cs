@@ -9,7 +9,17 @@ namespace View
     public partial class MainForm : Form
     {
         //TODO: incapsulation +
+
+        /// <summary>
+        /// Список фигур.
+        /// </summary>
         private BindingList<GeometricFigureBase> GeometricFigures { get; set; }
+
+        /// <summary>
+        /// Отфильтрованный список фигур.
+        /// </summary>
+        private BindingList<GeometricFigureBase> FilteredGeometricFigures 
+        { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the
@@ -19,13 +29,20 @@ namespace View
         {
             InitializeComponent();
             InitializeFigures();
-            PopulateDataGridView();
 
             addButton.Click += new EventHandler(OpenAddForm);
             removeButton.Click += new EventHandler(figureDataGrid_DeletingLine);
+            filterButton.Click += new EventHandler(OpenFilterForm);
+            resettingFilterButton.Click += new EventHandler(ResetFilter);
         }
 
+        #region Add
         //TODO: RSDN +
+        /// <summary>
+        /// Cоздает форму для добавления фигуры.
+        /// </summary>
+        /// <param name="sender".></param>
+        /// <param name="e">.</param>
         private void OpenAddForm(object sender, EventArgs e)
         {
             AddForm addForm = new AddForm();
@@ -35,6 +52,11 @@ namespace View
             addForm.Show();
         }
 
+        /// <summary>
+        /// Добавить фигуру.
+        /// </summary>
+        /// <param name="sender".></param>
+        /// <param name="geometricFigure">.</param>
         private void FigureAdded(object sender, EventArgs geometricFigure)
         {
             FigureAddedEventArgs addedEventArgs = geometricFigure as FigureAddedEventArgs;
@@ -42,31 +64,86 @@ namespace View
             GeometricFigures.Add(addedEventArgs?.GeometricFigure);
         }
 
+        /// <summary>
+        /// Отмена добавления фигуры.
+        /// </summary>
+        /// <param name="sender">.</param>
+        /// <param name="geometricFigure">.</param>
         private void FigureDeleted(object sender, EventArgs geometricFigure)
         {
-            FigureDeletedEventArgs addedEventArgs = geometricFigure as FigureDeletedEventArgs;
+            FigureAddedEventArgs addedEventArgs = geometricFigure as FigureAddedEventArgs;
 
             _ = GeometricFigures.Remove(addedEventArgs?.GeometricFigure);
         }
+        #endregion
 
+        #region Filter
+
+        /// <summary>
+        /// Cоздает форму для задания фильтра.
+        /// </summary>
+        /// <param name="sender".></param>
+        /// <param name="e">.</param>
+        private void OpenFilterForm(object sender, EventArgs e)
+        {
+            FilterForm filterForm = new FilterForm(GeometricFigures);
+            filterForm.FiguresFilteredOut += new EventHandler(FiguresFilteredOut);
+
+            filterForm.Show();
+        }
+
+        /// <summary>
+        /// Отфильтровать фигуры.
+        /// </summary>
+        /// <param name="sender".></param>
+        /// <param name="geometricFigure">.</param>
+        private void FiguresFilteredOut(object sender, EventArgs geometricFigure)
+        {
+            FiguresAddedEventArgs filterEventArgs = geometricFigure as FiguresAddedEventArgs;
+
+            FilteredGeometricFigures = filterEventArgs?.GeometricFigure;
+
+            PopulateDataGridView(figureDataGrid, FilteredGeometricFigures);
+        }
+
+        /// <summary>
+        /// Сбросить фильтр
+        /// </summary>
+        /// <param name="sender".></param>
+        /// <param name="e">.</param>
+        private void ResetFilter(object sender, EventArgs e)
+        {
+            PopulateDataGridView(figureDataGrid, GeometricFigures);
+        }
+
+        #endregion
+
+
+        /// <summary>
+        /// Инициализация GeometricFigures.
+        /// </summary>
         private void InitializeFigures()
         {
-            GeometricFigures = new BindingList<GeometricFigureBase>
-            {
-                new Circle(1),
-                new GeometricFigures.Rectangle(2,2),
-                new Triangle(1,2, new Angle(90)),
-            };
+            GeometricFigures = new BindingList<GeometricFigureBase>();
+            PopulateDataGridView(figureDataGrid, GeometricFigures);
         }
 
         /// <summary>
         /// Связывание листа с таблицей на форме.
         /// </summary>
-        public void PopulateDataGridView()
+        /// <param name="figureDataGrid">Таблица.</param>
+        /// <param name="GeometricFigures">Лист фигур.</param>
+        public void PopulateDataGridView(DataGridView figureDataGrid, 
+            BindingList<GeometricFigureBase> GeometricFigures)
         {
             figureDataGrid.DataSource = GeometricFigures;
         }
 
+        /// <summary>
+        /// Удаляет фигуру.
+        /// </summary>
+        /// <param name="sender">.</param>
+        /// <param name="e">.</param>
         private void figureDataGrid_DeletingLine(object sender, EventArgs e)
         {
             if (figureDataGrid.SelectedRows.Count > 0)

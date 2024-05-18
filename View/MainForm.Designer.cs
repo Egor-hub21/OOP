@@ -11,11 +11,12 @@ namespace View
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        private GroupBox figuresGroupBox;
         private Button addButton;
         private Button removeButton;
+        private Button filterButton;
+        private Button resettingFilterButton;
         private DataGridView figureDataGrid;
-
+        private GroupBox figuresGroupBox;
 
         /// <summary>
         ///  Clean up any resources being used.
@@ -56,6 +57,24 @@ namespace View
                 Location = new Point(670, 120),
                 Name = "removeButton",
             };
+            // 
+            // filterButton
+            // 
+            filterButton = new MyButton()
+            {
+                Text = "Filter",
+                Location = new Point(670, 180),
+                Name = "filterButton",
+            };
+            // 
+            // resettingFilterButton
+            // 
+            resettingFilterButton = new MyButton()
+            {
+                Text = "Resetting",
+                Location = new Point(670, 240),
+                Name = "resettingFilterButton",
+            };
             //
             // figureDataGrid
             //
@@ -66,7 +85,9 @@ namespace View
                 Name = "figureDataGrid",
                 AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
                 ReadOnly = true,
+                AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells,
             };
+            figureDataGrid.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             // 
             // figuresGroupBox
             // 
@@ -83,14 +104,17 @@ namespace View
             // 
             int widhtForm = 800;
             int heightForm = 400;
+
             FormBorderStyle = FormBorderStyle.FixedDialog;
-            this.ClientSize = new Size(widhtForm, heightForm);
-            this.Text = "MainForm";
-            this.Name = "MainForm";
+            ClientSize = new Size(widhtForm, heightForm);
+            Text = "MainForm";
+            Name = "MainForm";
             ResumeLayout(false);
-            this.Controls.Add(figuresGroupBox);
-            this.Controls.Add(addButton);
-            this.Controls.Add(removeButton);
+            Controls.Add(figuresGroupBox);
+            Controls.Add(addButton);
+            Controls.Add(removeButton);
+            Controls.Add(filterButton);
+            Controls.Add(resettingFilterButton);
         }
 
 #endregion

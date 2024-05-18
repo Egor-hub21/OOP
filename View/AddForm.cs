@@ -234,6 +234,7 @@ namespace View
             else
             {
                 _ = MessageBox.Show("Пожалуйста, заполните все поля");
+                return;
             }
 
             if (GeometricFigure is not null)
@@ -251,7 +252,7 @@ namespace View
         {
             if (GeometricFigure is not null)
             {
-                FigureDeleted?.Invoke(this, new FigureDeletedEventArgs(GeometricFigure));
+                FigureDeleted?.Invoke(this, new FigureAddedEventArgs(GeometricFigure));
             }
         }
 

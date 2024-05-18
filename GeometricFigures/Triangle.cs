@@ -40,7 +40,7 @@ namespace GeometricFigures
         { }
 
         /// <summary>
-        /// Get Set <see cref="_firstSide"/>.
+        /// Gets or sets get Set <see cref="_firstSide"/>.
         /// </summary>
         public double FirstSide
         {
@@ -55,7 +55,7 @@ namespace GeometricFigures
         }
 
         /// <summary>
-        /// Get Set <see cref="_secondSide"/>.
+        /// Gets or sets get Set <see cref="_secondSide"/>.
         /// </summary>
         public double SecondSide
         {
@@ -70,7 +70,7 @@ namespace GeometricFigures
         }
 
         /// <summary>
-        /// Get Set <see cref="_thirdSide"/>.
+        /// Gets or sets get Set <see cref="_thirdSide"/>.
         /// </summary>
         public Angle Angle
         {
@@ -112,8 +112,8 @@ namespace GeometricFigures
         /// <inheritdoc/>
         public override string Info
         {
-            get => $"Первая сторона: {FirstSide}; "
-                + $"Вторая сторона: {SecondSide}; "
+            get => $"Первая сторона: {FirstSide};\n"
+                + $"Вторая сторона: {SecondSide};\n"
                 + $"Угол м/у ними: {Angle.Degrees};";
         }
 
@@ -123,8 +123,8 @@ namespace GeometricFigures
         /// <returns>Третья сторона.</returns>
         public double GetThirdSide()
         {
-            return Math.Pow(FirstSide, 2) + Math.Pow(SecondSide, 2)
-                - (2 * FirstSide * SecondSide * Math.Sin(Angle.Radians));
+            return Math.Pow((Math.Pow(FirstSide, 2) + Math.Pow(SecondSide, 2)
+                - (2 * FirstSide * SecondSide * Math.Cos(Angle.Radians))), 0.5);
         }
     }
 }

@@ -33,7 +33,7 @@ namespace GeometricFigures
         { }
 
         /// <summary>
-        /// Get Set <see cref="_length"/>..
+        /// Gets or sets get Set <see cref="_length"/>..
         /// </summary>
         public double Length
         {
@@ -48,7 +48,7 @@ namespace GeometricFigures
         }
 
         /// <summary>
-        /// Get Set <see cref="_width"/>..
+        /// Gets or sets get Set <see cref="_width"/>..
         /// </summary>
         public double Width
         {
@@ -74,6 +74,6 @@ namespace GeometricFigures
         public override double Perimeter { get => (Width * 2) + (2 * Length); }
 
         /// <inheritdoc/>
-        public override string Info { get => $"Длина: {Length}, Ширина: {Width}"; }
+        public override string Info { get => $"Длина: {Length};\nШирина: {Width}"; }
     }
 }
