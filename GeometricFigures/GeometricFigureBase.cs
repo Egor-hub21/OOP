@@ -1,10 +1,14 @@
 using System.ComponentModel;
+using System.Xml.Serialization;
 
 namespace GeometricFigures
 {
     /// <summary>
     /// Описывает общую природу всех геометрических фигур.
     /// </summary>
+    [XmlInclude(typeof(Circle))]
+    [XmlInclude(typeof(Rectangle))]
+    [XmlInclude(typeof(Triangle))]
     public abstract class GeometricFigureBase
     {
         /// <summary>

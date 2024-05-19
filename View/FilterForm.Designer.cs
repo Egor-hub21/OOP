@@ -7,18 +7,18 @@
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        private CheckBox checkBoxTypeCircle;
-        private CheckBox checkBoxTypeRectangle;
-        private CheckBox checkBoxTypeTriangle;
-        private CheckBox checkBoxArea;
-        private CheckBox checkBoxPerimeter;
+        private CheckBox _checkBoxTypeCircle;
+        private CheckBox _checkBoxTypeRectangle;
+        private CheckBox _checkBoxTypeTriangle;
+        private CheckBox _checkBoxArea;
+        private CheckBox _checkBoxPerimeter;
 
-        private NumericBox areaNumericBox;
-        private NumericBox perimeterNumericBox;
+        private NumericBox _areaNumericBox;
+        private NumericBox _perimeterNumericBox;
 
-        private Button filterButton;
+        private Button _filterButton;
 
-        private GroupBox filterGroupBox;
+        private GroupBox _filterGroupBox;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -41,157 +41,120 @@
         /// </summary>
         private void InitializeComponent()
         {
-            int startPointX = 20;
-            int startPointY = 20;
-            int incrementX = 120;
-            int incrementY = 30;
-            Size sizeCheckBox = new System.Drawing.Size(80, 25);
-            Size sizeNumericBox = new System.Drawing.Size(140, 25);
+            _checkBoxTypeCircle = new CheckBox();
+            _checkBoxTypeRectangle = new CheckBox();
+            _checkBoxTypeTriangle = new CheckBox();
+            _checkBoxArea = new CheckBox();
+            _checkBoxPerimeter = new CheckBox();
+            _perimeterNumericBox = new NumericBox();
+            _areaNumericBox = new NumericBox();
+            _filterButton = new Button();
+            _filterGroupBox = new GroupBox();
+            _filterGroupBox.SuspendLayout();
+            SuspendLayout();
             // 
-            // checkBoxTypeCircle 
+            // _checkBoxTypeCircle
             // 
-            checkBoxTypeCircle = new CheckBox()
-            {
-                AutoSize = true,
-                Location = CreatePoint(1),
-                Size = sizeCheckBox,
-                Name = "checkTypeCircle",
-                TabIndex = 1,
-                Text = "Окружность",
-                UseVisualStyleBackColor = true,
-            };
+            _checkBoxTypeCircle.AutoSize = true;
+            _checkBoxTypeCircle.Location = new Point(20, 20);
+            _checkBoxTypeCircle.Name = "_checkBoxTypeCircle";
+            _checkBoxTypeCircle.Size = new Size(94, 19);
+            _checkBoxTypeCircle.TabIndex = 1;
+            _checkBoxTypeCircle.Text = "Окружность";
+            _checkBoxTypeCircle.UseVisualStyleBackColor = true;
             // 
-            // checkBoxTypeRectangle
+            // _checkBoxTypeRectangle
             // 
-            checkBoxTypeRectangle = new CheckBox()
-            {
-                AutoSize = true,
-                Location = CreatePoint(2),
-                Size = sizeCheckBox,
-                Name = "checkTypeRectangle",
-                TabIndex = 1,
-                Text = "Прямоугольник",
-                UseVisualStyleBackColor = true,
-            };
+            _checkBoxTypeRectangle.AutoSize = true;
+            _checkBoxTypeRectangle.Location = new Point(20, 50);
+            _checkBoxTypeRectangle.Name = "_checkBoxTypeRectangle";
+            _checkBoxTypeRectangle.Size = new Size(115, 19);
+            _checkBoxTypeRectangle.TabIndex = 1;
+            _checkBoxTypeRectangle.Text = "Прямоугольник";
+            _checkBoxTypeRectangle.UseVisualStyleBackColor = true;
             // 
-            // checkBoxTypeTriangle 
+            // _checkBoxTypeTriangle
             // 
-            checkBoxTypeTriangle = new CheckBox()
-            {
-                AutoSize = true,
-                Location = CreatePoint(3),
-                Size = sizeCheckBox,
-                Name = "checkTypeTriangle",
-                TabIndex = 1,
-                Text = "Треугольник",
-                UseVisualStyleBackColor = true,
-            };
+            _checkBoxTypeTriangle.AutoSize = true;
+            _checkBoxTypeTriangle.Location = new Point(20, 80);
+            _checkBoxTypeTriangle.Name = "_checkBoxTypeTriangle";
+            _checkBoxTypeTriangle.Size = new Size(96, 19);
+            _checkBoxTypeTriangle.TabIndex = 1;
+            _checkBoxTypeTriangle.Text = "Треугольник";
+            _checkBoxTypeTriangle.UseVisualStyleBackColor = true;
             // 
-            // checkBoxArea
+            // _checkBoxArea
             // 
-            checkBoxArea = new CheckBox()
-            {
-                AutoSize = true,
-                Location = CreatePoint(4),
-                Size = sizeCheckBox,
-                Name = "checkArea",
-
-                TabIndex = 1,
-                Text = "Площадь",
-                UseVisualStyleBackColor = true,
-            };
+            _checkBoxArea.AutoSize = true;
+            _checkBoxArea.Location = new Point(20, 110);
+            _checkBoxArea.Name = "_checkBoxArea";
+            _checkBoxArea.Size = new Size(78, 19);
+            _checkBoxArea.TabIndex = 1;
+            _checkBoxArea.Text = "Площадь";
+            _checkBoxArea.UseVisualStyleBackColor = true;
             // 
-            // checkBoxPerimeter
+            // _checkBoxPerimeter
             // 
-            checkBoxPerimeter = new CheckBox()
-            {
-                AutoSize = true,
-                Location = CreatePoint(5),
-                Size = sizeCheckBox,
-                Name = "checkPerimeter",
-                TabIndex = 1,
-                Text = "Периметр",
-                UseVisualStyleBackColor = true,
-            };
+            _checkBoxPerimeter.Location = new Point(20, 140);
+            _checkBoxPerimeter.Name = "_checkBoxPerimeter";
+            _checkBoxPerimeter.Size = new Size(80, 25);
+            _checkBoxPerimeter.TabIndex = 1;
+            _checkBoxPerimeter.Text = "Периметр";
+            _checkBoxPerimeter.UseVisualStyleBackColor = true;
             // 
-            // areaNumericBox
+            // _perimeterNumericBox
             // 
-            areaNumericBox = new NumericBox()
-            {
-                Location = CreatePoint(1, incrementX, 0, 
-                startPointX, startPointY + incrementY * 4),
-                Size = sizeNumericBox,
-                Name = "areaNumericBox",
-                TabIndex = 2,
-            };
+            _perimeterNumericBox.Location = new Point(143, 141);
+            _perimeterNumericBox.Name = "_perimeterNumericBox";
+            _perimeterNumericBox.Size = new Size(140, 23);
+            _perimeterNumericBox.TabIndex = 2;
             // 
-            // perimeterNumericBox
+            // _areaNumericBox
             // 
-            perimeterNumericBox = new NumericBox()
-            {
-                Location = CreatePoint(1, incrementX, 0,
-                startPointX, startPointY + incrementY * 5),
-                Size = sizeNumericBox,
-                Name = "perimeterNumericBox",
-                TabIndex = 2,
-            };
+            _areaNumericBox.Location = new Point(143, 108);
+            _areaNumericBox.Name = "_areaNumericBox";
+            _areaNumericBox.Size = new Size(140, 23);
+            _areaNumericBox.TabIndex = 2;
             // 
-            // filterButton
+            // _filterButton
             // 
-            filterButton = new Button()
-            {
-                Location = new System.Drawing.Point(20, 230),
-                Name = "filterButton",
-                Size = new System.Drawing.Size(200, 30),
-                TabIndex = 1,
-                Text = "Фильтровать",
-                UseVisualStyleBackColor = true,
-            };
+            _filterButton.Location = new Point(111, 198);
+            _filterButton.Name = "_filterButton";
+            _filterButton.Size = new Size(200, 30);
+            _filterButton.TabIndex = 1;
+            _filterButton.Text = "Фильтровать";
+            _filterButton.UseVisualStyleBackColor = true;
             // 
-            // filterGroupBox
+            // _filterGroupBox
             // 
-            filterGroupBox = new GroupBox() 
-            {
-                Text = "Фильтры",
-                Location = new Point(20, 20),
-                Size = new Size(300, 200),
-                Name = "filterGroupBox",
-            };
-            filterGroupBox.Controls.Add(checkBoxTypeCircle);
-            filterGroupBox.Controls.Add(checkBoxTypeRectangle);
-            filterGroupBox.Controls.Add(checkBoxTypeTriangle);
-            filterGroupBox.Controls.Add(checkBoxArea);
-            filterGroupBox.Controls.Add(checkBoxPerimeter);
-
-            filterGroupBox.Controls.Add(areaNumericBox);
-            filterGroupBox.Controls.Add(perimeterNumericBox);
+            _filterGroupBox.Controls.Add(_checkBoxTypeCircle);
+            _filterGroupBox.Controls.Add(_checkBoxTypeRectangle);
+            _filterGroupBox.Controls.Add(_checkBoxTypeTriangle);
+            _filterGroupBox.Controls.Add(_checkBoxArea);
+            _filterGroupBox.Controls.Add(_checkBoxPerimeter);
+            _filterGroupBox.Controls.Add(_areaNumericBox);
+            _filterGroupBox.Controls.Add(_perimeterNumericBox);
+            _filterGroupBox.Location = new Point(12, 12);
+            _filterGroupBox.Name = "_filterGroupBox";
+            _filterGroupBox.Size = new Size(299, 180);
+            _filterGroupBox.TabIndex = 0;
+            _filterGroupBox.TabStop = false;
+            _filterGroupBox.Text = "Фильтры";
             // 
             // FilterForm
             // 
-            int widhtForm = 340;//400;
-            int heightForm = 260;//200;
+            ClientSize = new Size(323, 235);
+            Controls.Add(_filterGroupBox);
+            Controls.Add(_filterButton);
             FormBorderStyle = FormBorderStyle.FixedDialog;
-            ClientSize = new System.Drawing.Size(widhtForm, heightForm);
-            Text = "FilterForm";
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "FilterForm";
-            Controls.Add(filterGroupBox);
-            Controls.Add(filterButton);
+            Text = "Фильтр";
+            _filterGroupBox.ResumeLayout(false);
+            _filterGroupBox.PerformLayout();
+            ResumeLayout(false);
         }
-
-        /// <summary>
-        /// Создание точки.
-        /// </summary>
-        /// <param name="number">.</param>
-        /// <param name="startPointX">.</param>
-        /// <param name="startPointY">.</param>
-        /// <param name="incrementX">.</param>
-        /// <param name="incrementY">.</param>
-        /// <returns></returns>
-        private Point CreatePoint(int number, int incrementX = 0,
-            int incrementY = 30, int startPointX = 20,
-            int startPointY = 20) => new Point(
-                number * incrementX + startPointX,
-                number * incrementY + startPointY);
 
         #endregion
     }

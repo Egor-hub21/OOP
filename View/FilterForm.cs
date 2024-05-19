@@ -9,7 +9,8 @@ namespace View
         /// <summary>
         /// Список фигур.
         /// </summary>
-        private BindingList<GeometricFigureBase> GeometricFigures { get; set; }
+        private BindingList<GeometricFigureBase> GeometricFigures 
+        { get; set; }
 
         /// <summary>
         /// Отфильтрованный список фигур.
@@ -20,46 +21,43 @@ namespace View
         /// <summary>
         /// Событие на фильтрацию списка.
         /// </summary>
-        public EventHandler FiguresFilteredOut{ get; set; }
+        public EventHandler figuresFilteredOut;
 
         public FilterForm(BindingList<GeometricFigureBase> geometricFigures)
         {
             GeometricFigures = geometricFigures;
             InitializeComponent();
             DeactivateElements();
-            filterButton.Click += new EventHandler(FilterOut);
-            checkBoxArea.CheckedChanged += new EventHandler(checkBoxArea_CheckedChanged);
-            checkBoxPerimeter.CheckedChanged += new EventHandler(perimeterNumericBox_CheckedChanged);
+            _filterButton.Click += new EventHandler(FilterOut);
+            _checkBoxArea.CheckedChanged += new EventHandler(checkBoxArea_CheckedChanged);
+            _checkBoxPerimeter.CheckedChanged += new EventHandler(perimeterNumericBox_CheckedChanged);
 
-            checkBoxTypeCircle.CheckedChanged += new EventHandler(CheckBox_ActivateElements);
-            checkBoxTypeRectangle.CheckedChanged += new EventHandler(CheckBox_ActivateElements);
-            checkBoxTypeTriangle.CheckedChanged += new EventHandler(CheckBox_ActivateElements);
+            _checkBoxTypeCircle.CheckedChanged += new EventHandler(CheckBox_ActivateElements);
+            _checkBoxTypeRectangle.CheckedChanged += new EventHandler(CheckBox_ActivateElements);
+            _checkBoxTypeTriangle.CheckedChanged += new EventHandler(CheckBox_ActivateElements);
         }
 
         private void DeactivateElements()
         {
-            checkBoxArea.Enabled = false;
-            checkBoxPerimeter.Enabled = false;
+            _checkBoxArea.Enabled = false;
+            _checkBoxPerimeter.Enabled = false;
 
-            areaNumericBox.Enabled = false;
-            perimeterNumericBox.Enabled = false;
+            _areaNumericBox.Enabled = false;
+            _perimeterNumericBox.Enabled = false;
 
-            filterButton.Enabled = false;
+            _filterButton.Enabled = false;
         }
 
         private void CheckBox_ActivateElements(object sender, EventArgs e)
         {
-            bool activate = checkBoxTypeCircle.Checked
-                || checkBoxTypeRectangle.Checked
-                || checkBoxTypeTriangle.Checked;
+            bool activate = _checkBoxTypeCircle.Checked
+                || _checkBoxTypeRectangle.Checked
+                || _checkBoxTypeTriangle.Checked;
 
-            filterButton.Enabled = activate;
-            checkBoxArea.Enabled = activate;
-            checkBoxPerimeter.Enabled = activate;
+            _filterButton.Enabled = activate;
+            _checkBoxArea.Enabled = activate;
+            _checkBoxPerimeter.Enabled = activate;
         }
-
-
-
 
         /// <summary>
         /// Флажок активации поля ввода объёма.
@@ -68,7 +66,7 @@ namespace View
         /// <param name="e"></param>
         private void checkBoxArea_CheckedChanged(object sender, EventArgs e)
         {
-            areaNumericBox.Enabled = checkBoxArea.Checked;
+            _areaNumericBox.Enabled = _checkBoxArea.Checked;
         }
 
         /// <summary>
@@ -78,7 +76,7 @@ namespace View
         /// <param name="e"></param>
         private void perimeterNumericBox_CheckedChanged(object sender, EventArgs e)
         {
-            perimeterNumericBox.Enabled = checkBoxPerimeter.Checked;
+            _perimeterNumericBox.Enabled = _checkBoxPerimeter.Checked;
         }
 
         /// <summary>
@@ -90,46 +88,46 @@ namespace View
         {
             FilteredGeometricFigures = new BindingList<GeometricFigureBase>();
 
-            if (checkBoxTypeCircle.Checked) 
+            if (_checkBoxTypeCircle.Checked) 
             {
                 FilterByType(GeometricFigures, FilteredGeometricFigures,
                     typeof(Circle));
             }
-            if (checkBoxTypeRectangle.Checked)
+            if (_checkBoxTypeRectangle.Checked)
             {
                 FilterByType(GeometricFigures, FilteredGeometricFigures,
                     typeof(GeometricFigures.Rectangle));
             }
-            if (checkBoxTypeTriangle.Checked)
+            if (_checkBoxTypeTriangle.Checked)
             {
                 FilterByType(GeometricFigures, FilteredGeometricFigures,
                     typeof(Triangle));
             }
-            if (checkBoxArea.Checked)
+            if (_checkBoxArea.Checked)
             {
-                if (!string.IsNullOrWhiteSpace(areaNumericBox.Text))
+                if (!string.IsNullOrWhiteSpace(_areaNumericBox.Text))
                 {
                     FilteredGeometricFigures = FilterByArea(FilteredGeometricFigures,
-                        Convert.ToDouble(areaNumericBox.Text));
+                        Convert.ToDouble(_areaNumericBox.Text));
                 }
                 else 
                 {
                     _ = MessageBox.Show("Пожалуйста, заполните Плщадь");
                 }
             }
-            if (checkBoxPerimeter.Checked)
+            if (_checkBoxPerimeter.Checked)
             {
-                if (!string.IsNullOrWhiteSpace(perimeterNumericBox.Text))
+                if (!string.IsNullOrWhiteSpace(_perimeterNumericBox.Text))
                 {
                     FilteredGeometricFigures = FilterByPerimeter(FilteredGeometricFigures,
-                        Convert.ToDouble(perimeterNumericBox.Text));
+                        Convert.ToDouble(_perimeterNumericBox.Text));
                 }
                 else
                 {
                     _ = MessageBox.Show("Пожалуйста, заполните Периметр");
                 }
             }
-            FiguresFilteredOut.Invoke(this, new FiguresAddedEventArgs(FilteredGeometricFigures));
+            figuresFilteredOut.Invoke(this, new FiguresAddedEventArgs(FilteredGeometricFigures));
         }
 
         /// <summary>

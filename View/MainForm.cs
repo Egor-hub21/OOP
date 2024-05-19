@@ -1,5 +1,7 @@
 using GeometricFigures;
 using System.ComponentModel;
+using System.Windows.Forms;
+using System.Xml.Serialization;
 
 namespace View
 {
@@ -22,6 +24,12 @@ namespace View
         { get; set; }
 
         /// <summary>
+        /// Для Сериализации/Десериализации. 
+        /// </summary>
+        private readonly XmlSerializer _serializer =
+            new XmlSerializer(typeof(BindingList<GeometricFigureBase>));
+
+        /// <summary>
         /// Initializes a new instance of the
         /// <see cref="MainForm"/> class.
         /// </summary>
@@ -30,10 +38,13 @@ namespace View
             InitializeComponent();
             InitializeFigures();
 
-            addButton.Click += new EventHandler(OpenAddForm);
-            removeButton.Click += new EventHandler(figureDataGrid_DeletingLine);
-            filterButton.Click += new EventHandler(OpenFilterForm);
-            resettingFilterButton.Click += new EventHandler(ResetFilter);
+            _addButton.Click += new EventHandler(OpenAddForm);
+            _removeButton.Click += new EventHandler(figureDataGrid_DeletingLine);
+            _filterButton.Click += new EventHandler(OpenFilterForm);
+            _resettingFilterButton.Click += new EventHandler(ResetFilter);
+
+            _serializationButton.Click += new EventHandler(SerializeFigures);
+            _deserializationButton.Click += new EventHandler(DeserializeFigures);
         }
 
         #region Add
@@ -46,8 +57,8 @@ namespace View
         private void OpenAddForm(object sender, EventArgs e)
         {
             AddForm addForm = new AddForm();
-            addForm.FigureAdded += new EventHandler(FigureAdded);
-            addForm.FigureDeleted += new EventHandler(FigureDeleted);
+            addForm.figureAdded += new EventHandler(FigureAdded);
+            addForm.figureDeleted += new EventHandler(FigureDeleted);
 
             addForm.Show();
         }
@@ -87,7 +98,7 @@ namespace View
         private void OpenFilterForm(object sender, EventArgs e)
         {
             FilterForm filterForm = new FilterForm(GeometricFigures);
-            filterForm.FiguresFilteredOut += new EventHandler(FiguresFilteredOut);
+            filterForm.figuresFilteredOut += new EventHandler(FiguresFilteredOut);
 
             filterForm.Show();
         }
@@ -103,7 +114,7 @@ namespace View
 
             FilteredGeometricFigures = filterEventArgs?.GeometricFigure;
 
-            PopulateDataGridView(figureDataGrid, FilteredGeometricFigures);
+            PopulateDataGridView(_figureDataGrid, FilteredGeometricFigures);
         }
 
         /// <summary>
@@ -113,7 +124,7 @@ namespace View
         /// <param name="e">.</param>
         private void ResetFilter(object sender, EventArgs e)
         {
-            PopulateDataGridView(figureDataGrid, GeometricFigures);
+            PopulateDataGridView(_figureDataGrid, GeometricFigures);
         }
 
         #endregion
@@ -125,7 +136,7 @@ namespace View
         private void InitializeFigures()
         {
             GeometricFigures = new BindingList<GeometricFigureBase>();
-            PopulateDataGridView(figureDataGrid, GeometricFigures);
+            PopulateDataGridView(_figureDataGrid, GeometricFigures);
         }
 
         /// <summary>
@@ -146,17 +157,74 @@ namespace View
         /// <param name="e">.</param>
         private void figureDataGrid_DeletingLine(object sender, EventArgs e)
         {
-            if (figureDataGrid.SelectedRows.Count > 0)
+
+            _figureDataGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+            foreach (DataGridViewRow row in _figureDataGrid.SelectedRows)
             {
-                foreach (DataGridViewRow row in figureDataGrid.SelectedRows)
-                {
-                    figureDataGrid.Rows.Remove(row);
-                }
-            }
-            else
-            {
-                _ = MessageBox.Show("Выделите строку в таблице!");
+                _figureDataGrid.Rows.Remove(row);
             }
         }
+
+        /// <summary>
+        /// Сохраненить список в файл.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SerializeFigures(object sender, EventArgs e)
+        {
+            if (GeometricFigures.Count == 0 || GeometricFigures is null)
+            {
+                MessageBox.Show("Список пуст!");
+                return;
+            }
+
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                Filter = "Файлы (*.fig)|*.fig|Все файлы (*.*)|*.*"
+            };
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string path = saveFileDialog.FileName.ToString();
+                using (var file = File.Create(path))
+                {
+                    _serializer.Serialize(file, GeometricFigures);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Загрузить список из файла.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DeserializeFigures(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "Файлы (*.fig)|*.fig|Все файлы (*.*)|*.*"
+            };
+
+            if (openFileDialog.ShowDialog() != DialogResult.OK) return;
+
+            string path = openFileDialog.FileName.ToString();
+            try
+            {
+                using (var file = new StreamReader(path))
+                {
+                    GeometricFigures = (BindingList<GeometricFigureBase>)
+                        _serializer.Deserialize(file);
+                }
+
+                _figureDataGrid.DataSource = GeometricFigures;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Не удалось загрузить файл!");
+            }
+        }
+
+
     }
 }

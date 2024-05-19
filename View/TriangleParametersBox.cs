@@ -43,19 +43,19 @@ namespace View
         {
             AngelLabel = new Label()
             {
-                Text = "Angel :",
+                Text = "Угол :",
                 Dock = DockStyle.Bottom,
             };
 
             FirstSideLabel = new Label()
             {
-                Text = "FirstSide :",
+                Text = "Первая сторона :",
                 Dock = DockStyle.Bottom,
             };
 
             SecondSideLabel = new Label()
             {
-                Text = "SecondSide :",
+                Text = "Вторая сторона :",
                 Dock = DockStyle.Bottom,
             };
 
@@ -78,7 +78,7 @@ namespace View
             };
 
             Size = new Size(200, 165);
-            Text = "TriangleParameters";
+            Text = "Параметры треугольника";
 
             Controls.Add(FirstSideLabel);
             Controls.Add(FirstSideTextBox);

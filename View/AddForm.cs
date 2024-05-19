@@ -17,11 +17,11 @@ namespace View
         {
             InitializeComponent();
             FillComboBox();
-            comboBox.SelectedIndexChanged += new EventHandler(comboBox_SelectedIndexChanged);
-            okButton.Click += new EventHandler(okButton_Click);
-            cancelButton.Click += new EventHandler(cancel_Click);
+            _comboBox.SelectedIndexChanged += new EventHandler(comboBox_SelectedIndexChanged);
+            _okButton.Click += new EventHandler(okButton_Click);
+            _cancelButton.Click += new EventHandler(cancel_Click);
 #if DEBUG
-            randomButton.Click += new EventHandler(randomButton_Click);
+            _randomButton.Click += new EventHandler(randomButton_Click);
 #endif
         }
 
@@ -33,12 +33,12 @@ namespace View
         /// <summary>
         /// Событие на добавление фигуры.
         /// </summary>
-        public EventHandler FigureAdded { get; set; }
+        public EventHandler figureAdded;
 
         /// <summary>
         /// Событие на удаление фигуры.
         /// </summary>
-        public EventHandler FigureDeleted { get; set; }
+        public EventHandler figureDeleted;
 
         /// <summary>
         /// Заполняет ComboBox данными.
@@ -48,8 +48,8 @@ namespace View
             TypeFigures[] colorsArray = 
                 (TypeFigures[])Enum.GetValues(typeof(TypeFigures));
 
-            comboBox.DataSource = colorsArray;
-            comboBox.SelectedItem = colorsArray.GetValue(0);
+            _comboBox.DataSource = colorsArray;
+            _comboBox.SelectedItem = colorsArray.GetValue(0);
             SetFigureParametersBox();
         }
 
@@ -68,7 +68,7 @@ namespace View
         /// </summary>
         private void SetFigureParametersBox()
         {
-            Controls.Remove(figureParametersBox);
+            Controls.Remove(_figureParametersBox);
 
             Dictionary<TypeFigures, FigureParametersBox> figureParametersBoxes =
                 new()
@@ -77,29 +77,29 @@ namespace View
                     TypeFigures.Circle,
                     new CircleParametersBox()
                     {
-                        Location = figureParametersBox.Location,
+                        Location = _figureParametersBox.Location,
                     }
                 },
                 {
                     TypeFigures.Rectangle,
                     new RectangleParametersBox()
                     {
-                        Location = figureParametersBox.Location,
+                        Location = _figureParametersBox.Location,
                     }
                 },
                 {
                     TypeFigures.Triangle,
                     new TriangleParametersBox()
                     {
-                        Location = figureParametersBox.Location,
+                        Location = _figureParametersBox.Location,
                     }
                 },
             };
 
-            figureParametersBox = 
-                figureParametersBoxes[(TypeFigures)comboBox.SelectedItem];
+            _figureParametersBox = 
+                figureParametersBoxes[(TypeFigures)_comboBox.SelectedItem];
 
-            Controls.Add(figureParametersBox);
+            Controls.Add(_figureParametersBox);
         }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace View
                         return new Circle
                             {
                                 Radius = Convert.ToDouble(
-                                    ((CircleParametersBox)figureParametersBox)
+                                    ((CircleParametersBox)_figureParametersBox)
                                     .RadiusTextBox.Text),
                             };
                     }
@@ -150,10 +150,10 @@ namespace View
                         return new GeometricFigures.Rectangle
                         {
                             Length = Convert.ToDouble(
-                                ((RectangleParametersBox)figureParametersBox).
+                                ((RectangleParametersBox)_figureParametersBox).
                                 LengthTextBox.Text),
                             Width = Convert.ToDouble(
-                                ((RectangleParametersBox)figureParametersBox)
+                                ((RectangleParametersBox)_figureParametersBox)
                                 .WidthSideTextBox.Text),
                         };
                     }
@@ -166,13 +166,13 @@ namespace View
                         return new Triangle
                         {
                             Angle = new Angle( Convert.ToDouble(
-                                ((TriangleParametersBox)figureParametersBox)
+                                ((TriangleParametersBox)_figureParametersBox)
                                 .AngleTextBox.Text)),
                             FirstSide = Convert.ToDouble(
-                                ((TriangleParametersBox)figureParametersBox)
+                                ((TriangleParametersBox)_figureParametersBox)
                                 .FirstSideTextBox.Text),
                             SecondSide = Convert.ToDouble(
-                                ((TriangleParametersBox)figureParametersBox)
+                                ((TriangleParametersBox)_figureParametersBox)
                                 .SecondSideTextBox.Text),
                         };
                     }
@@ -187,7 +187,7 @@ namespace View
                     () =>
                     {
                         return string.IsNullOrWhiteSpace(
-                            ((CircleParametersBox)figureParametersBox)
+                            ((CircleParametersBox)_figureParametersBox)
                             .RadiusTextBox.Text);
                     }
                 },
@@ -196,10 +196,10 @@ namespace View
                     () =>
                     {
                         return string.IsNullOrWhiteSpace(
-                                ((RectangleParametersBox)figureParametersBox)
+                                ((RectangleParametersBox)_figureParametersBox)
                                 .LengthTextBox.Text)
                             || string.IsNullOrWhiteSpace(
-                                ((RectangleParametersBox)figureParametersBox)
+                                ((RectangleParametersBox)_figureParametersBox)
                             .WidthSideTextBox.Text);
                     }
                 },
@@ -208,23 +208,23 @@ namespace View
                     () =>
                     {
                         return string.IsNullOrWhiteSpace(
-                            ((TriangleParametersBox)figureParametersBox)
+                            ((TriangleParametersBox)_figureParametersBox)
                             .AngleTextBox.Text)
                         || string.IsNullOrWhiteSpace(
-                            ((TriangleParametersBox)figureParametersBox)
+                            ((TriangleParametersBox)_figureParametersBox)
                             .FirstSideTextBox.Text)
                         || string.IsNullOrWhiteSpace(
-                            ((TriangleParametersBox)figureParametersBox)
+                            ((TriangleParametersBox)_figureParametersBox)
                             .SecondSideTextBox.Text);
                     }
                 },
             };
 
-            if (!invalidInputs[figureParametersBox.GetType()].Invoke())
+            if (!invalidInputs[_figureParametersBox.GetType()].Invoke())
             {
                 try
                 {
-                    GeometricFigure = geometricFigures[figureParametersBox.GetType()].Invoke();
+                    GeometricFigure = geometricFigures[_figureParametersBox.GetType()].Invoke();
                 }
                 catch (Exception ex)
                 {
@@ -239,7 +239,7 @@ namespace View
 
             if (GeometricFigure is not null)
             {
-                FigureAdded?.Invoke(this, new FigureAddedEventArgs(GeometricFigure));
+                figureAdded?.Invoke(this, new FigureAddedEventArgs(GeometricFigure));
             }
         }
 
@@ -252,7 +252,7 @@ namespace View
         {
             if (GeometricFigure is not null)
             {
-                FigureDeleted?.Invoke(this, new FigureAddedEventArgs(GeometricFigure));
+                figureDeleted?.Invoke(this, new FigureAddedEventArgs(GeometricFigure));
             }
         }
 
@@ -275,7 +275,7 @@ namespace View
                     typeof(CircleParametersBox),
                     () =>
                     {
-                        ((CircleParametersBox)figureParametersBox)
+                        ((CircleParametersBox)_figureParametersBox)
                             .RadiusTextBox.Text = 
                                 $"{random.Next(minValue,maxValue)}";
                     }
@@ -284,10 +284,10 @@ namespace View
                     typeof(RectangleParametersBox),
                     () =>
                     {
-                        ((RectangleParametersBox)figureParametersBox)
+                        ((RectangleParametersBox)_figureParametersBox)
                             .LengthTextBox.Text =
                                 $"{random.Next(minValue,maxValue)}";
-                        ((RectangleParametersBox)figureParametersBox)
+                        ((RectangleParametersBox)_figureParametersBox)
                             .WidthSideTextBox.Text =
                                 $"{random.Next(minValue,maxValue)}";
                     }
@@ -297,13 +297,13 @@ namespace View
                     typeof(TriangleParametersBox),
                     () =>
                     {
-                        ((TriangleParametersBox)figureParametersBox)
+                        ((TriangleParametersBox)_figureParametersBox)
                             .AngleTextBox.Text  =
                                 $"{random.Next(minValue,maxValue)}";
-                        ((TriangleParametersBox)figureParametersBox)
+                        ((TriangleParametersBox)_figureParametersBox)
                             .FirstSideTextBox.Text =
                                 $"{random.Next(minValue,maxValue)}";
-                        ((TriangleParametersBox)figureParametersBox)
+                        ((TriangleParametersBox)_figureParametersBox)
                             .SecondSideTextBox.Text =
                                 $"{random.Next(minValue,maxValue)}";
                     }
@@ -311,7 +311,7 @@ namespace View
                 },
             };
            
-            geometricFigures[figureParametersBox.GetType()].Invoke();
+            geometricFigures[_figureParametersBox.GetType()].Invoke();
         }
 #endif
 

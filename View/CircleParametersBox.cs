@@ -23,7 +23,7 @@ namespace View
         {
             RadiusLabel = new Label()
             {
-                Text = "Radius :",
+                Text = "Радиус :",
                 Dock = DockStyle.Bottom,
             };
 
@@ -33,7 +33,7 @@ namespace View
             };
 
             Size = new Size(200, 75);
-            Text = "CircleParameters";
+            Text = "Параметры окружности";
 
             Controls.Add(RadiusLabel);
             Controls.Add(RadiusTextBox);

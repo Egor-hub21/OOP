@@ -33,13 +33,13 @@ namespace View
         {
             LenghtLabel = new Label()
             {
-                Text = "Lenght :",
+                Text = "Длина :",
                 Dock = DockStyle.Bottom,
             };
 
             WidthLabel = new Label()
             {
-                Text = "Width :",
+                Text = "Ширина :",
                 Dock = DockStyle.Bottom,
             };
 
@@ -54,7 +54,7 @@ namespace View
             };
 
             Size = new Size(200, 120);
-            Text = "CircleParameters";
+            Text = "Параметры окружности";
 
             Controls.Add(LenghtLabel);
             Controls.Add(LengthTextBox);
