@@ -4,30 +4,36 @@ using System.Reflection;
 
 namespace View
 {
+    //TODO: XML
     public partial class FilterForm : Form
     {
+        //TODO: 
         /// <summary>
         /// Список фигур.
         /// </summary>
         private BindingList<GeometricFigureBase> GeometricFigures 
         { get; set; }
 
+        //TODO: 
         /// <summary>
         /// Отфильтрованный список фигур.
         /// </summary>
         private BindingList<GeometricFigureBase> FilteredGeometricFigures
         { get; set; }
 
+        //TODO: RSDN
         /// <summary>
         /// Событие на фильтрацию списка.
         /// </summary>
         public EventHandler figuresFilteredOut;
 
+        //TODO: XML
         public FilterForm(BindingList<GeometricFigureBase> geometricFigures)
         {
             GeometricFigures = geometricFigures;
             InitializeComponent();
             DeactivateElements();
+            //TODO: refactor
             _filterButton.Click += new EventHandler(FilterOut);
             _checkBoxArea.CheckedChanged += new EventHandler(checkBoxArea_CheckedChanged);
             _checkBoxPerimeter.CheckedChanged += new EventHandler(perimeterNumericBox_CheckedChanged);
@@ -37,6 +43,7 @@ namespace View
             _checkBoxTypeTriangle.CheckedChanged += new EventHandler(CheckBox_ActivateElements);
         }
 
+        //TODO: XML
         private void DeactivateElements()
         {
             _checkBoxArea.Enabled = false;
@@ -48,6 +55,7 @@ namespace View
             _filterButton.Enabled = false;
         }
 
+        //TODO: XML
         private void CheckBox_ActivateElements(object sender, EventArgs e)
         {
             bool activate = _checkBoxTypeCircle.Checked
@@ -59,6 +67,7 @@ namespace View
             _checkBoxPerimeter.Enabled = activate;
         }
 
+        //TODO: RSDN
         /// <summary>
         /// Флажок активации поля ввода объёма.
         /// </summary>
@@ -69,6 +78,7 @@ namespace View
             _areaNumericBox.Enabled = _checkBoxArea.Checked;
         }
 
+        //TODO: RSDN
         /// <summary>
         /// Флажок активации поля ввода Периметра.
         /// </summary>
@@ -112,6 +122,7 @@ namespace View
                 }
                 else 
                 {
+                    //TODO: 
                     _ = MessageBox.Show("Пожалуйста, заполните Плщадь");
                 }
             }
@@ -191,7 +202,5 @@ namespace View
             }
             return filteredList;
         }
-
-
     }
 }

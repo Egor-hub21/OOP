@@ -10,13 +10,13 @@ namespace View
     /// </summary>
     public partial class MainForm : Form
     {
-        //TODO: incapsulation +
-
+        //TODO: 
         /// <summary>
         /// Список фигур.
         /// </summary>
         private BindingList<GeometricFigureBase> GeometricFigures { get; set; }
 
+        //TODO: 
         /// <summary>
         /// Отфильтрованный список фигур.
         /// </summary>
@@ -38,7 +38,8 @@ namespace View
             InitializeComponent();
             InitializeFigures();
 
-            _addButton.Click += new EventHandler(OpenAddForm);
+            _addButton.Click += OpenAddForm;
+            //TODO: 
             _removeButton.Click += new EventHandler(figureDataGrid_DeletingLine);
             _filterButton.Click += new EventHandler(OpenFilterForm);
             _resettingFilterButton.Click += new EventHandler(ResetFilter);
@@ -48,7 +49,7 @@ namespace View
         }
 
         #region Add
-        //TODO: RSDN +
+
         /// <summary>
         /// Cоздает форму для добавления фигуры.
         /// </summary>
@@ -139,6 +140,7 @@ namespace View
             PopulateDataGridView(_figureDataGrid, GeometricFigures);
         }
 
+        //TODO: rename
         /// <summary>
         /// Связывание листа с таблицей на форме.
         /// </summary>
@@ -150,6 +152,7 @@ namespace View
             figureDataGrid.DataSource = GeometricFigures;
         }
 
+        //TODO: RSDN
         /// <summary>
         /// Удаляет фигуру.
         /// </summary>
@@ -224,7 +227,5 @@ namespace View
                 MessageBox.Show("Не удалось загрузить файл!");
             }
         }
-
-
     }
 }

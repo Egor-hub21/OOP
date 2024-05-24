@@ -77,6 +77,7 @@ namespace View
                 Location = new Point(0, 100),
             };
 
+            //TODO: duplication
             Size = new Size(200, 165);
             Text = "Параметры треугольника";
 

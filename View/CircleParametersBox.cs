@@ -32,6 +32,7 @@ namespace View
                 Dock = DockStyle.Bottom,
             };
 
+            //TODO: duplication
             Size = new Size(200, 75);
             Text = "Параметры окружности";
 

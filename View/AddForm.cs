@@ -7,8 +7,6 @@ namespace View
     /// </summary>
     public partial class AddForm : Form
     {
-        //TODO: remove argument +
-
         /// <summary>
         /// Initializes a new instance of the
         /// <see cref="AddForm"/> class.
@@ -25,16 +23,19 @@ namespace View
 #endif
         }
 
+        //TODO: 
         /// <summary>
         /// Фигура.
         /// </summary>
         private GeometricFigureBase GeometricFigure { get; set; }
 
+        //TODO: RSDN
         /// <summary>
         /// Событие на добавление фигуры.
         /// </summary>
         public EventHandler figureAdded;
 
+        //TODO: RSDN
         /// <summary>
         /// Событие на удаление фигуры.
         /// </summary>
@@ -135,11 +136,12 @@ namespace View
                     typeof(CircleParametersBox),
                     () =>
                     {
+                        var figureParametersBox = 
+                            GetFigureParameterBox<CircleParametersBox>(_figureParametersBox);
                         return new Circle
                             {
                                 Radius = Convert.ToDouble(
-                                    ((CircleParametersBox)_figureParametersBox)
-                                    .RadiusTextBox.Text),
+                                    figureParametersBox.RadiusTextBox.Text),
                             };
                     }
                 },
@@ -149,6 +151,7 @@ namespace View
                     {
                         return new GeometricFigures.Rectangle
                         {
+                            //TODO: refactor
                             Length = Convert.ToDouble(
                                 ((RectangleParametersBox)_figureParametersBox).
                                 LengthTextBox.Text),
@@ -165,6 +168,7 @@ namespace View
                     {
                         return new Triangle
                         {
+                            //TODO: refactor
                             Angle = new Angle( Convert.ToDouble(
                                 ((TriangleParametersBox)_figureParametersBox)
                                 .AngleTextBox.Text)),
@@ -186,6 +190,7 @@ namespace View
                     typeof(CircleParametersBox),
                     () =>
                     {
+                        //TODO: refactor
                         return string.IsNullOrWhiteSpace(
                             ((CircleParametersBox)_figureParametersBox)
                             .RadiusTextBox.Text);
@@ -195,6 +200,7 @@ namespace View
                     typeof(RectangleParametersBox),
                     () =>
                     {
+                        //TODO: refactor
                         return string.IsNullOrWhiteSpace(
                                 ((RectangleParametersBox)_figureParametersBox)
                                 .LengthTextBox.Text)
@@ -207,6 +213,7 @@ namespace View
                     typeof(TriangleParametersBox),
                     () =>
                     {
+                        //TODO: refactor
                         return string.IsNullOrWhiteSpace(
                             ((TriangleParametersBox)_figureParametersBox)
                             .AngleTextBox.Text)
@@ -256,6 +263,13 @@ namespace View
             }
         }
 
+        //TODO: RSDN
+        private T GetFigureParameterBox<T>(FigureParametersBox figureParametersBox)
+            where T : FigureParametersBox
+        {
+            return (T)figureParametersBox;
+        }
+
 #if DEBUG
         /// <summary>
         /// Заполнение полей рандомными данными
@@ -275,6 +289,7 @@ namespace View
                     typeof(CircleParametersBox),
                     () =>
                     {
+                        //TODO: refactor
                         ((CircleParametersBox)_figureParametersBox)
                             .RadiusTextBox.Text = 
                                 $"{random.Next(minValue,maxValue)}";
@@ -284,6 +299,7 @@ namespace View
                     typeof(RectangleParametersBox),
                     () =>
                     {
+                        //TODO: refactor
                         ((RectangleParametersBox)_figureParametersBox)
                             .LengthTextBox.Text =
                                 $"{random.Next(minValue,maxValue)}";
@@ -297,6 +313,7 @@ namespace View
                     typeof(TriangleParametersBox),
                     () =>
                     {
+                        //TODO: refactor
                         ((TriangleParametersBox)_figureParametersBox)
                             .AngleTextBox.Text  =
                                 $"{random.Next(minValue,maxValue)}";

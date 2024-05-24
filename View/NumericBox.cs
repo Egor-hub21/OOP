@@ -14,6 +14,7 @@ namespace View
             KeyPress += new KeyPressEventHandler(textBox_KeyPress);
         }
 
+        //TODO: RSDN
         /// <summary>
         /// Корректировка ввода данных.
         /// </summary>
@@ -23,7 +24,6 @@ namespace View
         {
             char symbol = e.KeyChar;
 
-            //TODO: refactor +
             if ((symbol == '.') && Text.IndexOf(',') != -1)
             {
                 e.Handled = true;
