@@ -34,27 +34,35 @@ namespace View
             LenghtLabel = new Label()
             {
                 Text = "Длина :",
-                Dock = DockStyle.Bottom,
+                Left = leftElement,
+                Top = topElement,
+                Width = widthElement,
             };
 
             WidthLabel = new Label()
             {
                 Text = "Ширина :",
-                Dock = DockStyle.Bottom,
+                Left = leftElement,
+                Top = topElement + 40,
+                Width = widthElement,
             };
 
             LengthTextBox = new NumericBox()
             {
-                Dock = DockStyle.Bottom,
+                Left = leftElement + 80,
+                Top = topElement,
+                Width = widthElement,
             };
 
             WidthSideTextBox = new NumericBox()
             {
-                Dock = DockStyle.Bottom,
+                Left = leftElement + 80,
+                Top = topElement + 40,
+                Width = widthElement,
             };
 
-            //TODO: duplication
-            Size = new Size(200, 120);
+            //TODO: duplication +
+            Size = new Size(width, height);
             Text = "Параметры окружности";
 
             Controls.Add(LenghtLabel);

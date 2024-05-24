@@ -43,7 +43,7 @@ namespace GeometricFigures
         /// <inheritdoc/>
         public override string TypeFigure
         {
-            get => TypeFigures.Circle.ToString();
+            get => "Круг";
         }
 
         /// <inheritdoc/>

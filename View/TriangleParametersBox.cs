@@ -5,6 +5,7 @@ namespace View
     /// </summary>
     public class TriangleParametersBox : FigureParametersBox
     {
+
         /// <summary>
         /// Текстовое поле для ввода угла.
         /// </summary>
@@ -44,41 +45,50 @@ namespace View
             AngelLabel = new Label()
             {
                 Text = "Угол :",
-                Dock = DockStyle.Bottom,
+                Left = leftElement,
+                Top = topElement,
+                Width = widthElement,
             };
 
             FirstSideLabel = new Label()
             {
-                Text = "Первая сторона :",
-                Dock = DockStyle.Bottom,
+                Text = "Сторона 1:",
+                Left = leftElement,
+                Top = topElement + 40,
+                Width = widthElement,
             };
 
             SecondSideLabel = new Label()
             {
-                Text = "Вторая сторона :",
-                Dock = DockStyle.Bottom,
+                Text = "Сторона 2:",
+                Left = leftElement,
+                Top = topElement + 40 * 2,
+                Width = widthElement,
             };
 
             AngleTextBox = new NumericBox()
             {
-                Dock = DockStyle.Bottom,
-                Location = new Point(0, 0),
+                Left = leftElement + 80,
+                Top = topElement,
+                Width = widthElement,
             };
 
             FirstSideTextBox = new NumericBox()
             {
-                Dock = DockStyle.Bottom,
-                Location = new Point(0, 50),
+                Left = leftElement + 80,
+                Top = topElement + 40,
+                Width = widthElement,
             };
 
             SecondSideTextBox = new NumericBox()
             {
-                Dock = DockStyle.Bottom,
-                Location = new Point(0, 100),
+                Left = leftElement + 80,
+                Top = topElement + 40 * 2,
+                Width = widthElement,
             };
 
-            //TODO: duplication
-            Size = new Size(200, 165);
+            //TODO: duplication +
+            Size = new Size(width, height);
             Text = "Параметры треугольника";
 
             Controls.Add(FirstSideLabel);

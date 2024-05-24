@@ -2,6 +2,7 @@ using GeometricFigures;
 using System.ComponentModel;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using static System.Windows.Forms.DataFormats;
 
 namespace View
 {
@@ -10,18 +11,17 @@ namespace View
     /// </summary>
     public partial class MainForm : Form
     {
-        //TODO: 
+        //TODO: +
         /// <summary>
         /// Список фигур.
         /// </summary>
-        private BindingList<GeometricFigureBase> GeometricFigures { get; set; }
+        private BindingList<GeometricFigureBase> _geometricFigures;
 
-        //TODO: 
+        //TODO: +
         /// <summary>
         /// Отфильтрованный список фигур.
         /// </summary>
-        private BindingList<GeometricFigureBase> FilteredGeometricFigures 
-        { get; set; }
+        private BindingList<GeometricFigureBase> _filteredGeometricFigures;
 
         /// <summary>
         /// Для Сериализации/Десериализации. 
@@ -39,13 +39,13 @@ namespace View
             InitializeFigures();
 
             _addButton.Click += OpenAddForm;
-            //TODO: 
-            _removeButton.Click += new EventHandler(figureDataGrid_DeletingLine);
-            _filterButton.Click += new EventHandler(OpenFilterForm);
-            _resettingFilterButton.Click += new EventHandler(ResetFilter);
+            //TODO: +
+            _removeButton.Click += DeleteFigure;
+            _filterButton.Click += OpenFilterForm;
+            _resettingFilterButton.Click += ResetFilter;
 
-            _serializationButton.Click += new EventHandler(SerializeFigures);
-            _deserializationButton.Click += new EventHandler(DeserializeFigures);
+            _serializationButton.Click += SerializeFigures;
+            _deserializationButton.Click += DeserializeFigures;
         }
 
         #region Add
@@ -53,39 +53,52 @@ namespace View
         /// <summary>
         /// Cоздает форму для добавления фигуры.
         /// </summary>
-        /// <param name="sender".></param>
-        /// <param name="e">.</param>
+        /// <param name="sender">Источник события.</param>
+        /// <param name="e">Объект <see cref="EventArgs"/>,
+        /// содержащий данные события.</param>
         private void OpenAddForm(object sender, EventArgs e)
         {
-            AddForm addForm = new AddForm();
-            addForm.figureAdded += new EventHandler(FigureAdded);
-            addForm.figureDeleted += new EventHandler(FigureDeleted);
+            AddForm addForm = Application
+                .OpenForms.OfType<AddForm>().FirstOrDefault();
 
-            addForm.Show();
+            if (addForm == null)
+            {
+                addForm = new AddForm();
+                addForm.Show();
+                addForm.FigureAdded += FigureAdded;
+                addForm.FigureDeleted += FigureDeleted;
+            }
+            else
+            {
+                addForm.Focus();
+            }
+
         }
 
         /// <summary>
         /// Добавить фигуру.
         /// </summary>
-        /// <param name="sender".></param>
-        /// <param name="geometricFigure">.</param>
+        /// <param name="sender".>Источник события</param>
+        /// <param name="geometricFigure">Объект <see cref="EventArgs"/>,
+        /// содержащий данные события.</param>
         private void FigureAdded(object sender, EventArgs geometricFigure)
         {
             FigureAddedEventArgs addedEventArgs = geometricFigure as FigureAddedEventArgs;
 
-            GeometricFigures.Add(addedEventArgs?.GeometricFigure);
+            _geometricFigures.Add(addedEventArgs?.GeometricFigure);
         }
 
         /// <summary>
         /// Отмена добавления фигуры.
         /// </summary>
-        /// <param name="sender">.</param>
-        /// <param name="geometricFigure">.</param>
+        /// <param name="sender".>Источник события</param>
+        /// <param name="geometricFigure">Объект <see cref="EventArgs"/>,
+        /// содержащий данные события.</param>
         private void FigureDeleted(object sender, EventArgs geometricFigure)
         {
             FigureAddedEventArgs addedEventArgs = geometricFigure as FigureAddedEventArgs;
 
-            _ = GeometricFigures.Remove(addedEventArgs?.GeometricFigure);
+            _ = _geometricFigures.Remove(addedEventArgs?.GeometricFigure);
         }
         #endregion
 
@@ -94,74 +107,85 @@ namespace View
         /// <summary>
         /// Cоздает форму для задания фильтра.
         /// </summary>
-        /// <param name="sender".></param>
-        /// <param name="e">.</param>
+        /// <param name="sender">Источник события.</param>
+        /// <param name="e">Объект <see cref="EventArgs"/>,
+        /// содержащий данные события.</param>
         private void OpenFilterForm(object sender, EventArgs e)
         {
-            FilterForm filterForm = new FilterForm(GeometricFigures);
-            filterForm.figuresFilteredOut += new EventHandler(FiguresFilteredOut);
+            FilterForm filterForm = Application
+                .OpenForms.OfType<FilterForm>().FirstOrDefault();
 
-            filterForm.Show();
+            if (filterForm == null)
+            {
+                filterForm = new FilterForm(_geometricFigures);
+                filterForm.FiguresFilteredOut += FiguresFilteredOut;
+                filterForm.Show();
+            }
+            else
+            {
+                filterForm.Focus();
+            }
         }
 
         /// <summary>
         /// Отфильтровать фигуры.
-        /// </summary>
-        /// <param name="sender".></param>
-        /// <param name="geometricFigure">.</param>
+        /// <param name="sender".>Источник события</param>
+        /// <param name="geometricFigure">Объект <see cref="EventArgs"/>,
+        /// содержащий данные события.</param>
         private void FiguresFilteredOut(object sender, EventArgs geometricFigure)
         {
             FiguresAddedEventArgs filterEventArgs = geometricFigure as FiguresAddedEventArgs;
 
-            FilteredGeometricFigures = filterEventArgs?.GeometricFigure;
+            _filteredGeometricFigures = filterEventArgs?.GeometricFigure;
 
-            PopulateDataGridView(_figureDataGrid, FilteredGeometricFigures);
+            BindDataToGrid(_figureDataGrid, _filteredGeometricFigures);
         }
 
         /// <summary>
         /// Сбросить фильтр
         /// </summary>
-        /// <param name="sender".></param>
-        /// <param name="e">.</param>
+        /// <param name="sender">Источник события.</param>
+        /// <param name="e">Объект <see cref="EventArgs"/>,
+        /// содержащий данные события.</param>
         private void ResetFilter(object sender, EventArgs e)
         {
-            PopulateDataGridView(_figureDataGrid, GeometricFigures);
+            BindDataToGrid(_figureDataGrid, _geometricFigures);
         }
 
         #endregion
 
-
         /// <summary>
-        /// Инициализация GeometricFigures.
+        /// Инициализация _geometricFigures.
         /// </summary>
         private void InitializeFigures()
         {
-            GeometricFigures = new BindingList<GeometricFigureBase>();
-            PopulateDataGridView(_figureDataGrid, GeometricFigures);
+            _geometricFigures = new BindingList<GeometricFigureBase>();
+            BindDataToGrid(_figureDataGrid, _geometricFigures);
         }
 
-        //TODO: rename
+        //TODO: rename +
         /// <summary>
         /// Связывание листа с таблицей на форме.
         /// </summary>
         /// <param name="figureDataGrid">Таблица.</param>
         /// <param name="GeometricFigures">Лист фигур.</param>
-        public void PopulateDataGridView(DataGridView figureDataGrid, 
+        public void BindDataToGrid(DataGridView figureDataGrid, 
             BindingList<GeometricFigureBase> GeometricFigures)
         {
             figureDataGrid.DataSource = GeometricFigures;
         }
 
-        //TODO: RSDN
+        //TODO: RSDN +
         /// <summary>
         /// Удаляет фигуру.
         /// </summary>
-        /// <param name="sender">.</param>
-        /// <param name="e">.</param>
-        private void figureDataGrid_DeletingLine(object sender, EventArgs e)
-        {
-
-            _figureDataGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+        /// <param name="sender">Источник события.</param>
+        /// <param name="e">Объект <see cref="EventArgs"/>,
+        /// содержащий данные события.</param>
+        private void DeleteFigure(object sender, EventArgs e)
+        { 
+            _figureDataGrid.SelectionMode = 
+                DataGridViewSelectionMode.FullRowSelect;
 
             foreach (DataGridViewRow row in _figureDataGrid.SelectedRows)
             {
@@ -172,13 +196,15 @@ namespace View
         /// <summary>
         /// Сохраненить список в файл.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Источник события.</param>
+        /// <param name="e">Объект <see cref="EventArgs"/>,
+        /// содержащий данные события.</param>
         private void SerializeFigures(object sender, EventArgs e)
         {
-            if (GeometricFigures.Count == 0 || GeometricFigures is null)
+            if (_geometricFigures.Count == 0 || _geometricFigures is null)
             {
-                MessageBox.Show("Список пуст!");
+                MessageBox.Show("Список пуст!", "Сообщение",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -192,7 +218,7 @@ namespace View
                 string path = saveFileDialog.FileName.ToString();
                 using (var file = File.Create(path))
                 {
-                    _serializer.Serialize(file, GeometricFigures);
+                    _serializer.Serialize(file, _geometricFigures);
                 }
             }
         }
@@ -200,8 +226,9 @@ namespace View
         /// <summary>
         /// Загрузить список из файла.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Источник события.</param>
+        /// <param name="e">Объект <see cref="EventArgs"/>,
+        /// содержащий данные события.</param>
         private void DeserializeFigures(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog
@@ -216,15 +243,16 @@ namespace View
             {
                 using (var file = new StreamReader(path))
                 {
-                    GeometricFigures = (BindingList<GeometricFigureBase>)
+                    _geometricFigures = (BindingList<GeometricFigureBase>)
                         _serializer.Deserialize(file);
                 }
 
-                _figureDataGrid.DataSource = GeometricFigures;
+                _figureDataGrid.DataSource = _geometricFigures;
             }
             catch (Exception)
             {
-                MessageBox.Show("Не удалось загрузить файл!");
+                MessageBox.Show("Не удалось загрузить файл!", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

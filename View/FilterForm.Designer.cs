@@ -97,7 +97,7 @@
             // 
             _checkBoxPerimeter.Location = new Point(20, 140);
             _checkBoxPerimeter.Name = "_checkBoxPerimeter";
-            _checkBoxPerimeter.Size = new Size(80, 25);
+            _checkBoxPerimeter.Size = new Size(90, 25);
             _checkBoxPerimeter.TabIndex = 1;
             _checkBoxPerimeter.Text = "Периметр";
             _checkBoxPerimeter.UseVisualStyleBackColor = true;

@@ -64,7 +64,7 @@ namespace GeometricFigures
         /// <inheritdoc/>
         public override string TypeFigure
         {
-            get => TypeFigures.Rectangle.ToString();
+            get => "Прямоугольник";
         }
 
         /// <inheritdoc/>

@@ -24,16 +24,20 @@ namespace View
             RadiusLabel = new Label()
             {
                 Text = "Радиус :",
-                Dock = DockStyle.Bottom,
+                Left = leftElement,
+                Top = topElement,
+                Width = widthElement,
             };
 
             RadiusTextBox = new NumericBox()
             {
-                Dock = DockStyle.Bottom,
+                Left = leftElement + 80,
+                Top = topElement,
+                Width = widthElement,
             };
 
-            //TODO: duplication
-            Size = new Size(200, 75);
+            //TODO: duplication +
+            Size = new Size(width, height);
             Text = "Параметры окружности";
 
             Controls.Add(RadiusLabel);

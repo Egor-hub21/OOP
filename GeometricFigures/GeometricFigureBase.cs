@@ -42,6 +42,12 @@ namespace GeometricFigures
         /// <exception cref="ArgumentOutOfRangeException">Исключение.</exception>
         protected static void CheckNumberPositivity(double number)
         {
+            if (number is double.NaN)
+            {
+                throw new ArgumentOutOfRangeException(
+                    "Введено NaN.");
+            }
+
             if (number <= 0)
             {
                 throw new ArgumentOutOfRangeException(

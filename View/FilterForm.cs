@@ -4,46 +4,56 @@ using System.Reflection;
 
 namespace View
 {
-    //TODO: XML
+    //TODO: XML +
+    /// <summary>
+    /// Представляет форму для фильтрации данных.
+    /// </summary>
     public partial class FilterForm : Form
     {
-        //TODO: 
+        //TODO: +
         /// <summary>
         /// Список фигур.
         /// </summary>
-        private BindingList<GeometricFigureBase> GeometricFigures 
-        { get; set; }
+        private BindingList<GeometricFigureBase> _geometricFigures;
 
-        //TODO: 
+        //TODO: +
         /// <summary>
         /// Отфильтрованный список фигур.
         /// </summary>
-        private BindingList<GeometricFigureBase> FilteredGeometricFigures
-        { get; set; }
+        private BindingList<GeometricFigureBase> _filteredGeometricFigures;
 
-        //TODO: RSDN
+        //TODO: RSDN +
         /// <summary>
         /// Событие на фильтрацию списка.
         /// </summary>
-        public EventHandler figuresFilteredOut;
+        public EventHandler FiguresFilteredOut;
 
-        //TODO: XML
+        //TODO: XML +
+        /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="FilterForm"/>.
+        /// </summary>
+        /// <param name="geometricFigures">Список 
+        /// геометрических фигур для фильтрации.</param>
         public FilterForm(BindingList<GeometricFigureBase> geometricFigures)
         {
-            GeometricFigures = geometricFigures;
+            _geometricFigures = geometricFigures;
             InitializeComponent();
             DeactivateElements();
-            //TODO: refactor
-            _filterButton.Click += new EventHandler(FilterOut);
-            _checkBoxArea.CheckedChanged += new EventHandler(checkBoxArea_CheckedChanged);
-            _checkBoxPerimeter.CheckedChanged += new EventHandler(perimeterNumericBox_CheckedChanged);
+            //TODO: refactor +
+            _filterButton.Click += FilterOut;
+            _checkBoxArea.CheckedChanged += ActivateAreaBox;
+            _checkBoxPerimeter.CheckedChanged += ActivatePerimeterBox;
 
-            _checkBoxTypeCircle.CheckedChanged += new EventHandler(CheckBox_ActivateElements);
-            _checkBoxTypeRectangle.CheckedChanged += new EventHandler(CheckBox_ActivateElements);
-            _checkBoxTypeTriangle.CheckedChanged += new EventHandler(CheckBox_ActivateElements);
+            _checkBoxTypeCircle.CheckedChanged += ActivateElements;
+            _checkBoxTypeRectangle.CheckedChanged += ActivateElements;
+            _checkBoxTypeTriangle.CheckedChanged += ActivateElements;
+
         }
 
-        //TODO: XML
+        //TODO: XML +
+        /// <summary>
+        /// Деактивирует элементы управления на форме.
+        /// </summary>
         private void DeactivateElements()
         {
             _checkBoxArea.Enabled = false;
@@ -55,8 +65,15 @@ namespace View
             _filterButton.Enabled = false;
         }
 
-        //TODO: XML
-        private void CheckBox_ActivateElements(object sender, EventArgs e)
+        //TODO: XML +
+        /// <summary>
+        /// Активирует или деактивирует элементы управления
+        /// в зависимости от состояния чекбоксов типа фигуры.
+        /// </summary>
+        /// <param name="sender">Источник события.</param>
+        /// <param name="e">Объект <see cref="EventArgs"/>,
+        /// содержащий данные события.</param>
+        private void ActivateElements(object sender, EventArgs e)
         {
             bool activate = _checkBoxTypeCircle.Checked
                 || _checkBoxTypeRectangle.Checked
@@ -67,24 +84,26 @@ namespace View
             _checkBoxPerimeter.Enabled = activate;
         }
 
-        //TODO: RSDN
+        //TODO: RSDN +
         /// <summary>
-        /// Флажок активации поля ввода объёма.
+        /// Активация поля ввода Площади.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void checkBoxArea_CheckedChanged(object sender, EventArgs e)
+        /// <param name="sender">Источник события.</param>
+        /// <param name="e">Объект <see cref="EventArgs"/>,
+        /// содержащий данные события.</param>
+        private void ActivateAreaBox(object sender, EventArgs e)
         {
             _areaNumericBox.Enabled = _checkBoxArea.Checked;
         }
 
-        //TODO: RSDN
+        //TODO: RSDN +
         /// <summary>
-        /// Флажок активации поля ввода Периметра.
+        /// Активациия поля ввода Периметра.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void perimeterNumericBox_CheckedChanged(object sender, EventArgs e)
+        /// <param name="sender">Источник события.</param>
+        /// <param name="e">Объект <see cref="EventArgs"/>,
+        /// содержащий данные события.</param>
+        private void ActivatePerimeterBox(object sender, EventArgs e)
         {
             _perimeterNumericBox.Enabled = _checkBoxPerimeter.Checked;
         }
@@ -92,60 +111,68 @@ namespace View
         /// <summary>
         /// Фильтрация списка.
         /// </summary>
-        /// <param name="sender">.</param>
-        /// <param name="e">.</param>
+        /// <param name="sender">Источник события.</param>
+        /// <param name="e">Объект <see cref="EventArgs"/>,
+        /// содержащий данные события.</param>
         private void FilterOut(object sender, EventArgs e)
         {
-            FilteredGeometricFigures = new BindingList<GeometricFigureBase>();
+            _filteredGeometricFigures = new BindingList<GeometricFigureBase>();
 
             if (_checkBoxTypeCircle.Checked) 
             {
-                FilterByType(GeometricFigures, FilteredGeometricFigures,
+                FilterByType(_geometricFigures, _filteredGeometricFigures,
                     typeof(Circle));
             }
             if (_checkBoxTypeRectangle.Checked)
             {
-                FilterByType(GeometricFigures, FilteredGeometricFigures,
+                FilterByType(_geometricFigures, _filteredGeometricFigures,
                     typeof(GeometricFigures.Rectangle));
             }
             if (_checkBoxTypeTriangle.Checked)
             {
-                FilterByType(GeometricFigures, FilteredGeometricFigures,
+                FilterByType(_geometricFigures, _filteredGeometricFigures,
                     typeof(Triangle));
             }
             if (_checkBoxArea.Checked)
             {
                 if (!string.IsNullOrWhiteSpace(_areaNumericBox.Text))
                 {
-                    FilteredGeometricFigures = FilterByArea(FilteredGeometricFigures,
+                    _filteredGeometricFigures = 
+                        FilterByArea(_filteredGeometricFigures,
                         Convert.ToDouble(_areaNumericBox.Text));
                 }
                 else 
                 {
-                    //TODO: 
-                    _ = MessageBox.Show("Пожалуйста, заполните Плщадь");
+                    //TODO: +
+                    _ = MessageBox.Show("Пожалуйста, заполните Площадь",
+                        "Сообщение", MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
                 }
             }
             if (_checkBoxPerimeter.Checked)
             {
                 if (!string.IsNullOrWhiteSpace(_perimeterNumericBox.Text))
                 {
-                    FilteredGeometricFigures = FilterByPerimeter(FilteredGeometricFigures,
+                    _filteredGeometricFigures = 
+                        FilterByPerimeter(_filteredGeometricFigures,
                         Convert.ToDouble(_perimeterNumericBox.Text));
                 }
                 else
                 {
-                    _ = MessageBox.Show("Пожалуйста, заполните Периметр");
+                    _ = MessageBox.Show("Пожалуйста, заполните Периметр",
+                        "Сообщение", MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
                 }
             }
-            figuresFilteredOut.Invoke(this, new FiguresAddedEventArgs(FilteredGeometricFigures));
+            FiguresFilteredOut.Invoke(this, 
+                new FiguresAddedEventArgs(_filteredGeometricFigures));
         }
 
         /// <summary>
         /// Отфильтровывает список по типу.
         /// </summary>
-        /// <typeparam name="T">Тип значений списа.</typeparam>
-        /// <param name="originalList">Лист пдлежащий ильтрации.</param>
+        /// <typeparam name="T">Тип значений списка.</typeparam>
+        /// <param name="originalList">Лист подлежащий фильтрации.</param>
         /// <param name="filteredList">Список в который будут добавленны
         /// отфильтрованные значения</param>
         /// <param name="typeFilter">Тип отфильтрованных значений.</param>
@@ -166,7 +193,7 @@ namespace View
         /// <summary>
         /// Отфильтровывает список по Площади.
         /// </summary>
-        /// <param name="originalList">Лист пдлежащий ильтрации.</param>
+        /// <param name="originalList">Лист подлежащий фильтрации.</param>
         /// <param name="valueArea">Значение Площади.</param>
         /// <returns>Отфильтрованный список.</returns>
         private static BindingList<GeometricFigureBase> FilterByArea(

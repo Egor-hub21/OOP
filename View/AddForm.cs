@@ -7,6 +7,18 @@ namespace View
     /// </summary>
     public partial class AddForm : Form
     {
+
+        /// <summary>
+        /// Словарь, который сопоставляет строковые названия фигур их
+        /// соответствующим значениям перечисления <see cref="TypeFigures"/>.
+        /// </summary>
+        private readonly Dictionary<string, TypeFigures> _figuresTypes = new()
+        {
+            {"Круг", TypeFigures.Circle},
+            {"Прямоугольник", TypeFigures.Rectangle},
+            {"Треугольник", TypeFigures.Triangle},
+        };
+
         /// <summary>
         /// Initializes a new instance of the
         /// <see cref="AddForm"/> class.
@@ -15,59 +27,58 @@ namespace View
         {
             InitializeComponent();
             FillComboBox();
-            _comboBox.SelectedIndexChanged += new EventHandler(comboBox_SelectedIndexChanged);
-            _okButton.Click += new EventHandler(okButton_Click);
-            _cancelButton.Click += new EventHandler(cancel_Click);
+            _comboBox.SelectedIndexChanged += ChangeDisplayParametersBox;
+            _okButton.Click += AddFigure;
+            _cancelButton.Click += CancelAddingFigure;
 #if DEBUG
-            _randomButton.Click += new EventHandler(randomButton_Click);
+            _randomButton.Click += SetRandomParameters;
 #endif
         }
 
-        //TODO: 
+        //TODO: +
         /// <summary>
         /// Фигура.
         /// </summary>
-        private GeometricFigureBase GeometricFigure { get; set; }
+        private GeometricFigureBase GeometricFigure;
 
-        //TODO: RSDN
+        //TODO: RSDN +
         /// <summary>
         /// Событие на добавление фигуры.
         /// </summary>
-        public EventHandler figureAdded;
+        public EventHandler FigureAdded;
 
-        //TODO: RSDN
+        //TODO: RSDN +
         /// <summary>
         /// Событие на удаление фигуры.
         /// </summary>
-        public EventHandler figureDeleted;
+        public EventHandler FigureDeleted;
 
         /// <summary>
         /// Заполняет ComboBox данными.
         /// </summary>
         private void FillComboBox()
         {
-            TypeFigures[] colorsArray = 
-                (TypeFigures[])Enum.GetValues(typeof(TypeFigures));
-
-            _comboBox.DataSource = colorsArray;
-            _comboBox.SelectedItem = colorsArray.GetValue(0);
-            SetFigureParametersBox();
+            List<string> keysList = _figuresTypes.Keys.ToList();
+            _comboBox.DataSource = keysList;
+            _comboBox.SelectedItem = keysList[0];
+            ChangeDisplayParametersBox();
         }
 
         /// <summary>
         /// Отображение ввода данных.
         /// </summary>
-        /// <param name="sender">.</param>
-        /// <param name="e">.</param>
-        private void comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        /// <param name="sender">Источник события.</param>
+        /// <param name="e">Объект <see cref="EventArgs"/>,
+        /// содержащий данные события.</param>
+        private void ChangeDisplayParametersBox(object sender, EventArgs e)
         {
-            SetFigureParametersBox();
+            ChangeDisplayParametersBox();
         }
 
         /// <summary>
         /// Определяет вид FigureParametersBox.
         /// </summary>
-        private void SetFigureParametersBox()
+        private void ChangeDisplayParametersBox()
         {
             Controls.Remove(_figureParametersBox);
 
@@ -97,8 +108,8 @@ namespace View
                 },
             };
 
-            _figureParametersBox = 
-                figureParametersBoxes[(TypeFigures)_comboBox.SelectedItem];
+            _figureParametersBox =
+                figureParametersBoxes[_figuresTypes[(string)_comboBox.SelectedItem]];
 
             Controls.Add(_figureParametersBox);
         }
@@ -106,9 +117,10 @@ namespace View
         /// <summary>
         /// Добавление фигуры.
         /// </summary>
-        /// <param name="sender">.</param>
-        /// <param name="e">.</param>
-        private void okButton_Click(object sender, EventArgs e)
+        /// <param name="sender">Источник события.</param>
+        /// <param name="e">Объект <see cref="EventArgs"/>,
+        /// содержащий данные события.</param>
+        private void AddFigure(object sender, EventArgs e)
         {
             Dictionary<Type, Action<string>> catchDictionary =
                 new Dictionary<Type, Action<string>>()
@@ -117,14 +129,18 @@ namespace View
                     typeof(ArgumentOutOfRangeException),
                     (string message) =>
                     {
-                        _ = MessageBox.Show($"Возникло исключение {message}");
+                        _ = MessageBox.Show($"Возникло исключение {message}",
+                            "Ошибка", MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
                     }
                 },
                 {
                     typeof(FormatException),
                     (string message) =>
                     {
-                        _ = MessageBox.Show($"Возникло исключение {message}");
+                        _ = MessageBox.Show($"Возникло исключение {message}",
+                            "Ошибка", MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
                     }
                 },
             };
@@ -136,12 +152,13 @@ namespace View
                     typeof(CircleParametersBox),
                     () =>
                     {
-                        var figureParametersBox = 
-                            GetFigureParameterBox<CircleParametersBox>(_figureParametersBox);
+                        var figureParametersBox =
+                            GetFigureParameterBox<CircleParametersBox>
+                                (_figureParametersBox);
                         return new Circle
                             {
-                                Radius = Convert.ToDouble(
-                                    figureParametersBox.RadiusTextBox.Text),
+                                Radius = Convert.ToDouble(figureParametersBox
+                                    .RadiusTextBox.Text),
                             };
                     }
                 },
@@ -149,14 +166,15 @@ namespace View
                     typeof(RectangleParametersBox),
                     () =>
                     {
+                        var figureParametersBox =
+                            GetFigureParameterBox<RectangleParametersBox>
+                                (_figureParametersBox);
                         return new GeometricFigures.Rectangle
                         {
-                            //TODO: refactor
-                            Length = Convert.ToDouble(
-                                ((RectangleParametersBox)_figureParametersBox).
-                                LengthTextBox.Text),
-                            Width = Convert.ToDouble(
-                                ((RectangleParametersBox)_figureParametersBox)
+                            //TODO: refactor +
+                            Length = Convert.ToDouble(figureParametersBox
+                                .LengthTextBox.Text),
+                            Width = Convert.ToDouble(figureParametersBox
                                 .WidthSideTextBox.Text),
                         };
                     }
@@ -166,19 +184,19 @@ namespace View
                     typeof(TriangleParametersBox),
                     () =>
                     {
+                        var figureParametersBox =
+                            GetFigureParameterBox<TriangleParametersBox>
+                                (_figureParametersBox);
                         return new Triangle
-                        {
-                            //TODO: refactor
-                            Angle = new Angle( Convert.ToDouble(
-                                ((TriangleParametersBox)_figureParametersBox)
-                                .AngleTextBox.Text)),
-                            FirstSide = Convert.ToDouble(
-                                ((TriangleParametersBox)_figureParametersBox)
+                        (
+                            //TODO: refactor +
+                            firstSide: Convert.ToDouble(figureParametersBox
                                 .FirstSideTextBox.Text),
-                            SecondSide = Convert.ToDouble(
-                                ((TriangleParametersBox)_figureParametersBox)
+                            secondSide: Convert.ToDouble(figureParametersBox
                                 .SecondSideTextBox.Text),
-                        };
+                            angle: Convert.ToDouble(
+                                figureParametersBox.AngleTextBox.Text)
+                        );
                     }
 
                 },
@@ -190,9 +208,12 @@ namespace View
                     typeof(CircleParametersBox),
                     () =>
                     {
-                        //TODO: refactor
-                        return string.IsNullOrWhiteSpace(
-                            ((CircleParametersBox)_figureParametersBox)
+
+                        var figureParametersBox =
+                            GetFigureParameterBox<CircleParametersBox>
+                                (_figureParametersBox);
+                        //TODO: refactor +
+                        return string.IsNullOrWhiteSpace(figureParametersBox
                             .RadiusTextBox.Text);
                     }
                 },
@@ -200,28 +221,29 @@ namespace View
                     typeof(RectangleParametersBox),
                     () =>
                     {
-                        //TODO: refactor
-                        return string.IsNullOrWhiteSpace(
-                                ((RectangleParametersBox)_figureParametersBox)
+                         var figureParametersBox =
+                            GetFigureParameterBox<RectangleParametersBox>
+                                (_figureParametersBox);
+                        //TODO: refactor +
+                        return string.IsNullOrWhiteSpace(figureParametersBox
                                 .LengthTextBox.Text)
-                            || string.IsNullOrWhiteSpace(
-                                ((RectangleParametersBox)_figureParametersBox)
-                            .WidthSideTextBox.Text);
+                            || string.IsNullOrWhiteSpace(figureParametersBox
+                                .WidthSideTextBox.Text);
                     }
                 },
                 {
                     typeof(TriangleParametersBox),
                     () =>
                     {
-                        //TODO: refactor
-                        return string.IsNullOrWhiteSpace(
-                            ((TriangleParametersBox)_figureParametersBox)
+                        var figureParametersBox =
+                            GetFigureParameterBox<TriangleParametersBox>
+                                (_figureParametersBox);
+                        //TODO: refactor +
+                        return string.IsNullOrWhiteSpace(figureParametersBox
                             .AngleTextBox.Text)
-                        || string.IsNullOrWhiteSpace(
-                            ((TriangleParametersBox)_figureParametersBox)
+                        || string.IsNullOrWhiteSpace(figureParametersBox
                             .FirstSideTextBox.Text)
-                        || string.IsNullOrWhiteSpace(
-                            ((TriangleParametersBox)_figureParametersBox)
+                        || string.IsNullOrWhiteSpace(figureParametersBox
                             .SecondSideTextBox.Text);
                     }
                 },
@@ -236,35 +258,52 @@ namespace View
                 catch (Exception ex)
                 {
                     catchDictionary[ex.GetType()].Invoke(ex.Message);
+                    return;
                 }
             }
+
             else
             {
-                _ = MessageBox.Show("Пожалуйста, заполните все поля");
+                _ = MessageBox.Show("Пожалуйста, заполните все поля",
+                        "Сообщение", MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
                 return;
             }
 
             if (GeometricFigure is not null)
             {
-                figureAdded?.Invoke(this, new FigureAddedEventArgs(GeometricFigure));
+                FigureAdded?
+                    .Invoke(this, new FigureAddedEventArgs(GeometricFigure));
             }
         }
 
         /// <summary>
         /// Отмена добаления фигуры.
         /// </summary>
-        /// <param name="sender">.</param>
-        /// <param name="e">.</param>
-        private void cancel_Click(object sender, EventArgs e)
+        /// <param name="sender">Источник события.</param>
+        /// <param name="e">Объект <see cref="EventArgs"/>,
+        /// содержащий данные события.</param>
+        private void CancelAddingFigure(object sender, EventArgs e)
         {
             if (GeometricFigure is not null)
             {
-                figureDeleted?.Invoke(this, new FigureAddedEventArgs(GeometricFigure));
+                FigureDeleted?
+                    .Invoke(this, new FigureAddedEventArgs(GeometricFigure));
             }
         }
 
-        //TODO: RSDN
-        private T GetFigureParameterBox<T>(FigureParametersBox figureParametersBox)
+        //TODO: RSDN +
+
+        /// <summary>
+        /// Приводит FigureParametersBox к соответствующему типу.
+        /// </summary>
+        /// <typeparam name="T">Тип FigureParametersBox.</typeparam>
+        /// <param name="figureParametersBox">Область для
+        /// ввода параметров фигуры.</param>
+        /// <returns>Приведенная область для 
+        /// ввода параметров фигуры.</returns>
+        private T GetFigureParameterBox<T>(
+            FigureParametersBox figureParametersBox)
             where T : FigureParametersBox
         {
             return (T)figureParametersBox;
@@ -272,11 +311,12 @@ namespace View
 
 #if DEBUG
         /// <summary>
-        /// Заполнение полей рандомными данными
+        /// Заполнение полей рандомными данными.
         /// </summary>
-        /// <param name="sender">.</param>
-        /// <param name="e">.</param>
-        private void randomButton_Click(object sender, EventArgs e)
+        /// <param name="sender">Источник события.</param>
+        /// <param name="e">Объект <see cref="EventArgs"/>,
+        /// содержащий данные события.</param>
+        private void SetRandomParameters(object sender, EventArgs e)
         {
             Random random = new Random();
             int minValue = 1;
@@ -289,9 +329,11 @@ namespace View
                     typeof(CircleParametersBox),
                     () =>
                     {
-                        //TODO: refactor
-                        ((CircleParametersBox)_figureParametersBox)
-                            .RadiusTextBox.Text = 
+                        //TODO: refactor +
+                        var figureParametersBox =
+                            GetFigureParameterBox<CircleParametersBox>
+                                (_figureParametersBox);
+                        figureParametersBox.RadiusTextBox.Text =
                                 $"{random.Next(minValue,maxValue)}";
                     }
                 },
@@ -299,12 +341,13 @@ namespace View
                     typeof(RectangleParametersBox),
                     () =>
                     {
-                        //TODO: refactor
-                        ((RectangleParametersBox)_figureParametersBox)
-                            .LengthTextBox.Text =
+                        //TODO: refactor +
+                        var figureParametersBox =
+                            GetFigureParameterBox<RectangleParametersBox>
+                                (_figureParametersBox);
+                        figureParametersBox.LengthTextBox.Text =
                                 $"{random.Next(minValue,maxValue)}";
-                        ((RectangleParametersBox)_figureParametersBox)
-                            .WidthSideTextBox.Text =
+                        figureParametersBox.WidthSideTextBox.Text =
                                 $"{random.Next(minValue,maxValue)}";
                     }
 
@@ -313,21 +356,21 @@ namespace View
                     typeof(TriangleParametersBox),
                     () =>
                     {
-                        //TODO: refactor
-                        ((TriangleParametersBox)_figureParametersBox)
-                            .AngleTextBox.Text  =
+                        //TODO: refactor +
+                        var figureParametersBox =
+                            GetFigureParameterBox<TriangleParametersBox>
+                                (_figureParametersBox);
+                        figureParametersBox.AngleTextBox.Text  =
                                 $"{random.Next(minValue,maxValue)}";
-                        ((TriangleParametersBox)_figureParametersBox)
-                            .FirstSideTextBox.Text =
+                        figureParametersBox.FirstSideTextBox.Text =
                                 $"{random.Next(minValue,maxValue)}";
-                        ((TriangleParametersBox)_figureParametersBox)
-                            .SecondSideTextBox.Text =
+                        figureParametersBox.SecondSideTextBox.Text =
                                 $"{random.Next(minValue,maxValue)}";
                     }
 
                 },
             };
-           
+
             geometricFigures[_figureParametersBox.GetType()].Invoke();
         }
 #endif

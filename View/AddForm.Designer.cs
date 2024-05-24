@@ -37,24 +37,28 @@ namespace View
         /// </summary>
         private void InitializeComponent()
         {
+#if DEBUG
             _randomButton = new Button();
+#endif
             _okButton = new Button();
             _cancelButton = new Button();
             _comboBox = new ComboBox();
             _figureParametersBox = new FigureParametersBox();
             SuspendLayout();
+#if DEBUG
             // 
             // _randomButton
             // 
-            _randomButton.Location = new Point(12, 148);
+            _randomButton.Location = new Point(12, 71);
             _randomButton.Name = "_randomButton";
             _randomButton.Size = new Size(75, 23);
             _randomButton.TabIndex = 4;
             _randomButton.Text = "Заполнить";
+#endif
             // 
             // _okButton
             // 
-            _okButton.Location = new Point(12, 90);
+            _okButton.Location = new Point(12, 100);
             _okButton.Name = "_okButton";
             _okButton.Size = new Size(75, 23);
             _okButton.TabIndex = 0;
@@ -62,7 +66,7 @@ namespace View
             // 
             // _cancelButton
             // 
-            _cancelButton.Location = new Point(12, 119);
+            _cancelButton.Location = new Point(12, 129);
             _cancelButton.Name = "_cancelButton";
             _cancelButton.Size = new Size(75, 23);
             _cancelButton.TabIndex = 1;
@@ -80,19 +84,21 @@ namespace View
             // 
             _figureParametersBox.Location = new Point(158, 12);
             _figureParametersBox.Name = "_figureParametersBox";
-            _figureParametersBox.Size = new Size(200, 159);
+            _figureParametersBox.Size = new Size(200, 140);
             _figureParametersBox.TabIndex = 3;
             _figureParametersBox.TabStop = false;
             _figureParametersBox.Text = "Параметры фигуры";
             // 
             // AddForm
             // 
-            ClientSize = new Size(370, 186);
+            ClientSize = new Size(370, 167);
             Controls.Add(_okButton);
             Controls.Add(_cancelButton);
             Controls.Add(_comboBox);
             Controls.Add(_figureParametersBox);
+#if DEBUG
             Controls.Add(_randomButton);
+#endif
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
             MinimizeBox = false;
