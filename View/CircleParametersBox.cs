@@ -36,7 +36,6 @@ namespace View
                 Width = widthElement,
             };
 
-            //TODO: duplication +
             Size = new Size(width, height);
             Text = "Параметры окружности";
 

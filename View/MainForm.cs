@@ -11,13 +11,11 @@ namespace View
     /// </summary>
     public partial class MainForm : Form
     {
-        //TODO: +
         /// <summary>
         /// Список фигур.
         /// </summary>
         private BindingList<GeometricFigureBase> _geometricFigures;
 
-        //TODO: +
         /// <summary>
         /// Отфильтрованный список фигур.
         /// </summary>
@@ -39,7 +37,6 @@ namespace View
             InitializeFigures();
 
             _addButton.Click += OpenAddForm;
-            //TODO: +
             _removeButton.Click += DeleteFigure;
             _filterButton.Click += OpenFilterForm;
             _resettingFilterButton.Click += ResetFilter;
@@ -72,7 +69,6 @@ namespace View
             {
                 addForm.Focus();
             }
-
         }
 
         /// <summary>
@@ -163,7 +159,6 @@ namespace View
             BindDataToGrid(_figureDataGrid, _geometricFigures);
         }
 
-        //TODO: rename +
         /// <summary>
         /// Связывание листа с таблицей на форме.
         /// </summary>
@@ -175,7 +170,6 @@ namespace View
             figureDataGrid.DataSource = GeometricFigures;
         }
 
-        //TODO: RSDN +
         /// <summary>
         /// Удаляет фигуру.
         /// </summary>

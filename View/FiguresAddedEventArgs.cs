@@ -3,20 +3,17 @@ using System.ComponentModel;
 
 namespace View
 {
-    //TODO: XML +
     /// <summary>
     /// Представляет данные для события, возникающего при
     /// добавлении нескольких новых геометрических фигур.
     /// </summary>
     internal class FiguresAddedEventArgs : EventArgs
     {
-        //TODO: XML +
         /// <summary>
         /// Получает список добавленных геометрических фигур.
         /// </summary>
         public BindingList<GeometricFigureBase> GeometricFigure { get; }
 
-        //TODO: XML +
         /// <summary>
         /// Инициализирует новый экземпляр класса 
         /// <see cref="FiguresAddedEventArgs"/>.

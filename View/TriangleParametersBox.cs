@@ -54,6 +54,7 @@ namespace View
             {
                 Text = "Сторона 1:",
                 Left = leftElement,
+                //TODO: to const
                 Top = topElement + 40,
                 Width = widthElement,
             };
@@ -62,12 +63,14 @@ namespace View
             {
                 Text = "Сторона 2:",
                 Left = leftElement,
+                //TODO: to const
                 Top = topElement + 40 * 2,
                 Width = widthElement,
             };
 
             AngleTextBox = new NumericBox()
             {
+                //TODO: to const
                 Left = leftElement + 80,
                 Top = topElement,
                 Width = widthElement,
@@ -75,6 +78,7 @@ namespace View
 
             FirstSideTextBox = new NumericBox()
             {
+                //TODO: to const
                 Left = leftElement + 80,
                 Top = topElement + 40,
                 Width = widthElement,
@@ -82,12 +86,12 @@ namespace View
 
             SecondSideTextBox = new NumericBox()
             {
+                //TODO: to const
                 Left = leftElement + 80,
                 Top = topElement + 40 * 2,
                 Width = widthElement,
             };
 
-            //TODO: duplication +
             Size = new Size(width, height);
             Text = "Параметры треугольника";
 

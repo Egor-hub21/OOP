@@ -4,31 +4,26 @@ using System.Reflection;
 
 namespace View
 {
-    //TODO: XML +
     /// <summary>
     /// Представляет форму для фильтрации данных.
     /// </summary>
     public partial class FilterForm : Form
     {
-        //TODO: +
         /// <summary>
         /// Список фигур.
         /// </summary>
         private BindingList<GeometricFigureBase> _geometricFigures;
 
-        //TODO: +
         /// <summary>
         /// Отфильтрованный список фигур.
         /// </summary>
         private BindingList<GeometricFigureBase> _filteredGeometricFigures;
 
-        //TODO: RSDN +
         /// <summary>
         /// Событие на фильтрацию списка.
         /// </summary>
         public EventHandler FiguresFilteredOut;
 
-        //TODO: XML +
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="FilterForm"/>.
         /// </summary>
@@ -39,7 +34,7 @@ namespace View
             _geometricFigures = geometricFigures;
             InitializeComponent();
             DeactivateElements();
-            //TODO: refactor +
+
             _filterButton.Click += FilterOut;
             _checkBoxArea.CheckedChanged += ActivateAreaBox;
             _checkBoxPerimeter.CheckedChanged += ActivatePerimeterBox;
@@ -50,7 +45,6 @@ namespace View
 
         }
 
-        //TODO: XML +
         /// <summary>
         /// Деактивирует элементы управления на форме.
         /// </summary>
@@ -65,7 +59,6 @@ namespace View
             _filterButton.Enabled = false;
         }
 
-        //TODO: XML +
         /// <summary>
         /// Активирует или деактивирует элементы управления
         /// в зависимости от состояния чекбоксов типа фигуры.
@@ -84,7 +77,6 @@ namespace View
             _checkBoxPerimeter.Enabled = activate;
         }
 
-        //TODO: RSDN +
         /// <summary>
         /// Активация поля ввода Площади.
         /// </summary>
@@ -96,7 +88,6 @@ namespace View
             _areaNumericBox.Enabled = _checkBoxArea.Checked;
         }
 
-        //TODO: RSDN +
         /// <summary>
         /// Активациия поля ввода Периметра.
         /// </summary>
@@ -108,6 +99,7 @@ namespace View
             _perimeterNumericBox.Enabled = _checkBoxPerimeter.Checked;
         }
 
+        //TODO: rename
         /// <summary>
         /// Фильтрация списка.
         /// </summary>
@@ -143,7 +135,6 @@ namespace View
                 }
                 else 
                 {
-                    //TODO: +
                     _ = MessageBox.Show("Пожалуйста, заполните Площадь",
                         "Сообщение", MessageBoxButtons.OK,
                         MessageBoxIcon.Information);

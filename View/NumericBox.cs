@@ -14,7 +14,6 @@ namespace View
             KeyPress += new KeyPressEventHandler(ValidateNumericInput);
         }
 
-        //TODO: RSDN +
         /// <summary>
         /// Корректировка ввода данных.
         /// </summary>

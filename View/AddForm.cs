@@ -35,19 +35,16 @@ namespace View
 #endif
         }
 
-        //TODO: +
         /// <summary>
         /// Фигура.
         /// </summary>
         private GeometricFigureBase GeometricFigure;
 
-        //TODO: RSDN +
         /// <summary>
         /// Событие на добавление фигуры.
         /// </summary>
         public EventHandler FigureAdded;
 
-        //TODO: RSDN +
         /// <summary>
         /// Событие на удаление фигуры.
         /// </summary>
@@ -171,7 +168,6 @@ namespace View
                                 (_figureParametersBox);
                         return new GeometricFigures.Rectangle
                         {
-                            //TODO: refactor +
                             Length = Convert.ToDouble(figureParametersBox
                                 .LengthTextBox.Text),
                             Width = Convert.ToDouble(figureParametersBox
@@ -189,7 +185,6 @@ namespace View
                                 (_figureParametersBox);
                         return new Triangle
                         (
-                            //TODO: refactor +
                             firstSide: Convert.ToDouble(figureParametersBox
                                 .FirstSideTextBox.Text),
                             secondSide: Convert.ToDouble(figureParametersBox
@@ -212,7 +207,6 @@ namespace View
                         var figureParametersBox =
                             GetFigureParameterBox<CircleParametersBox>
                                 (_figureParametersBox);
-                        //TODO: refactor +
                         return string.IsNullOrWhiteSpace(figureParametersBox
                             .RadiusTextBox.Text);
                     }
@@ -224,7 +218,6 @@ namespace View
                          var figureParametersBox =
                             GetFigureParameterBox<RectangleParametersBox>
                                 (_figureParametersBox);
-                        //TODO: refactor +
                         return string.IsNullOrWhiteSpace(figureParametersBox
                                 .LengthTextBox.Text)
                             || string.IsNullOrWhiteSpace(figureParametersBox
@@ -238,7 +231,6 @@ namespace View
                         var figureParametersBox =
                             GetFigureParameterBox<TriangleParametersBox>
                                 (_figureParametersBox);
-                        //TODO: refactor +
                         return string.IsNullOrWhiteSpace(figureParametersBox
                             .AngleTextBox.Text)
                         || string.IsNullOrWhiteSpace(figureParametersBox
@@ -292,8 +284,6 @@ namespace View
             }
         }
 
-        //TODO: RSDN +
-
         /// <summary>
         /// Приводит FigureParametersBox к соответствующему типу.
         /// </summary>
@@ -329,7 +319,6 @@ namespace View
                     typeof(CircleParametersBox),
                     () =>
                     {
-                        //TODO: refactor +
                         var figureParametersBox =
                             GetFigureParameterBox<CircleParametersBox>
                                 (_figureParametersBox);
@@ -341,7 +330,6 @@ namespace View
                     typeof(RectangleParametersBox),
                     () =>
                     {
-                        //TODO: refactor +
                         var figureParametersBox =
                             GetFigureParameterBox<RectangleParametersBox>
                                 (_figureParametersBox);
@@ -356,7 +344,6 @@ namespace View
                     typeof(TriangleParametersBox),
                     () =>
                     {
-                        //TODO: refactor +
                         var figureParametersBox =
                             GetFigureParameterBox<TriangleParametersBox>
                                 (_figureParametersBox);

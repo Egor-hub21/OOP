@@ -5,6 +5,7 @@ namespace View
     /// </summary>
     public class FigureParametersBox : GroupBox
     {
+        //TODO: RSDN
         /// <summary>
         /// Шириена box.
         /// </summary>

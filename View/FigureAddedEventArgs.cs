@@ -2,20 +2,17 @@
 
 namespace View
 {
-    //TODO: XML +
     /// <summary>
     /// Представляет данные для события, возникающего
     /// при добавлении новой геометрической фигуры.
     /// </summary>
     internal class FigureAddedEventArgs : EventArgs 
     {
-        //TODO: XML +
         /// <summary>
         /// Получает добавленную геометрическую фигуру.
         /// </summary>
         public GeometricFigureBase GeometricFigure { get; }
 
-        //TODO: XML +
         /// <summary>
         /// Инициализирует новый экземпляр
         /// класса <see cref="FigureAddedEventArgs"/>.

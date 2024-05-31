@@ -43,12 +43,15 @@ namespace View
             {
                 Text = "Ширина :",
                 Left = leftElement,
+                //TODO: to const
                 Top = topElement + 40,
                 Width = widthElement,
             };
 
             LengthTextBox = new NumericBox()
             {
+                //TODO: to const
+
                 Left = leftElement + 80,
                 Top = topElement,
                 Width = widthElement,
@@ -56,12 +59,13 @@ namespace View
 
             WidthSideTextBox = new NumericBox()
             {
+                //TODO: to const
+
                 Left = leftElement + 80,
                 Top = topElement + 40,
                 Width = widthElement,
             };
 
-            //TODO: duplication +
             Size = new Size(width, height);
             Text = "Параметры окружности";
 
