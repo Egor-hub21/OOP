@@ -45,7 +45,7 @@ namespace View
             AngelLabel = new Label()
             {
                 Text = "Угол :",
-                Left = LleftElement,
+                Left = LeftElement,
                 Top = TopElement,
                 Width = WidthElement,
             };
@@ -53,8 +53,7 @@ namespace View
             FirstSideLabel = new Label()
             {
                 Text = "Сторона 1:",
-                Left = LleftElement,
-                //TODO: to const +
+                Left = LeftElement,
                 Top = TopElement + ShiftTop,
                 Width = WidthElement,
             };
@@ -62,32 +61,28 @@ namespace View
             SecondSideLabel = new Label()
             {
                 Text = "Сторона 2:",
-                Left = LleftElement,
-                //TODO: to const +
+                Left = LeftElement,
                 Top = TopElement + ShiftTop * 2,
                 Width = WidthElement,
             };
 
             AngleTextBox = new NumericBox()
             {
-                //TODO: to const +
-                Left = LleftElement + ShiftLleft,
+                Left = LeftElement + ShiftLeft,
                 Top = TopElement,
                 Width = WidthElement,
             };
 
             FirstSideTextBox = new NumericBox()
             {
-                //TODO: to const +
-                Left = LleftElement + ShiftLleft,
+                Left = LeftElement + ShiftLeft,
                 Top = TopElement + ShiftTop,
                 Width = WidthElement,
             };
 
             SecondSideTextBox = new NumericBox()
             {
-                //TODO: to const +
-                Left = LleftElement + ShiftLleft,
+                Left = LeftElement + ShiftLeft,
                 Top = TopElement + ShiftTop * 2,
                 Width = WidthElement,
             };

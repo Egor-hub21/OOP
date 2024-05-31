@@ -34,7 +34,7 @@ namespace View
             LenghtLabel = new Label()
             {
                 Text = "Длина :",
-                Left = LleftElement,
+                Left = LeftElement,
                 Top = TopElement,
                 Width = WidthElement,
             };
@@ -42,26 +42,25 @@ namespace View
             WidthLabel = new Label()
             {
                 Text = "Ширина :",
-                Left = LleftElement,
+                Left = LeftElement,
                 Top = TopElement + ShiftTop,
                 Width = WidthElement,
             };
 
             LengthTextBox = new NumericBox()
             {
-                Left = LleftElement + ShiftLleft,
+                Left = LeftElement + ShiftLeft,
                 Top = TopElement,
                 Width = WidthElement,
             };
 
             WidthSideTextBox = new NumericBox()
             {
-                Left = LleftElement + ShiftLleft,
+                Left = LeftElement + ShiftLeft,
                 Top = TopElement + ShiftTop,
                 Width = WidthElement,
             };
 
-            //TODO: duplication +
             Size = new Size(WidthBox, HeightBox);
             Text = "Параметры окружности";
 

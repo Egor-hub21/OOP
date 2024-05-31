@@ -5,7 +5,6 @@ namespace View
     /// </summary>
     public class FigureParametersBox : GroupBox
     {
-        //TODO: RSDN +
         /// <summary>
         /// Шириена box.
         /// </summary>
@@ -25,7 +24,7 @@ namespace View
         /// Расстояние в пикселях между левым краем элемента управления
         /// и левым краем клиентской области его контейнера.
         /// </summary>
-        protected readonly int LleftElement = 10;
+        protected readonly int LeftElement = 10;
 
         /// <summary>
         /// Расстояние в пикселях между верхним краем элемента управления
@@ -41,7 +40,7 @@ namespace View
         /// <summary>
         /// Отступ.
         /// </summary>
-        protected readonly int ShiftLleft = 80;
+        protected readonly int ShiftLeft = 80;
 
         /// <summary>
         /// Initializes a new instance of the

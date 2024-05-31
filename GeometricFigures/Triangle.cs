@@ -28,7 +28,7 @@ namespace GeometricFigures
         /// <param name="angle">Угол между прямыми.</param>
         public Triangle(double firstSide, double secondSide, double angle)
         {
-            if (angle <= 0 || angle >= 180)
+            if (angle <= 0.0 || angle >= 180.0)
             {
                 throw new ArgumentOutOfRangeException("Введенный угол" +
                     " должен находиться в диапазоне от 0 до 180!");

@@ -99,7 +99,6 @@ namespace View
             _perimeterNumericBox.Enabled = _checkBoxPerimeter.Checked;
         }
 
-        //TODO: rename +
         /// <summary>
         /// Фильтрация списка.
         /// </summary>

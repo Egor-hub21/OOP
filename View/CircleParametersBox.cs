@@ -24,14 +24,14 @@ namespace View
             RadiusLabel = new Label()
             {
                 Text = "Радиус :",
-                Left = LleftElement,
+                Left = LeftElement,
                 Top = TopElement,
                 Width = WidthElement,
             };
 
             RadiusTextBox = new NumericBox()
             {
-                Left = LleftElement + ShiftLleft,
+                Left = LeftElement + ShiftLeft,
                 Top = TopElement,
                 Width = WidthElement,
             };
