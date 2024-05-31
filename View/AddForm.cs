@@ -38,7 +38,7 @@ namespace View
         /// <summary>
         /// Фигура.
         /// </summary>
-        private GeometricFigureBase GeometricFigure;
+        private GeometricFigureBase _geometricFigure;
 
         /// <summary>
         /// Событие на добавление фигуры.
@@ -245,7 +245,7 @@ namespace View
             {
                 try
                 {
-                    GeometricFigure = geometricFigures[_figureParametersBox.GetType()].Invoke();
+                    _geometricFigure = geometricFigures[_figureParametersBox.GetType()].Invoke();
                 }
                 catch (Exception ex)
                 {
@@ -262,10 +262,10 @@ namespace View
                 return;
             }
 
-            if (GeometricFigure is not null)
+            if (_geometricFigure is not null)
             {
                 FigureAdded?
-                    .Invoke(this, new FigureAddedEventArgs(GeometricFigure));
+                    .Invoke(this, new FigureAddedEventArgs(_geometricFigure));
             }
         }
 
@@ -277,10 +277,10 @@ namespace View
         /// содержащий данные события.</param>
         private void CancelAddingFigure(object sender, EventArgs e)
         {
-            if (GeometricFigure is not null)
+            if (_geometricFigure is not null)
             {
                 FigureDeleted?
-                    .Invoke(this, new FigureAddedEventArgs(GeometricFigure));
+                    .Invoke(this, new FigureAddedEventArgs(_geometricFigure));
             }
         }
 

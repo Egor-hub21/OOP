@@ -45,54 +45,54 @@ namespace View
             AngelLabel = new Label()
             {
                 Text = "Угол :",
-                Left = leftElement,
-                Top = topElement,
-                Width = widthElement,
+                Left = LleftElement,
+                Top = TopElement,
+                Width = WidthElement,
             };
 
             FirstSideLabel = new Label()
             {
                 Text = "Сторона 1:",
-                Left = leftElement,
-                //TODO: to const
-                Top = topElement + 40,
-                Width = widthElement,
+                Left = LleftElement,
+                //TODO: to const +
+                Top = TopElement + ShiftTop,
+                Width = WidthElement,
             };
 
             SecondSideLabel = new Label()
             {
                 Text = "Сторона 2:",
-                Left = leftElement,
-                //TODO: to const
-                Top = topElement + 40 * 2,
-                Width = widthElement,
+                Left = LleftElement,
+                //TODO: to const +
+                Top = TopElement + ShiftTop * 2,
+                Width = WidthElement,
             };
 
             AngleTextBox = new NumericBox()
             {
-                //TODO: to const
-                Left = leftElement + 80,
-                Top = topElement,
-                Width = widthElement,
+                //TODO: to const +
+                Left = LleftElement + ShiftLleft,
+                Top = TopElement,
+                Width = WidthElement,
             };
 
             FirstSideTextBox = new NumericBox()
             {
-                //TODO: to const
-                Left = leftElement + 80,
-                Top = topElement + 40,
-                Width = widthElement,
+                //TODO: to const +
+                Left = LleftElement + ShiftLleft,
+                Top = TopElement + ShiftTop,
+                Width = WidthElement,
             };
 
             SecondSideTextBox = new NumericBox()
             {
-                //TODO: to const
-                Left = leftElement + 80,
-                Top = topElement + 40 * 2,
-                Width = widthElement,
+                //TODO: to const +
+                Left = LleftElement + ShiftLleft,
+                Top = TopElement + ShiftTop * 2,
+                Width = WidthElement,
             };
 
-            Size = new Size(width, height);
+            Size = new Size(WidthBox, HeightBox);
             Text = "Параметры треугольника";
 
             Controls.Add(FirstSideLabel);

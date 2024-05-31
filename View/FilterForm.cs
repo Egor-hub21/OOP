@@ -35,7 +35,7 @@ namespace View
             InitializeComponent();
             DeactivateElements();
 
-            _filterButton.Click += FilterOut;
+            _filterButton.Click += Filter;
             _checkBoxArea.CheckedChanged += ActivateAreaBox;
             _checkBoxPerimeter.CheckedChanged += ActivatePerimeterBox;
 
@@ -99,14 +99,14 @@ namespace View
             _perimeterNumericBox.Enabled = _checkBoxPerimeter.Checked;
         }
 
-        //TODO: rename
+        //TODO: rename +
         /// <summary>
         /// Фильтрация списка.
         /// </summary>
         /// <param name="sender">Источник события.</param>
         /// <param name="e">Объект <see cref="EventArgs"/>,
         /// содержащий данные события.</param>
-        private void FilterOut(object sender, EventArgs e)
+        private void Filter(object sender, EventArgs e)
         {
             _filteredGeometricFigures = new BindingList<GeometricFigureBase>();
 

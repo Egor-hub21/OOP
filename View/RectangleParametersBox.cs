@@ -34,39 +34,35 @@ namespace View
             LenghtLabel = new Label()
             {
                 Text = "Длина :",
-                Left = leftElement,
-                Top = topElement,
-                Width = widthElement,
+                Left = LleftElement,
+                Top = TopElement,
+                Width = WidthElement,
             };
 
             WidthLabel = new Label()
             {
                 Text = "Ширина :",
-                Left = leftElement,
-                //TODO: to const
-                Top = topElement + 40,
-                Width = widthElement,
+                Left = LleftElement,
+                Top = TopElement + ShiftTop,
+                Width = WidthElement,
             };
 
             LengthTextBox = new NumericBox()
             {
-                //TODO: to const
-
-                Left = leftElement + 80,
-                Top = topElement,
-                Width = widthElement,
+                Left = LleftElement + ShiftLleft,
+                Top = TopElement,
+                Width = WidthElement,
             };
 
             WidthSideTextBox = new NumericBox()
             {
-                //TODO: to const
-
-                Left = leftElement + 80,
-                Top = topElement + 40,
-                Width = widthElement,
+                Left = LleftElement + ShiftLleft,
+                Top = TopElement + ShiftTop,
+                Width = WidthElement,
             };
 
-            Size = new Size(width, height);
+            //TODO: duplication +
+            Size = new Size(WidthBox, HeightBox);
             Text = "Параметры окружности";
 
             Controls.Add(LenghtLabel);

@@ -24,19 +24,19 @@ namespace View
             RadiusLabel = new Label()
             {
                 Text = "Радиус :",
-                Left = leftElement,
-                Top = topElement,
-                Width = widthElement,
+                Left = LleftElement,
+                Top = TopElement,
+                Width = WidthElement,
             };
 
             RadiusTextBox = new NumericBox()
             {
-                Left = leftElement + 80,
-                Top = topElement,
-                Width = widthElement,
+                Left = LleftElement + ShiftLleft,
+                Top = TopElement,
+                Width = WidthElement,
             };
 
-            Size = new Size(width, height);
+            Size = new Size(WidthBox, HeightBox);
             Text = "Параметры окружности";
 
             Controls.Add(RadiusLabel);
