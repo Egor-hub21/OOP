@@ -1,28 +1,39 @@
+using System.ComponentModel;
+using System.Xml.Serialization;
 
 namespace GeometricFigures
 {
     /// <summary>
     /// Описывает общую природу всех геометрических фигур.
     /// </summary>
+    [XmlInclude(typeof(Circle))]
+    [XmlInclude(typeof(Rectangle))]
+    [XmlInclude(typeof(Triangle))]
     public abstract class GeometricFigureBase
     {
         /// <summary>
-        /// Возвращает площадь фигуры.
+        /// Тип фигуры.
         /// </summary>
-        /// <returns>Площадь.</returns>
-        public abstract double GetArea();
+        [DisplayName("Тип фигуры")]
+        public abstract string TypeFigure { get; }
 
         /// <summary>
-        /// Возвращает периметр фигуры.
+        /// Площадь фигуры.
         /// </summary>
-        /// <returns>Периметр.</returns>
-        public abstract double GetPerimeter();
+        [DisplayName("Площадь")]
+        public abstract double Area { get; }
 
         /// <summary>
-        /// Возвращает информацию о фигуре в форме строки.
+        /// Периметр фигуры.
         /// </summary>
-        /// <returns>Информация.</returns>
-        public abstract string GetInfo();
+        [DisplayName("Периметр")]
+        public abstract double Perimeter { get; }
+
+        /// <summary>
+        /// Информацию о фигуре в форме строки.
+        /// </summary>
+        [DisplayName("Информация")]
+        public abstract string Info { get; }
 
         /// <summary>
         /// Выбрасывает исключение если число меньше или равно нулю.
@@ -31,6 +42,12 @@ namespace GeometricFigures
         /// <exception cref="ArgumentOutOfRangeException">Исключение.</exception>
         protected static void CheckNumberPositivity(double number)
         {
+            if (number is double.NaN)
+            {
+                throw new ArgumentOutOfRangeException(
+                    "Введено NaN.");
+            }
+
             if (number <= 0)
             {
                 throw new ArgumentOutOfRangeException(

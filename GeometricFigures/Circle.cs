@@ -26,7 +26,7 @@ namespace GeometricFigures
         { }
 
         /// <summary>
-        /// Get Set <see cref="_radius"/>.
+        /// Gets or sets get Set <see cref="_radius"/>.
         /// </summary>
         public double Radius
         {
@@ -41,21 +41,18 @@ namespace GeometricFigures
         }
 
         /// <inheritdoc/>
-        public override double GetArea()
+        public override string TypeFigure
         {
-            return Math.PI * Math.Pow(Radius, 2);
+            get => "Круг";
         }
 
         /// <inheritdoc/>
-        public override string GetInfo()
-        {
-            return $"Радиус: {Radius}";
-        }
+        public override double Area { get => Math.PI * Math.Pow(Radius, 2); }
 
         /// <inheritdoc/>
-        public override double GetPerimeter()
-        {
-            return 2 * Math.PI * Radius;
-        }
+        public override double Perimeter { get => 2 * Math.PI * Radius; }
+
+        /// <inheritdoc/>
+        public override string Info { get => $"Радиус: {Radius}"; }
     }
 }
